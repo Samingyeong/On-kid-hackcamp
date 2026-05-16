@@ -13,9 +13,10 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
-        <Link to="/" className={`navbar-logo ${pathname === '/' ? 'active' : ''}`}>
-          홈화면
-        </Link>
+        {/* 로고 */}
+        <Link to="/" className={`navbar-logo ${pathname === '/' ? 'active' : ''}`}>홈화면</Link>
+
+        {/* 메뉴 */}
         <div className="navbar-menu">
           {NAV_ITEMS.map(item => (
             <Link
@@ -27,7 +28,10 @@ export default function Navbar() {
             </Link>
           ))}
         </div>
+
         <div className="navbar-spacer" />
+
+        {/* 유저 */}
         <div className="navbar-user">
           <div className="user-info">
             <span className="user-name">사민경</span>

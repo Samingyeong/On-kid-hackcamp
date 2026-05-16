@@ -1,102 +1,130 @@
 .navbar {
   width: 100%;
-  height: 60px;
-  background: #fff;
-  border-bottom: 1px solid #e8e8e8;
-  position: sticky;
-  top: 0;
+  background: #FFB256;
+  height: 64px;
+  display: flex;
+  align-items: stretch;
   z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .navbar-inner {
-  max-width: 1400px;
+  width: 100%;
+  max-width: 1600px;
   margin: 0 auto;
-  height: 100%;
+  padding: 0 32px;
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+
+/* ── 탭 공통 스타일 ── */
+.navbar-logo,
+.navbar-link {
+  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   padding: 0 24px;
-  gap: 32px;
+  position: relative;
+  transition: color 0.15s;
+  border-radius: 20px 20px 0 0;
 }
+.navbar-logo:hover,
+.navbar-link:hover { color: #333; }
 
-.navbar-logo {
-  font-size: 18px;
-  font-weight: 700;
+/* 활성 탭 */
+.navbar-logo.active,
+.navbar-link.active {
   color: #333;
-  text-decoration: none;
+  background: #FAF4EE;
+}
+.navbar-logo.active::before,
+.navbar-link.active::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: -14px;
+  width: 14px; height: 14px;
+  background: transparent;
+  border-bottom-right-radius: 14px;
+  box-shadow: 5px 5px 0 5px #FAF4EE;
+}
+.navbar-logo.active::after,
+.navbar-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: -14px;
+  width: 14px; height: 14px;
+  background: transparent;
+  border-bottom-left-radius: 14px;
+  box-shadow: -5px 5px 0 5px #FAF4EE;
 }
 
-.navbar-logo.active {
-  color: #6370B4;
-}
-
+/* 메뉴 */
 .navbar-menu {
   display: flex;
-  gap: 24px;
+  align-items: stretch;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
-.navbar-link {
-  font-size: 15px;
-  font-weight: 500;
-  color: #666;
-  text-decoration: none;
-  padding: 8px 0;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s, border-color 0.2s;
-}
+/* 오른쪽 여백 채우기 */
+.navbar-spacer { flex: 1; }
 
-.navbar-link:hover {
-  color: #333;
-}
-
-.navbar-link.active {
-  color: #6370B4;
-  border-bottom-color: #6370B4;
-}
-
-.navbar-spacer {
-  flex: 1;
-}
-
+/* 유저 */
 .navbar-user {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  background: rgba(255,242,217,0.6);
+  border-radius: 40px;
+  padding: 4px 4px 4px 16px;
+  height: 52px;
+  align-self: center;
+  flex-shrink: 0;
+  overflow: visible;
 }
-
 .user-info {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: baseline;
+  gap: 6px;
 }
-
 .user-name {
-  font-size: 14px;
-  font-weight: 600;
+  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
+  font-size: 18px;
   color: #333;
+  font-weight: 700;
+  line-height: 1;
 }
-
 .user-type {
-  font-size: 12px;
-  color: #999;
+  font-size: 10px;
+  color: #888;
 }
-
 .user-avatar {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
   position: relative;
-  width: 40px;
-  height: 40px;
 }
-
 .avatar-circle-bg {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(255,200,100,0.4);
   position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: #f0f0f0;
+  top: 0; left: 0;
 }
-
 .avatar-img {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  position: absolute;
+  bottom: 2.5px;
+  right: -2px;
 }
