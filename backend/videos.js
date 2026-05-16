@@ -46,13 +46,13 @@ function downloadFile(url, destPath) {
 
 // 특정 책의 모든 언어 영상+VTT 다운로드
 async function downloadBookVideos(thumbUrl) {
-  const base = path.basename(thumbUrl, '.png') // e.g. Nlcy_001_001
+  const uniqueBase = getUniqueBase(thumbUrl)
   const results = { ok: [], failed: [] }
 
   for (const lang of LANGS) {
     for (const ext of ['mp4', 'vtt']) {
       const url      = toVideoUrl(thumbUrl, lang, ext)
-      const filename = `${base}_${lang}.${ext}`
+      const filename = `${uniqueBase}_${lang}.${ext}`
       const destPath = path.join(VIDEO_DIR, filename)
       try {
         const downloaded = await downloadFile(url, destPath)
@@ -67,10 +67,18 @@ async function downloadBookVideos(thumbUrl) {
   return results
 }
 
+// thumbUrl에서 고유 식별자 추출 (연도+파일명으로 충돌 방지)
+// e.g. https://www.nlcy.go.kr/multiLanguageStory/2017/Nlcy_001_001/Nlcy_001_001.png → "2017_Nlcy_001_001"
+function getUniqueBase(thumbUrl) {
+  const match = thumbUrl.match(/\/(\d{4})\/([^/]+)\/([^/]+)\.png$/)
+  if (match) return `${match[1]}_${match[3]}`
+  return path.basename(thumbUrl, '.png')
+}
+
 // 로컬 파일 경로 반환 (없으면 null)
 function getLocalVideoPath(thumbUrl, lang, ext) {
-  const base     = path.basename(thumbUrl, '.png')
-  const filename = `${base}_${lang}.${ext}`
+  const uniqueBase = getUniqueBase(thumbUrl)
+  const filename = `${uniqueBase}_${lang}.${ext}`
   const filePath = path.join(VIDEO_DIR, filename)
   return fs.existsSync(filePath) ? filePath : null
 }
