@@ -24,8 +24,8 @@ export default function Navbar() {
         setMenuOpen(false)
       }
     }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
   }, [])
 
   return (
@@ -62,7 +62,11 @@ export default function Navbar() {
           {menuOpen && (
             <div className="navbar-dropdown">
               <button className="navbar-dropdown-item" onClick={() => { setMenuOpen(false); navigate('/settings') }}>설정</button>
-              <button className="navbar-dropdown-item" onClick={async () => { setMenuOpen(false); await signOut(); navigate('/login') }}>로그아웃</button>
+              <button className="navbar-dropdown-item" onClick={async () => {
+                setMenuOpen(false)
+                await signOut()
+                window.location.href = '/login'
+              }}>로그아웃</button>
             </div>
           )}
         </div>
