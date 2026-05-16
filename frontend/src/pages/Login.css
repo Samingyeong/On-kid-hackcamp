@@ -274,31 +274,14 @@
 /* 아이 유형 선택 카드 */
 .signup-child-types {
   display: flex;
-  gap: 16px;
+  gap: 8px;
   justify-content: center;
   align-items: flex-end;
-  flex-wrap: wrap;
   margin-top: 12px;
-  padding: 24px;
+  padding: 24px 12px;
   border: 2px dashed #d0d0d0;
   border-radius: 20px;
 }
-
-.child-type-card {
-  width: 180px;
-  border-radius: 20px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-  background: transparent;
-}
-.child-type-card:nth-child(1) {}
-.child-type-card:nth-child(2) {}
-.child-type-card:nth-child(3) {}
-.child-type-card:nth-child(4) {}
 
 .child-type-card:hover { transform: translateY(-4px); }
 .child-type-card.selected {
@@ -307,10 +290,24 @@
   border-radius: 20px;
 }
 
+.child-type-card {
+  width: 160px;
+  border-radius: 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  background: transparent;
+  overflow: hidden;
+}
+
 .child-type-img {
-  width: 180px;
-  height: 240px;
-  object-fit: contain;
+  width: 160px;
+  height: 220px;
+  object-fit: cover;
+  object-position: top;
   border-radius: 16px;
 }
 
@@ -390,3 +387,9 @@
   color: #888;
 }
 .login-divider { color: #ddd; }
+
+.signup-step:nth-child(2) .signup-step-icon img,
+.signup-step:nth-child(3) .signup-step-icon img {
+  width: 36px;
+  height: 36px;
+}
