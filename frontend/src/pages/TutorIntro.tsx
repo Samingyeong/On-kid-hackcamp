@@ -88,12 +88,19 @@ export default function TutorIntro() {
     setBubbleText('')
     try {
       const res = await fetchTutorialStep(profile, step, context)
-      setBubbleText(res.message_to_child)
+      const msg = res.message_to_child?.trim()
+      if (msg) {
+        setBubbleText(msg)
+      } else {
+        throw new Error('empty')
+      }
     } catch {
       if (step === 'INTRO') {
         setBubbleText(`안녕 ${childName || '친구'}! 나랑 같이 공부할 준비됐어?`)
       } else if (step === 'LEVEL_ANALYSIS') {
         setBubbleText('잘했어! 너에게 딱 맞는 동화를 찾아줄게!')
+      } else {
+        setBubbleText('같이 해보자!')
       }
     }
     setLoading(false)
