@@ -10,7 +10,7 @@
 /* 상단: 단어 흐름 */
 .st-top {
   background: #FFB256;
-  padding: 16px 20px;
+  padding: 12px 20px;
   display: flex;
   justify-content: center;
   flex-shrink: 0;
@@ -40,19 +40,19 @@
 }
 .st-word-display {
   background: #FFC549;
-  border-radius: 30px;
-  padding: 12px 48px;
+  border-radius: 24px;
+  padding: 8px 40px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 .st-word-label {
   display: block;
-  font-size: 14px;
+  font-size: 12px;
   color: #fff;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 .st-word {
-  font-size: clamp(48px, 5vw, 80px);
+  font-size: clamp(36px, 4vw, 60px);
   font-weight: 900;
   color: #1F1F1F;
 }
@@ -64,20 +64,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px;
+  padding: 16px 20px;
   background: #FAF4EE;
-  border-radius: 80px 80px 0 0;
+  border-radius: 60px 60px 0 0;
   position: relative;
+  min-height: 0;
 }
 .st-typed-area {
-  font-size: clamp(36px, 4vw, 60px);
+  font-size: clamp(28px, 3.5vw, 48px);
   font-weight: 700;
   color: #1F1F1F;
   border-bottom: 3px solid #FF900C;
-  padding: 8px 4px;
-  min-width: 240px;
+  padding: 6px 4px;
+  min-width: 200px;
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 .st-cursor {
   animation: blink 1s infinite;
@@ -99,21 +100,22 @@
   align-items: flex-end;
   position: relative;
   background: #FFB256;
-  min-height: 380px;
+  min-height: 320px;
+  flex-shrink: 0;
 }
 
 /* 통계 카드 (왼쪽 하단) */
 .st-stats {
   position: absolute;
-  left: 24px;
-  bottom: 24px;
+  left: 20px;
+  bottom: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-width: 240px;
+  gap: 10px;
+  min-width: 200px;
   background: #fff;
-  border-radius: 24px;
-  padding: 20px;
+  border-radius: 20px;
+  padding: 16px;
   box-shadow: 5px 5px 5px rgba(0,0,0,0.12), inset 4px 4px 4px rgba(0,0,0,0.05);
   z-index: 20;
 }
@@ -154,41 +156,41 @@
 .st-keyboard {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   position: relative;
   z-index: 5;
-  padding: 16px;
+  padding: 12px;
   background: rgba(255,255,255,0.3);
-  border-radius: 20px;
+  border-radius: 16px;
   box-shadow: inset -4px -4px 0px rgba(140,140,140,0.5), inset 3px 3px 0px rgba(128,128,128,0.25);
   filter: drop-shadow(2px 4px 4px #D97C0C);
 }
 
 .st-hands-row {
   position: absolute;
-  bottom: -40px;
+  bottom: -30px;
   left: 50%;
   transform: translateX(-50%);
-  width: 800px;
-  height: 360px;
+  width: 700px;
+  height: 300px;
   pointer-events: none;
   z-index: 10;
 }
 
 .st-kb-row {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 .st-key {
-  width: 52px;
-  height: 52px;
+  width: 46px;
+  height: 46px;
   background: #fff;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #000;
   transition: all 0.1s;
@@ -201,7 +203,7 @@
   transform: scale(0.9);
 }
 .st-space {
-  width: 320px;
+  width: 280px;
 }
 
 /* 빈 상태 */
