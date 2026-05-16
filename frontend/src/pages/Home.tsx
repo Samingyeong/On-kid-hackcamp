@@ -95,9 +95,7 @@ export default function Home() {
   const [flipped, setFlipped] = useState(false)
   const [featured, setFeatured] = useState<Book | null>(_cachedFeatured)
   const [rankingBooks, setRankingBooks] = useState<Book[]>(_cachedRanking)
-  const visibleStudyCards = childCharacter === 'vision'
-    ? STUDY_CARDS.filter(card => card.id !== 'quiz')
-    : STUDY_CARDS
+  const visibleStudyCards = STUDY_CARDS
 
   useEffect(() => {
     if (skipTutorForThisHomeMount && location.state) {
