@@ -103,8 +103,9 @@
   z-index: 10;
   flex: 1;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 0 40px;
   min-height: 0;
   overflow: hidden;
@@ -113,7 +114,6 @@
 /* 캐릭터 */
 .tutor-character {
   flex-shrink: 0;
-  align-self: flex-end;
 }
 .tutor-character-center {
   display: flex;
@@ -121,8 +121,8 @@
   align-items: center;
 }
 .tutor-character-img {
-  width: 480px;
-  height: 480px;
+  width: 420px;
+  height: 420px;
   object-fit: contain;
   animation: floatChar 3s ease-in-out infinite;
 }
@@ -134,8 +134,8 @@
 /* 말풍선 (캐릭터 오른쪽 위) */
 .tutor-speech-bubble {
   position: absolute;
-  top: 10px;
-  right: 80px;
+  top: 60px;
+  right: 60px;
   background: #f0f0f0;
   border-radius: 20px;
   padding: 24px 32px;
@@ -151,13 +151,13 @@
 .tutor-speech-bubble::after {
   content: '';
   position: absolute;
-  left: 40px;
-  bottom: -14px;
+  left: -14px;
+  bottom: 30px;
   width: 0;
   height: 0;
   border: 10px solid transparent;
-  border-top-color: #f0f0f0;
-  border-bottom: 0;
+  border-right-color: #f0f0f0;
+  border-left: 0;
 }
 
 @keyframes bubbleIn {
