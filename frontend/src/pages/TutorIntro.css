@@ -103,17 +103,17 @@
   z-index: 10;
   flex: 1;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-start;
   padding: 0 40px;
-  gap: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
 /* 캐릭터 */
 .tutor-character {
   flex-shrink: 0;
+  align-self: flex-end;
 }
 .tutor-character-center {
   display: flex;
@@ -121,8 +121,8 @@
   align-items: center;
 }
 .tutor-character-img {
-  width: 380px;
-  height: 380px;
+  width: 480px;
+  height: 480px;
   object-fit: contain;
   animation: floatChar 3s ease-in-out infinite;
 }
@@ -131,43 +131,30 @@
   50% { transform: translateY(-8px); }
 }
 
-/* 말풍선 (항상 캐릭터 위) */
+/* 말풍선 (캐릭터 오른쪽 위) */
 .tutor-speech-bubble {
-  position: relative;
+  position: absolute;
+  top: 10px;
+  right: 80px;
   background: #f0f0f0;
   border-radius: 20px;
-  padding: 20px 28px;
-  max-width: 440px;
-  min-width: 240px;
-  min-height: 60px;
+  padding: 24px 32px;
+  max-width: 420px;
+  min-width: 260px;
+  min-height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   animation: bubbleIn 0.3s ease-out;
-  margin-bottom: -10px;
 }
 .tutor-speech-bubble::after {
   content: '';
   position: absolute;
-  left: 50%;
+  left: 40px;
   bottom: -14px;
-  transform: translateX(-50%);
   width: 0;
   height: 0;
-  border: 10px solid transparent;
-  border-top-color: #f0f0f0;
-  border-bottom: 0;
-}
-
-/* 말풍선 (양쪽 카드 모드에서도 동일) */
-.tutor-speech-top {
-  margin-bottom: -20px;
-}
-.tutor-speech-top::after {
-  left: 50%;
-  bottom: -14px;
-  transform: translateX(-50%);
   border: 10px solid transparent;
   border-top-color: #f0f0f0;
   border-bottom: 0;
@@ -179,11 +166,12 @@
 }
 .tutor-speech-text {
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.8;
   color: #333;
   word-break: keep-all;
   margin: 0;
-  text-align: center;
+  text-align: left;
+  white-space: pre-line;
 }
 
 /* 양쪽 카드 선택지 */
@@ -363,10 +351,12 @@
 @media (max-width: 768px) {
   .tutor-scene {
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 0 16px;
   }
   .tutor-character {
-    position: static;
+    align-self: center;
   }
   .tutor-character-img {
     width: 220px;
@@ -374,11 +364,12 @@
   }
   .tutor-speech-bubble {
     position: static;
-    margin: 0;
+    margin-bottom: 10px;
     max-width: 90vw;
   }
   .tutor-speech-bubble::after {
-    display: none;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .tutor-speech-text {
     font-size: 14px;
@@ -392,9 +383,6 @@
     width: 140px;
     min-height: 120px;
     padding: 16px 12px;
-  }
-  .tutor-side-emoji {
-    font-size: 28px;
   }
   .tutor-side-label {
     font-size: 15px;
