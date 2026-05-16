@@ -101,22 +101,22 @@ export default function StudyTyping() {
 
   return (
     <div className="study-typing" onClick={() => inputRef.current?.focus()}>
-      {/* 상단: 이전/현재/다음 단어 */}
-      <div className="st-top">
-        <div className="st-word-flow">
-          <span className="st-word-prev">{words[currentIdx - 2] || ''}</span>
+      {/* 상단 주황 여백 */}
+      <div className="st-top" />
+
+      {/* 메인 흰 카드 */}
+      <div className="st-middle">
+        {/* 단어 흐름 */}
+        <div className="st-word-section">
           <span className="st-word-prev">{words[currentIdx - 1] || ''}</span>
           <div className="st-word-display">
             <span className="st-word-label">입력할 단어</span>
             <span className="st-word">{currentWord}</span>
           </div>
           <span className="st-word-next">{words[currentIdx + 1] || ''}</span>
-          <span className="st-word-next">{words[currentIdx + 2] || ''}</span>
         </div>
-      </div>
 
-      {/* 중간: 입력 영역 */}
-      <div className="st-middle">
+        {/* 입력 영역 */}
         <div className="st-typed-area">
           <span className="st-typed">{typed}</span>
           <span className="st-cursor">|</span>
