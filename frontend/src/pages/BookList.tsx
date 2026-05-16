@@ -148,17 +148,6 @@ export default function BookList() {
                                 : <img src={BOOK_SVGS[svgIdx]} alt={book.title} loading="lazy" className="shelf-book-svg" />
                               }
                             </div>
-                            <div className="shelf-book-actions">
-                              <button className="shelf-action-btn" title="읽기" onClick={() => openBook(book)}>
-                                <img src="/svg/Group 1171279199.svg" alt="읽기" />
-                              </button>
-                              <button className="shelf-action-btn" title="좋아요">
-                                <img src="/svg/Group 1171279198.svg" alt="좋아요" />
-                              </button>
-                              <button className="shelf-action-btn" title="정보">
-                                <img src="/svg/Group 1171279197.svg" alt="정보" />
-                              </button>
-                            </div>
                           </div>
                         </div>
                       )

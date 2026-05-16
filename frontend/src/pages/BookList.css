@@ -168,25 +168,6 @@
   box-shadow: -4px 6px 14px rgba(0,0,0,0.22);
 }
 
-/* 버튼 */
-.shelf-book-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-bottom: 4px;
-}
-.shelf-action-btn {
-  width: 44px;
-  height: 28px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  padding: 0;
-  transition: transform 0.1s;
-}
-.shelf-action-btn img { width: 100%; height: 100%; object-fit: contain; }
-.shelf-action-btn:hover { transform: scale(1.12); }
-
 /* 제목 — 책 위, 책 너비 기준 가운데 */
 .shelf-book-title {
   font-size: 12px;
