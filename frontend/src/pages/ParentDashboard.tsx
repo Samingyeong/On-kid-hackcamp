@@ -63,8 +63,20 @@ export default function ParentDashboard() {
         </header>
 
         <section className="pd-summary">
-          <h2>이번 학습 요약</h2>
+          <h2>🐰 AI 튜터의 학습 분석</h2>
           <p>{summaryText}</p>
+          {summary.words.total > 0 && (
+            <div className="pd-tutor-insight">
+              <strong>단어 학습:</strong> 전체 {summary.words.total}개 중 {summary.words.known}개를 알고 있어요.
+              {summary.words.unknown > 0 && ` 아직 ${summary.words.unknown}개를 더 연습하면 좋겠어요!`}
+            </div>
+          )}
+          {summary.voice.totalQuiz > 0 && (
+            <div className="pd-tutor-insight">
+              <strong>음성 학습:</strong> 퀴즈 정답률 {percent(summary.voice.quizAccuracy)}!
+              {summary.voice.quizAccuracy >= 0.8 ? ' 정말 잘하고 있어요! 🎉' : ' 조금 더 연습하면 더 좋아질 거예요!'}
+            </div>
+          )}
         </section>
 
         <section className="pd-metrics" aria-label="핵심 지표">

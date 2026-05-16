@@ -214,3 +214,18 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* AI 튜터 인사이트 */
+.pd-tutor-insight {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: #FFF8EE;
+  border-left: 4px solid #FFB256;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+.pd-tutor-insight strong {
+  color: #333;
+}
