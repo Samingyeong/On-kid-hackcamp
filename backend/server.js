@@ -221,38 +221,42 @@ app.post('/api/morpheme/batch', async (req, res) => {
 // ─── 단어 학습 API ────────────────────────────────────────────
 // POST /api/words  { word, base_form, pos, definition, known, from_book }
 app.post('/api/words', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const { word, base_form, pos, definition, known = 0, from_book = '' } = req.body
   if (!base_form) return res.status(400).json({ error: 'base_form required' })
   db.prepare(`
-    INSERT INTO word_study (word, base_form, pos, definition, known, from_book)
-    VALUES (?, ?, ?, ?, ?, ?)
-    ON CONFLICT(base_form) DO UPDATE SET
+    INSERT INTO word_study (user_id, word, base_form, pos, definition, known, from_book)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(user_id, base_form) DO UPDATE SET
       known = excluded.known,
       definition = excluded.definition
-  `).run(word || base_form, base_form, pos || '', definition || '', known, from_book)
+  `).run(userId, word || base_form, base_form, pos || '', definition || '', known, from_book)
   res.json({ ok: true })
 })
 
 // GET /api/words?known=0|1|all
 app.get('/api/words', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const { known } = req.query
   let rows
-  if (known === '0')      rows = db.prepare(`SELECT * FROM word_study WHERE known=0 ORDER BY created_at DESC`).all()
-  else if (known === '1') rows = db.prepare(`SELECT * FROM word_study WHERE known=1 ORDER BY created_at DESC`).all()
-  else                    rows = db.prepare(`SELECT * FROM word_study ORDER BY created_at DESC`).all()
+  if (known === '0')      rows = db.prepare(`SELECT * FROM word_study WHERE user_id=? AND known=0 ORDER BY created_at DESC`).all(userId)
+  else if (known === '1') rows = db.prepare(`SELECT * FROM word_study WHERE user_id=? AND known=1 ORDER BY created_at DESC`).all(userId)
+  else                    rows = db.prepare(`SELECT * FROM word_study WHERE user_id=? ORDER BY created_at DESC`).all(userId)
   res.json(rows)
 })
 
 // PATCH /api/words/:id  { known }
 app.patch('/api/words/:id', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const { known } = req.body
-  db.prepare(`UPDATE word_study SET known=? WHERE id=?`).run(known, req.params.id)
+  db.prepare(`UPDATE word_study SET known=? WHERE id=? AND user_id=?`).run(known, req.params.id, userId)
   res.json({ ok: true })
 })
 
 // DELETE /api/words/:id
 app.delete('/api/words/:id', (req, res) => {
-  db.prepare(`DELETE FROM word_study WHERE id=?`).run(req.params.id)
+  const userId = req.headers['x-user-id'] || ''
+  db.prepare(`DELETE FROM word_study WHERE id=? AND user_id=?`).run(req.params.id, userId)
   res.json({ ok: true })
 })
 
@@ -371,24 +375,27 @@ function runNlp(mode, text) {
 // ─── 읽은 책 기록 API ────────────────────────────────────────
 // POST /api/reading-history { title }
 app.post('/api/reading-history', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const { title } = req.body
   if (!title) return res.status(400).json({ error: 'title required' })
-  db.prepare(`INSERT OR IGNORE INTO reading_history (title) VALUES (?)`).run(title)
+  db.prepare(`INSERT OR IGNORE INTO reading_history (user_id, title) VALUES (?, ?)`).run(userId, title)
   res.json({ ok: true })
 })
 
 // GET /api/reading-history — 읽은 책 목록 (중복 제거, 최신순, 오늘 읽은 책 우선)
 app.get('/api/reading-history', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const rows = db.prepare(`
     SELECT rh.title, MAX(rh.read_at) as read_at, b.thumbnail, b.local_img, b.description, b.url, b.story_type
     FROM reading_history rh
     LEFT JOIN books b ON b.title = rh.title
+    WHERE rh.user_id = ?
     GROUP BY rh.title
     ORDER BY
       CASE WHEN MAX(rh.read_at) = date('now') THEN 0 ELSE 1 END,
       MAX(rh.read_at) DESC
     LIMIT 20
-  `).all()
+  `).all(userId)
 
   const items = rows.map(row => ({
     title: row.title,
@@ -404,6 +411,7 @@ app.get('/api/reading-history', (req, res) => {
 // ─── 책 단어 추출 API ────────────────────────────────────────
 // POST /api/books/words — 자막 텍스트에서 단어 추출 후 저장
 app.post('/api/books/words', async (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const { title, sentences } = req.body
   if (!title || !Array.isArray(sentences)) return res.status(400).json({ error: 'title and sentences required' })
 
@@ -418,9 +426,9 @@ app.post('/api/books/words', async (req, res) => {
     const unique = [...new Set(keywords)].slice(0, 20)
 
     // DB에 저장 (book_words 테이블)
-    const insert = db.prepare(`INSERT OR IGNORE INTO book_words (title, word) VALUES (?, ?)`)
+    const insert = db.prepare(`INSERT OR IGNORE INTO book_words (user_id, title, word) VALUES (?, ?, ?)`)
     const tx = db.transaction(() => {
-      for (const word of unique) insert.run(title, word)
+      for (const word of unique) insert.run(userId, title, word)
     })
     tx()
 
@@ -432,30 +440,33 @@ app.post('/api/books/words', async (req, res) => {
 
 // GET /api/books/words?title=... — 저장된 책 단어 조회
 app.get('/api/books/words', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const { title } = req.query
   if (!title) return res.status(400).json({ error: 'title required' })
 
-  const rows = db.prepare(`SELECT word, learned FROM book_words WHERE title = ? ORDER BY id`).all(title)
+  const rows = db.prepare(`SELECT word, learned FROM book_words WHERE user_id=? AND title = ? ORDER BY id`).all(userId, title)
   res.json(rows)
 })
 
 // PATCH /api/books/words/learned — 단어 학습 완료 표시
 app.patch('/api/books/words/learned', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const { title, word } = req.body
   if (!title || !word) return res.status(400).json({ error: 'title and word required' })
-  db.prepare(`UPDATE book_words SET learned = 1 WHERE title = ? AND word = ?`).run(title, word)
+  db.prepare(`UPDATE book_words SET learned = 1 WHERE user_id=? AND title = ? AND word = ?`).run(userId, title, word)
   res.json({ ok: true })
 })
 
 // ─── 문장 저장/조회 API ──────────────────────────────────────
 // POST /api/books/sentences — 문장 저장
 app.post('/api/books/sentences', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const { title, sentences } = req.body
   if (!title || !Array.isArray(sentences)) return res.status(400).json({ error: 'title and sentences required' })
-  const insert = db.prepare(`INSERT OR IGNORE INTO book_sentences (title, sentence) VALUES (?, ?)`)
+  const insert = db.prepare(`INSERT OR IGNORE INTO book_sentences (user_id, title, sentence) VALUES (?, ?, ?)`)
   const tx = db.transaction(() => {
     for (const s of sentences) {
-      if (s.trim().length > 2) insert.run(title, s.trim())
+      if (s.trim().length > 2) insert.run(userId, title, s.trim())
     }
   })
   tx()
@@ -464,17 +475,19 @@ app.post('/api/books/sentences', (req, res) => {
 
 // GET /api/books/sentences?title=...
 app.get('/api/books/sentences', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const { title } = req.query
   if (!title) return res.status(400).json({ error: 'title required' })
-  const rows = db.prepare(`SELECT sentence, learned FROM book_sentences WHERE title = ? ORDER BY id`).all(title)
+  const rows = db.prepare(`SELECT sentence, learned FROM book_sentences WHERE user_id=? AND title = ? ORDER BY id`).all(userId, title)
   res.json(rows)
 })
 
 // PATCH /api/books/sentences/learned
 app.patch('/api/books/sentences/learned', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
   const { title, sentence } = req.body
   if (!title || !sentence) return res.status(400).json({ error: 'title and sentence required' })
-  db.prepare(`UPDATE book_sentences SET learned = 1 WHERE title = ? AND sentence = ?`).run(title, sentence)
+  db.prepare(`UPDATE book_sentences SET learned = 1 WHERE user_id=? AND title = ? AND sentence = ?`).run(userId, title, sentence)
   res.json({ ok: true })
 })
 

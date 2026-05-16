@@ -1,6 +1,13 @@
 import type { Book } from '../types'
+import { supabase } from '../lib/supabase'
 
 const BASE = 'http://localhost:4000'
+
+// 현재 로그인된 유저 ID를 가져오는 헬퍼
+async function getUserId(): Promise<string> {
+  const { data } = await supabase.auth.getSession()
+  return data.session?.user?.id || ''
+}
 
 // ─── 백엔드 응답 → Book 타입 변환 ────────────────────────────
 function toBook(row: Record<string, string>): Book {
@@ -38,9 +45,10 @@ export async function fetchBookForReader(title: string): Promise<{
 
 // 읽은 기록 저장
 export async function saveReadingHistory(title: string) {
+  const uid = await getUserId()
   await fetch(`${BASE}/api/reading-history`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-user-id': uid },
     body: JSON.stringify({ title }),
   })
 }
@@ -51,7 +59,8 @@ export interface ReadHistory {
   description: string; url: string; isToday: boolean
 }
 export async function fetchReadingHistory(): Promise<ReadHistory[]> {
-  const res = await fetch(`${BASE}/api/reading-history`)
+  const uid = await getUserId()
+  const res = await fetch(`${BASE}/api/reading-history`, { headers: { 'x-user-id': uid } })
   return res.json()
 }
 
@@ -70,15 +79,17 @@ export async function checkWriting(imageBase64: string, targetWord: string): Pro
 // 책에서 추출된 단어 목록 (learned 포함)
 export interface BookWord { word: string; learned: number }
 export async function fetchBookWords(title: string): Promise<BookWord[]> {
-  const res = await fetch(`${BASE}/api/books/words?title=${encodeURIComponent(title)}`)
+  const uid = await getUserId()
+  const res = await fetch(`${BASE}/api/books/words?title=${encodeURIComponent(title)}`, { headers: { 'x-user-id': uid } })
   return res.json()
 }
 
 // 단어 학습 완료 표시
 export async function markWordLearned(title: string, word: string) {
+  const uid = await getUserId()
   await fetch(`${BASE}/api/books/words/learned`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-user-id': uid },
     body: JSON.stringify({ title, word }),
   })
 }
@@ -86,15 +97,17 @@ export async function markWordLearned(title: string, word: string) {
 // 책 문장 목록 조회
 export interface BookSentence { sentence: string; learned: number }
 export async function fetchBookSentences(title: string): Promise<BookSentence[]> {
-  const res = await fetch(`${BASE}/api/books/sentences?title=${encodeURIComponent(title)}`)
+  const uid = await getUserId()
+  const res = await fetch(`${BASE}/api/books/sentences?title=${encodeURIComponent(title)}`, { headers: { 'x-user-id': uid } })
   return res.json()
 }
 
 // 문장 학습 완료 표시
 export async function markSentenceLearned(title: string, sentence: string) {
+  const uid = await getUserId()
   await fetch(`${BASE}/api/books/sentences/learned`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-user-id': uid },
     body: JSON.stringify({ title, sentence }),
   })
 }
@@ -167,23 +180,26 @@ export async function saveWord(data: {
   word: string; base_form: string; pos?: string
   definition?: string; known: number; from_book?: string
 }) {
+  const uid = await getUserId()
   await fetch(`${BASE}/api/words`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-user-id': uid },
     body: JSON.stringify(data),
   })
 }
 
 export async function fetchStudyWords(known?: 0 | 1): Promise<StudyWord[]> {
+  const uid = await getUserId()
   const q = known !== undefined ? `?known=${known}` : ''
-  const res = await fetch(`${BASE}/api/words${q}`)
+  const res = await fetch(`${BASE}/api/words${q}`, { headers: { 'x-user-id': uid } })
   return res.json()
 }
 
 export async function updateWordKnown(id: number, known: number) {
+  const uid = await getUserId()
   await fetch(`${BASE}/api/words/${id}`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-user-id': uid },
     body: JSON.stringify({ known }),
   })
 }

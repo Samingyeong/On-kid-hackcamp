@@ -55,38 +55,74 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email,
       password,
       options: {
-        data: { name }
+        data: {
+          name,
+          child_name: childData?.childName || '',
+          child_birth: childData?.childBirth || '',
+          child_gender: childData?.childGender || '',
+          disability: childData?.disability || '',
+        }
       },
     })
     if (error) return { error: error.message }
 
-    // 프로필 + 아이 정보 저장
-    if (data.user) {
-      await supabase.from('profiles').upsert({
-        id: data.user.id,
-        name,
-        email,
-      })
-
-      if (childData?.childName) {
-        await supabase.from('children').insert({
-          parent_id: data.user.id,
-          name: childData.childName,
-          birth_date: childData.childBirth || null,
-          gender: childData.childGender || null,
-          disability: childData.disability || null,
-        })
-      }
+    // 세션이 있으면 바로 테이블에 저장 (이메일 확인 꺼진 경우)
+    if (data.session && data.user) {
+      await saveProfileAndChild(data.user.id, name, email, childData)
     }
 
     return { error: null }
   }
 
+  async function saveProfileAndChild(userId: string, name: string, email: string, childData?: { childName: string; childBirth: string; childGender: string; disability: string }) {
+    const { error: pErr } = await supabase.from('profiles').upsert({
+      id: userId,
+      name,
+      email,
+    })
+    if (pErr) console.error('profiles upsert error:', pErr)
+
+    if (childData?.childName) {
+      // 중복 방지: 이미 있는지 확인
+      const { data: existing } = await supabase
+        .from('children')
+        .select('id')
+        .eq('parent_id', userId)
+        .limit(1)
+
+      if (!existing || existing.length === 0) {
+        const { error: cErr } = await supabase.from('children').insert({
+          parent_id: userId,
+          name: childData.childName,
+          birth_date: childData.childBirth || null,
+          gender: childData.childGender || null,
+          disability: childData.disability || null,
+        })
+        if (cErr) console.error('children insert error:', cErr)
+      }
+    }
+  }
+
   async function signIn(email: string, password: string) {
     clearHomeCache()
     clearDictCache()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-    return { error: error?.message ?? null }
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) return { error: error.message }
+
+    // 첫 로그인 시 metadata에서 테이블로 저장 (이메일 확인 켜진 경우 대비)
+    if (data.user) {
+      const meta = data.user.user_metadata
+      if (meta?.name) {
+        await saveProfileAndChild(data.user.id, meta.name, email, {
+          childName: meta.child_name || '',
+          childBirth: meta.child_birth || '',
+          childGender: meta.child_gender || '',
+          disability: meta.disability || '',
+        })
+      }
+    }
+
+    return { error: null }
   }
 
   async function signOut() {

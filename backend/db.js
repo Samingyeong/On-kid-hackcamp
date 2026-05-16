@@ -45,6 +45,7 @@ db.exec(`
 
   CREATE TABLE IF NOT EXISTS word_study (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id    TEXT NOT NULL DEFAULT '',
     word       TEXT NOT NULL,
     base_form  TEXT NOT NULL,
     pos        TEXT,
@@ -52,35 +53,55 @@ db.exec(`
     known      INTEGER DEFAULT 0,
     from_book  TEXT,
     created_at TEXT DEFAULT (datetime('now')),
-    UNIQUE(base_form)
+    UNIQUE(user_id, base_form)
   );
 
   CREATE TABLE IF NOT EXISTS reading_history (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id    TEXT NOT NULL DEFAULT '',
     title      TEXT NOT NULL,
     read_at    TEXT DEFAULT (date('now')),
-    UNIQUE(title, read_at)
+    UNIQUE(user_id, title, read_at)
   );
   CREATE INDEX IF NOT EXISTS idx_read_at ON reading_history(read_at DESC);
 
   CREATE TABLE IF NOT EXISTS book_words (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id    TEXT NOT NULL DEFAULT '',
     title      TEXT NOT NULL,
     word       TEXT NOT NULL,
     learned    INTEGER DEFAULT 0,
-    UNIQUE(title, word)
+    UNIQUE(user_id, title, word)
   );
   CREATE INDEX IF NOT EXISTS idx_book_words_title ON book_words(title);
 
   CREATE TABLE IF NOT EXISTS book_sentences (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id    TEXT NOT NULL DEFAULT '',
     title      TEXT NOT NULL,
     sentence   TEXT NOT NULL,
     learned    INTEGER DEFAULT 0,
-    UNIQUE(title, sentence)
+    UNIQUE(user_id, title, sentence)
   );
   CREATE INDEX IF NOT EXISTS idx_book_sentences_title ON book_sentences(title);
 `)
+
+// ─── 마이그레이션: user_id 컬럼 추가 ──────────────────────────
+try {
+  db.exec(`ALTER TABLE word_study ADD COLUMN user_id TEXT NOT NULL DEFAULT ''`)
+} catch {}
+try {
+  db.exec(`ALTER TABLE reading_history ADD COLUMN user_id TEXT NOT NULL DEFAULT ''`)
+} catch {}
+try {
+  db.exec(`ALTER TABLE book_words ADD COLUMN user_id TEXT NOT NULL DEFAULT ''`)
+} catch {}
+try {
+  db.exec(`ALTER TABLE book_sentences ADD COLUMN user_id TEXT NOT NULL DEFAULT ''`)
+} catch {}
+
+// UNIQUE 제약은 ALTER로 변경 불가하므로, 새 테이블에서만 적용됨
+// 기존 데이터는 user_id='' 로 남음 (이전 데이터)
 
 // ─── 쿼리 헬퍼 ───────────────────────────────────────────────
 const stmts = {
