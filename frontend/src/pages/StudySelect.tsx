@@ -82,6 +82,7 @@ export default function StudySelect() {
         </div>
 
         <h1 className="study-select-title">어떤 책으로 학습할까요?</h1>
+        <button className="study-back-btn" onClick={() => navigate(-1)}>← 돌아가기</button>
 
         {books.length === 0 ? (
           <p className="study-empty">아직 읽은 책이 없어요. 동화를 먼저 읽어보세요!</p>
