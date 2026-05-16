@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { fetchTutorialStep, type ChildProfile } from '../api/midm'
-import { fetchBookForReader, fetchRecommendedBooks, fetchStudyWords, fetchTutorQuizData, type RecommendedBook } from '../api/library'
+import { fetchBookForReader, fetchRecommendedBooks, fetchTutorQuizData, type RecommendedBook } from '../api/library'
 import './TutorIntro.css'
 
 // 기본 단어 테스트 (첫 방문용)
@@ -234,17 +234,17 @@ export default function TutorIntro() {
   }
 
   // 선택지 렌더링
-  function renderChoices() {
+  function renderBottom() {
     if (!showChoices || loading) return null
 
     if (phase === 'WORD_TEST') {
       return (
-        <div className="tutor-side-choices">
-          <button className="tutor-side-card" onClick={() => handleWordAnswer(true)}>
-            <span className="tutor-side-label">알아!</span>
+        <div className="tutor-word-buttons">
+          <button className="tutor-word-btn know" onClick={() => handleWordAnswer(true)}>
+            알것같아!
           </button>
-          <button className="tutor-side-card" onClick={() => handleWordAnswer(false)}>
-            <span className="tutor-side-label">모르겠어</span>
+          <button className="tutor-word-btn dont-know" onClick={() => handleWordAnswer(false)}>
+            몰라...
           </button>
         </div>
       )
@@ -252,10 +252,10 @@ export default function TutorIntro() {
     if (phase === 'SENTENCE_QUIZ') {
       const q = sentenceQuiz[quizIdx]
       return (
-        <div className="tutor-side-choices tutor-quiz-choices">
+        <div className="tutor-quiz-buttons">
           {q.options.map((opt, i) => (
-            <button key={i} className="tutor-side-card tutor-quiz-card" onClick={() => handleQuizAnswer(opt)}>
-              <span className="tutor-side-label">{opt}</span>
+            <button key={i} className="tutor-quiz-btn" onClick={() => handleQuizAnswer(opt)}>
+              {opt}
             </button>
           ))}
         </div>
@@ -272,19 +272,24 @@ export default function TutorIntro() {
     }
     if (phase === 'RECOMMEND_BOOK') {
       return (
-        <div className="tutor-side-choices">
-          {recommendedBooks.map((book, i) => (
-            <div key={i} className="tutor-side-card tutor-book-side" onClick={() => selectBook(book)}>
-              <div className="tutor-book-cover">
-                {book.thumbnail
-                  ? <img src={book.thumbnail} alt={book.title} />
-                  : <div className="tutor-book-placeholder">📖</div>}
+        <>
+          <div className="tutor-book-cards">
+            {recommendedBooks.map((book, i) => (
+              <div key={i} className="tutor-book-card" onClick={() => selectBook(book)}>
+                <div className="tutor-book-cover">
+                  {book.thumbnail
+                    ? <img src={book.thumbnail} alt={book.title} />
+                    : <div className="tutor-book-placeholder">📖</div>}
+                </div>
+                <div className="tutor-book-title">{book.title}</div>
+                <div className="tutor-book-desc">{book.description?.slice(0, 40) || '재미있는 동화'}</div>
               </div>
-              <span className="tutor-book-title">{book.title}</span>
-              <span className="tutor-book-desc">{book.description?.slice(0, 30) || '재미있는 동화'}</span>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+          <button className="tutor-choice-btn tutor-home-btn" onClick={() => navigate('/')}>
+            나중에 읽을래
+          </button>
+        </>
       )
     }
     return null
@@ -292,7 +297,6 @@ export default function TutorIntro() {
 
   return (
     <div className="tutor-intro">
-      <div className="tutor-bg" />
       <div className="tutor-deco tutor-deco-1" />
       <div className="tutor-deco tutor-deco-2" />
       <div className="tutor-deco tutor-deco-3" />
@@ -320,19 +324,14 @@ export default function TutorIntro() {
         </div>
 
         <div className="tutor-character">
-          <img src="/svg/숭이.png" alt="튜터" className="tutor-character-img" />
+          <div className="tutor-character-circle">
+            <img src="/svg/숭이.png" alt="튜터" className="tutor-character-img" />
+          </div>
         </div>
-
-        {(phase === 'WORD_TEST' || phase === 'SENTENCE_QUIZ' || phase === 'RECOMMEND_BOOK') && showChoices && !loading && renderChoices()}
       </div>
 
       <div className="tutor-bottom">
-        {phase === 'INTRO' && showChoices && !loading && renderChoices()}
-        {phase === 'RECOMMEND_BOOK' && showChoices && (
-          <button className="tutor-choice-btn tutor-home-btn" onClick={() => navigate('/')}>
-            나중에 읽을래
-          </button>
-        )}
+        {renderBottom()}
         <button className="tutor-skip-btn" onClick={() => navigate('/')}>
           건너뛰기 →
         </button>

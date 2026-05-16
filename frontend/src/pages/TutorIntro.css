@@ -5,48 +5,38 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-/* 배경 */
-.tutor-bg {
-  position: absolute;
-  inset: 0;
   background: #FFB256;
-  z-index: 0;
 }
 
-/* 장식 */
+/* 배경 제거 (bg div 불필요) */
+.tutor-bg { display: none; }
+
+/* 장식 블록 */
 .tutor-deco {
   position: absolute;
-  z-index: 1;
   border-radius: 12px;
+  z-index: 1;
 }
 .tutor-deco-1 {
-  width: 120px;
-  height: 120px;
-  left: 60px;
-  top: 140px;
+  width: 130px; height: 130px;
+  left: 50px; top: 180px;
   background: #1FA7E1;
-  transform: rotate(-15deg);
-  opacity: 0.7;
+  transform: rotate(-11deg);
+  opacity: 0.85;
 }
 .tutor-deco-2 {
-  width: 100px;
-  height: 100px;
-  right: 100px;
-  top: 200px;
+  width: 110px; height: 110px;
+  right: 80px; top: 240px;
   background: #FF8B8B;
-  transform: rotate(20deg);
-  opacity: 0.6;
+  transform: rotate(15deg);
+  opacity: 0.75;
 }
 .tutor-deco-3 {
-  width: 90px;
-  height: 90px;
-  left: 180px;
-  bottom: 120px;
+  width: 100px; height: 100px;
+  left: 160px; bottom: 140px;
   background: #75D069;
-  transform: rotate(-25deg);
-  opacity: 0.5;
+  transform: rotate(-20deg);
+  opacity: 0.65;
 }
 
 /* 상단 바 */
@@ -68,7 +58,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 242, 217, 0.6);
+  background: rgba(255, 242, 217, 0.5);
   border-radius: 80px;
   padding: 6px 14px 6px 16px;
 }
@@ -82,22 +72,18 @@
   color: #595959;
 }
 .tutor-user-avatar {
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   border-radius: 50%;
   background: #FEFCF9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
 .tutor-user-avatar img {
-  width: 36px;
-  height: 36px;
+  width: 36px; height: 36px;
   object-fit: contain;
 }
 
-/* 메인 씬: 캐릭터 + 말풍선 */
+/* 메인 씬 */
 .tutor-scene {
   position: relative;
   z-index: 10;
@@ -106,165 +92,84 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 40px;
   min-height: 0;
-  overflow: hidden;
 }
 
-/* 캐릭터 */
-.tutor-character {
-  flex-shrink: 0;
-}
-.tutor-character-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.tutor-character-img {
-  width: 420px;
-  height: 420px;
-  object-fit: contain;
-  animation: floatChar 3s ease-in-out infinite;
-}
-@keyframes floatChar {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-/* 말풍선 (캐릭터 오른쪽 위) */
+/* 말풍선 (오른쪽 위) */
 .tutor-speech-bubble {
   position: absolute;
-  top: 60px;
-  right: 60px;
-  background: #f0f0f0;
-  border-radius: 20px;
-  padding: 24px 32px;
-  max-width: 420px;
-  min-width: 260px;
-  min-height: 80px;
+  top: 10px;
+  right: 12%;
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px 28px;
+  max-width: 380px;
+  min-width: 200px;
+  min-height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.12);
   animation: bubbleIn 0.3s ease-out;
+  z-index: 20;
 }
 .tutor-speech-bubble::after {
   content: '';
   position: absolute;
-  left: -14px;
-  bottom: 30px;
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
-  border-right-color: #f0f0f0;
-  border-left: 0;
+  left: 30px;
+  bottom: -12px;
+  width: 0; height: 0;
+  border: 8px solid transparent;
+  border-top-color: #fff;
+  border-bottom: 0;
 }
-
 @keyframes bubbleIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
 .tutor-speech-text {
-  font-size: 17px;
-  line-height: 1.8;
-  color: #333;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #000;
   word-break: keep-all;
   margin: 0;
   text-align: left;
   white-space: pre-line;
+  font-weight: 500;
 }
 
-/* 양쪽 카드 선택지 */
-.tutor-side-choices {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 320px;
-  pointer-events: none;
+/* 캐릭터 (흰 원 안에) */
+.tutor-character {
+  position: relative;
   z-index: 5;
 }
-.tutor-side-card {
-  pointer-events: all;
-  width: 220px;
-  min-height: 160px;
-  background: #f0f0f0;
-  border-radius: 20px;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 24px 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  animation: bubbleIn 0.3s ease-out;
-}
-.tutor-side-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+.tutor-character-circle {
+  width: 380px; height: 380px;
+  border-radius: 50%;
   background: #fff;
-}
-.tutor-side-card:active {
-  transform: translateY(0);
-}
-.tutor-side-label {
-  font-size: 22px;
-  font-weight: 700;
-  color: #333;
-}
-
-/* 책 카드 (양쪽 배치) */
-.tutor-book-side {
-  padding: 16px;
-  gap: 8px;
-}
-.tutor-book-side .tutor-book-cover {
-  width: 100%;
-  height: 120px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #e8e8e8;
-}
-.tutor-book-side .tutor-book-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.tutor-book-side .tutor-book-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #333;
-  text-align: center;
-}
-.tutor-book-side .tutor-book-desc {
-  font-size: 11px;
-  color: #777;
-  text-align: center;
-  line-height: 1.4;
-}
-.tutor-book-placeholder {
-  font-size: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+.tutor-character-img {
+  width: 360px; height: 360px;
+  object-fit: contain;
+  animation: floatChar 3s ease-in-out infinite;
+}
+@keyframes floatChar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 /* 타이핑 */
 .tutor-typing {
-  display: flex;
-  gap: 6px;
-  padding: 4px 0;
+  display: flex; gap: 6px; padding: 4px 0;
 }
 .tutor-typing span {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #bbb;
+  width: 10px; height: 10px;
+  border-radius: 50%; background: #bbb;
   animation: typingDot 1.2s infinite;
 }
 .tutor-typing span:nth-child(2) { animation-delay: 0.2s; }
@@ -274,130 +179,188 @@
   50% { opacity: 1; transform: scale(1.2); }
 }
 
-/* 하단: 선택지 */
+/* 하단 버튼 영역 */
 .tutor-bottom {
   position: relative;
   z-index: 10;
-  padding: 12px 32px 20px;
+  padding: 16px 32px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-shrink: 0;
 }
+
+/* 단어 테스트 버튼 (알것같아 / 몰라) */
+.tutor-word-buttons {
+  display: flex;
+  gap: 35px;
+  justify-content: center;
+  animation: bubbleIn 0.3s ease-out;
+}
+.tutor-word-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  min-width: 280px;
+  height: 100px;
+  border-radius: 45px;
+  border: 6px solid;
+  font-size: 40px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 4px rgba(191, 122, 41, 0.5);
+}
+.tutor-word-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 12px rgba(191, 122, 41, 0.4);
+}
+.tutor-word-btn:active {
+  transform: translateY(0);
+}
+.tutor-word-btn.know {
+  background: #6ED0CF;
+  border-color: #2DAFAD;
+}
+.tutor-word-btn.dont-know {
+  background: #FF8B8B;
+  border-color: #DA6D6A;
+}
+
+/* 문장 퀴즈 버튼 (3개 가로) */
+.tutor-quiz-buttons {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  animation: bubbleIn 0.3s ease-out;
+}
+.tutor-quiz-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  min-width: 180px;
+  height: 90px;
+  border-radius: 40px;
+  border: 5px solid;
+  font-size: 34px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 4px rgba(191, 122, 41, 0.5);
+}
+.tutor-quiz-btn:hover {
+  transform: translateY(-3px);
+}
+.tutor-quiz-btn:active {
+  transform: translateY(0);
+}
+.tutor-quiz-btn:nth-child(1) { background: #6ED0CF; border-color: #2DAFAD; }
+.tutor-quiz-btn:nth-child(2) { background: #FF8B8B; border-color: #DA6D6A; }
+.tutor-quiz-btn:nth-child(3) { background: #75D069; border-color: #4CAF50; }
+
+/* 일반 선택지 */
 .tutor-choices {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 20px;
   justify-content: center;
   animation: bubbleIn 0.3s ease-out;
 }
 .tutor-choice-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 14px 28px;
+  justify-content: center;
+  padding: 10px 30px;
+  min-width: 200px;
+  height: 80px;
   border-radius: 40px;
-  border: 2.5px solid #fff;
-  background: rgba(255, 255, 255, 0.92);
-  font-size: 16px;
+  border: 5px solid #2DAFAD;
+  background: #6ED0CF;
+  font-size: 30px;
   font-weight: 700;
-  color: #333;
+  color: #fff;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 4px rgba(191, 122, 41, 0.5);
 }
 .tutor-choice-btn:hover {
-  background: #fff;
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  border-color: #1FA7E1;
 }
-.tutor-choice-btn:active {
-  transform: translateY(0);
+.tutor-choice-btn.tutor-home-btn {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: #ddd;
+  color: #555;
+  font-size: 22px;
+  height: 60px;
+  min-width: 160px;
 }
-.tutor-choice-emoji {
-  font-size: 20px;
+
+/* 책 추천 카드 */
+.tutor-book-cards {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  animation: bubbleIn 0.3s ease-out;
 }
-.tutor-skip-btn {
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 14px;
+.tutor-book-card {
+  width: 220px;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  text-decoration: underline;
-  padding: 4px 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-.tutor-skip-btn:hover {
-  color: #fff;
+.tutor-book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+.tutor-book-cover {
+  width: 100%; height: 140px;
+  background: #f0f4f8;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.tutor-book-cover img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.tutor-book-placeholder { font-size: 36px; }
+.tutor-book-title {
+  padding: 10px 12px 4px;
+  font-size: 14px; font-weight: 700; color: #333;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.tutor-book-desc {
+  padding: 0 12px 10px;
+  font-size: 11px; color: #777; line-height: 1.4;
 }
 
-/* 홈 버튼 */
-.tutor-home-btn {
-  background: rgba(255, 255, 255, 0.6) !important;
-  border-color: transparent !important;
+/* 건너뛰기 */
+.tutor-skip-btn {
+  background: none; border: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px; cursor: pointer;
+  text-decoration: underline; padding: 4px 8px;
 }
-
-/* 문장 퀴즈 선택지 (3개 가로) */
-.tutor-quiz-choices {
-  gap: 200px;
-}
-.tutor-quiz-card {
-  width: 160px;
-  min-height: 100px;
-}
+.tutor-skip-btn:hover { color: #fff; }
 
 /* 모바일 */
 @media (max-width: 768px) {
-  .tutor-scene {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 16px;
-  }
-  .tutor-character {
-    align-self: center;
-  }
-  .tutor-character-img {
-    width: 220px;
-    height: 220px;
-  }
-  .tutor-speech-bubble {
-    position: static;
-    margin-bottom: 10px;
-    max-width: 90vw;
-  }
-  .tutor-speech-bubble::after {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .tutor-speech-text {
-    font-size: 14px;
-  }
-  .tutor-side-choices {
-    position: static;
-    padding: 0 16px;
-    gap: 12px;
-  }
-  .tutor-side-card {
-    width: 140px;
-    min-height: 120px;
-    padding: 16px 12px;
-  }
-  .tutor-side-label {
-    font-size: 15px;
-  }
-  .tutor-deco-1, .tutor-deco-2, .tutor-deco-3 {
-    display: none;
-  }
-  .tutor-topbar {
-    padding: 12px 16px;
-  }
-  .tutor-bottom {
-    padding: 12px 16px 20px;
-  }
-  .tutor-choice-btn {
-    padding: 12px 20px;
-    font-size: 14px;
-  }
+  .tutor-character-circle { width: 240px; height: 240px; }
+  .tutor-character-img { width: 220px; height: 220px; }
+  .tutor-speech-bubble { position: static; margin-bottom: 12px; max-width: 90vw; right: auto; }
+  .tutor-speech-bubble::after { display: none; }
+  .tutor-speech-text { font-size: 15px; }
+  .tutor-word-buttons { gap: 16px; }
+  .tutor-word-btn { min-width: 160px; height: 70px; font-size: 28px; border-width: 4px; }
+  .tutor-quiz-buttons { gap: 12px; }
+  .tutor-quiz-btn { min-width: 100px; height: 60px; font-size: 22px; }
+  .tutor-choice-btn { min-width: 140px; height: 60px; font-size: 22px; }
+  .tutor-deco-1, .tutor-deco-2, .tutor-deco-3 { display: none; }
+  .tutor-topbar { padding: 10px 16px; }
+  .tutor-bottom { padding: 12px 16px 20px; }
 }
