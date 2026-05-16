@@ -435,3 +435,45 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
+
+/* 오른쪽 패널: 학습 카드 그리드 */
+.panel-right {
+  flex: 1;
+  min-width: 0;
+}
+
+.study-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.study-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px;
+  border: 2px solid;
+  border-radius: 16px;
+  background: #fff;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.study-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.study-card-img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.study-card-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}

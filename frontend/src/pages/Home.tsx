@@ -222,6 +222,29 @@ export function Component() {
             )}
           </div>
         </div>
+
+        {/* 오른쪽: 학습 카드 그리드 */}
+        <div className="panel-right">
+          <h3 className="panel-title">학습하기</h3>
+          <div className="study-grid">
+            <button className="study-card" style={{ borderColor: '#6370B4' }} onClick={() => navigate('/study/today')}>
+              <img src="/svg/study_today.png" alt="오늘의 학습" className="study-card-img" />
+              <span className="study-card-label">오늘의 학습</span>
+            </button>
+            <button className="study-card" style={{ borderColor: '#F16F6F' }} onClick={() => navigate('/study/quiz')}>
+              <img src="/svg/study_quiz.png" alt="퀴즈 연습" className="study-card-img" />
+              <span className="study-card-label">퀴즈 연습</span>
+            </button>
+            <button className="study-card" style={{ borderColor: '#8BBE71' }} onClick={() => navigate('/study/select?type=word')}>
+              <img src="/svg/study_word.png" alt="단어 공부" className="study-card-img" />
+              <span className="study-card-label">단어 공부</span>
+            </button>
+            <button className="study-card" style={{ borderColor: '#EEB654' }} onClick={() => navigate('/study/select?type=sentence')}>
+              <img src="/svg/study_sentence.png" alt="문장 공부" className="study-card-img" />
+              <span className="study-card-label">문장 공부</span>
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* 달력 모달 */}
