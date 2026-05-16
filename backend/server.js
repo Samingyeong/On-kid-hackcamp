@@ -588,14 +588,13 @@ app.get('/api/books/recommend', (req, res) => {
   const { level = 'beginner', limit = '4' } = req.query
   const lim = parseInt(limit)
 
-  // 해당 레벨 책 우선 (nlcy 영상 있는 것만 — 2010년 데이터만 확실히 영상 제공)
+  // 해당 레벨 책 우선 (Nlcy_001_ = 2025년 데이터, 영상+자막 확실히 제공)
   let rows = db.prepare(`
     SELECT bd.*, b.thumbnail, b.local_img, b.description, b.story_type, b.url
     FROM book_difficulty bd
     JOIN books b ON b.title = bd.title
     WHERE bd.level = ?
-      AND b.thumbnail LIKE 'https://www.nlcy.go.kr/%'
-      AND b.thumbnail LIKE '%/2010/%'
+      AND b.thumbnail LIKE '%/Nlcy_001_%'
     ORDER BY RANDOM()
     LIMIT ?
   `).all(level, lim)
@@ -608,8 +607,7 @@ app.get('/api/books/recommend', (req, res) => {
       FROM book_difficulty bd
       JOIN books b ON b.title = bd.title
       WHERE bd.level = ?
-        AND b.thumbnail LIKE 'https://www.nlcy.go.kr/%'
-        AND b.thumbnail LIKE '%/2010/%'
+        AND b.thumbnail LIKE '%/Nlcy_001_%'
         AND bd.title NOT IN (${rows.map(() => '?').join(',') || "''"})
       ORDER BY RANDOM()
       LIMIT ?
@@ -617,14 +615,13 @@ app.get('/api/books/recommend', (req, res) => {
     rows = [...rows, ...more]
   }
 
-  // 아직도 부족하면 2010년 데이터 아무 레벨에서
+  // 아직도 부족하면 Nlcy_001_ 아무 레벨에서
   if (rows.length < lim) {
     const more = db.prepare(`
       SELECT bd.*, b.thumbnail, b.local_img, b.description, b.story_type, b.url
       FROM book_difficulty bd
       JOIN books b ON b.title = bd.title
-      WHERE b.thumbnail LIKE 'https://www.nlcy.go.kr/%'
-        AND b.thumbnail LIKE '%/2010/%'
+      WHERE b.thumbnail LIKE '%/Nlcy_001_%'
         AND bd.title NOT IN (${rows.map(() => '?').join(',') || "''"})
       ORDER BY RANDOM()
       LIMIT ?
