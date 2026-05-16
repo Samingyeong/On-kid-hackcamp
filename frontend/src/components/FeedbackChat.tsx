@@ -1,105 +1,72 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { fetchLearningFeedback, type MidmResponse } from '../api/midm'
 import './FeedbackChat.css'
 
-// 캐릭터 매핑: disability → 이미지 + 이름
-const CHARACTER_MAP: Record<string, { img: string; name: string }> = {
-  slow:    { img: '/svg/토끼.png', name: '토끼' },
-  study:   { img: '/svg/코끼리.png', name: '코끼리' },
-  hearing: { img: '/svg/숭이.png', name: '원숭이' },
-  vision:  { img: '/svg/강아지.png', name: '강아지' },
-}
-
-const DEFAULT_CHARACTER = { img: '/svg/토끼.png', name: '토끼' }
+const BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000'
 
 export default function FeedbackChat() {
   const { childName, childCharacter, childBirthDate } = useAuth()
-  const [open, setOpen] = useState(false)
-  const [feedback, setFeedback] = useState<MidmResponse | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const isVision = childCharacter === 'vision'
+  const [message, setMessage] = useState('')
+  const [visible, setVisible] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const lastTriggerRef = useRef(0)
 
-  const char = CHARACTER_MAP[childCharacter] || DEFAULT_CHARACTER
-
-  useEffect(() => {
-    if (open && !feedback && !loading) {
-      setLoading(true)
-      setError('')
-      const childProfile = {
-        name: childName || '친구',
-        birth_date: childBirthDate || '',
-        disability: childCharacter || '',
-      }
-      fetchLearningFeedback(childProfile)
-        .then(data => setFeedback(data))
-        .catch(() => setError('피드백을 불러올 수 없어요'))
-        .finally(() => setLoading(false))
+  const fetchFeedback = useCallback(async (context?: string) => {
+    try {
+      const res = await fetch(`${BASE}/api/learning/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          child_name: childName || '친구',
+          disability_type: childCharacter || '일반',
+          current_page: context || '학습 중',
+          learning_content: '',
+          repeated_failures: false,
+          emotion_state: '집중 중',
+        }),
+      })
+      const data = await res.json()
+      setMessage(data.character_message || '잘하고 있어! 계속 해보자!')
+    } catch {
+      setMessage('잘하고 있어! 계속 해보자!')
     }
-  }, [open])
+    setVisible(true)
+    if (timerRef.current) clearTimeout(timerRef.current)
+    timerRef.current = setTimeout(() => setVisible(false), 8000)
+  }, [childName, childCharacter])
+
+  // 페이지 로드 시 3초 후 자동 피드백
+  useEffect(() => {
+    if (isVision) return
+    const t = setTimeout(() => fetchFeedback(), 3000)
+    return () => clearTimeout(t)
+  }, [isVision, fetchFeedback])
+
+  // 외부에서 트리거 가능하도록 전역 이벤트 리스닝
+  useEffect(() => {
+    function onTrigger(e: CustomEvent) {
+      const now = Date.now()
+      if (now - lastTriggerRef.current < 5000) return // 5초 쿨다운
+      lastTriggerRef.current = now
+      fetchFeedback(e.detail?.context)
+    }
+    window.addEventListener('ai-tutor-trigger', onTrigger as EventListener)
+    return () => window.removeEventListener('ai-tutor-trigger', onTrigger as EventListener)
+  }, [fetchFeedback])
+
+  if (isVision) return null
 
   return (
     <div className="feedback-chat">
-      {/* 플로팅 캐릭터 버튼 */}
-      <button className="feedback-chat-toggle" onClick={() => setOpen(v => !v)}>
-        <img src={char.img} alt={char.name} className="feedback-chat-avatar" />
-        {!open && <span className="feedback-chat-badge">💬</span>}
-      </button>
-
-      {/* 챗봇 패널 */}
-      {open && (
-        <div className="feedback-chat-panel">
-          <div className="feedback-chat-header">
-            <img src={char.img} alt={char.name} className="feedback-header-avatar" />
-            <span className="feedback-header-name">{char.name} 선생님</span>
-            <button className="feedback-chat-close" onClick={() => setOpen(false)}>✕</button>
+      <div className="feedback-tutor-wrap" onClick={() => fetchFeedback('학습 중')}>
+        <img src="/svg/토끼.png" alt="AI 친구" className="feedback-tutor-img" />
+        {visible && message && (
+          <div className="feedback-tutor-bubble">
+            <p>{message}</p>
           </div>
-
-          <div className="feedback-chat-body">
-            {/* 인사 메시지 */}
-            <div className="chat-bubble bot">
-              <img src={char.img} alt="" className="bubble-avatar" />
-              <div className="bubble-content">
-                안녕 {childName || '친구'}! 오늘도 같이 공부하자! 🎉
-              </div>
-            </div>
-
-            {loading && (
-              <div className="chat-bubble bot">
-                <img src={char.img} alt="" className="bubble-avatar" />
-                <div className="bubble-content bubble-loading">
-                  <span className="dot" /><span className="dot" /><span className="dot" />
-                </div>
-              </div>
-            )}
-
-            {error && (
-              <div className="chat-bubble bot">
-                <img src={char.img} alt="" className="bubble-avatar" />
-                <div className="bubble-content bubble-error">{error}</div>
-              </div>
-            )}
-
-            {feedback && (
-              <div className="chat-bubble bot">
-                <img src={char.img} alt="" className="bubble-avatar" />
-                <div className="bubble-content">
-                  {feedback.message_to_child}
-                </div>
-              </div>
-            )}
-
-            {feedback?.recommended_content && feedback.recommended_content.length > 0 && (
-              <div className="chat-bubble bot">
-                <img src={char.img} alt="" className="bubble-avatar" />
-                <div className="bubble-content">
-                  📚 {feedback.recommended_content.join(', ')}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }
