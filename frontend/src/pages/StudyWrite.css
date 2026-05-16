@@ -188,8 +188,8 @@
 
 .sw-cell {
   position: relative;
-  width: clamp(100px, 14vw, 180px);
-  height: clamp(100px, 14vw, 180px);
+  width: clamp(80px, 10vw, 140px);
+  height: clamp(80px, 10vw, 140px);
   border: 1.2px solid rgba(91, 109, 158, 0.3);
   background: #fff;
   display: flex;
