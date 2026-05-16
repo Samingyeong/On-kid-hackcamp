@@ -342,32 +342,19 @@ export default function Reader() {
               <img src="/svg/spring.png" alt="" className="reader-spring" />
             </div>
             <div className="reader-page-right-inner">
-            <div className="reader-page-header">{title} - 이야기</div>
             <div className="reader-subtitle-list">
               {subtitleLoading && <p className="reader-loading">자막을 불러오는 중...</p>}
               {!subtitleLoading && cues.length === 0 && (
                 <p className="reader-loading">이 언어의 자막이 없어요.</p>
               )}
-              {cues.filter((_, idx) => {
-                // 활성 자막 주변 4개만 표시
-                const center = activeCue >= 0 ? activeCue : 0
-                return idx >= center - 1 && idx <= center + 2
-              }).map((cue) => {
-                const idx = cues.indexOf(cue)
-                return (
+              {cues.map((cue, idx) => (
                 <div
                   key={idx}
-                  className={`reader-cue ${idx === activeCue ? 'active' : ''} ${idx === 1 ? 'cue-author' : ''}`}
+                  className={`reader-cue ${idx === activeCue ? 'active' : ''} ${idx <= 2 ? 'cue-author' : ''}`}
                   ref={idx === activeCue ? activeCueRef : null}
                 >
-                  <span
-                    className="reader-cue-time"
-                    onClick={() => { if (videoRef.current) videoRef.current.currentTime = cue.start }}
-                  >
-                    {secToTime(cue.start)}
-                  </span>
                   <span className="reader-cue-text">
-                    {idx === 1
+                    {idx <= 2
                       ? <span className="reader-author">{cue.text}</span>
                       : cue.text.split(/(\s+)/).map((w, i) =>
                           w.trim()
@@ -377,8 +364,7 @@ export default function Reader() {
                     }
                   </span>
                 </div>
-                )
-              })}
+              ))}
             </div>
             </div>
           </div>
