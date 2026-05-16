@@ -149,28 +149,40 @@ export default function StudyWrite() {
 
   return (
     <div className="study-write">
-      {/* 왼쪽: 원숭이 + 말풍선 */}
-      <div className="sw-left">
-        <div className="sw-speech-bubble">
-          {result && !result.correct ? '다시 한번 써볼까요?' : STAGE_MESSAGES[stage - 1]}
+      <div className="sw-content-area">
+        {/* 구름 장식 */}
+        <div className="sw-cloud sw-cloud-left">
+          <div className="sw-cloud-circle" /><div className="sw-cloud-circle" /><div className="sw-cloud-circle" />
         </div>
-        <img
-          src={stage === 1 && !result?.correct ? '/svg/word_study_first.png' : '/svg/word_study_retry.png'}
-          alt="원숭이 캐릭터"
-          className="sw-monkey-img"
-        />
-      </div>
+        <div className="sw-cloud sw-cloud-right">
+          <div className="sw-cloud-circle" /><div className="sw-cloud-circle" /><div className="sw-cloud-circle" />
+        </div>
+        <div className="sw-cloud sw-cloud-top">
+          <div className="sw-cloud-circle" /><div className="sw-cloud-circle" /><div className="sw-cloud-circle" />
+        </div>
 
-      {/* 오른쪽: 학습 영역 */}
-      <div className="sw-main">
-        {/* 단계 표시 */}
-        <div className="sw-stages">
-          {[1, 2, 3].map(s => (
-            <div key={s} className={`sw-stage-dot ${s === stage ? 'active' : ''} ${s < stage ? 'done' : ''}`}>
-              {s}
-            </div>
-          ))}
+        {/* 왼쪽: 원숭이 + 말풍선 */}
+        <div className="sw-left">
+          <div className="sw-speech-bubble">
+            {result && !result.correct ? '다시 한번 써볼까요?' : STAGE_MESSAGES[stage - 1]}
+          </div>
+          <img
+            src={stage === 1 && !result?.correct ? '/svg/word_study_first.png' : '/svg/word_study_retry.png'}
+            alt="원숭이 캐릭터"
+            className="sw-monkey-img"
+          />
         </div>
+
+        {/* 오른쪽: 학습 카드 */}
+        <div className="sw-main">
+          {/* 단계 표시 */}
+          <div className="sw-stages">
+            <div className={`sw-stage-dot ${1 === stage ? 'active' : ''} ${1 < stage ? 'done' : ''}`}>1</div>
+            <div className="sw-stage-line" />
+            <div className={`sw-stage-dot ${2 === stage ? 'active' : ''} ${2 < stage ? 'done' : ''}`}>2</div>
+            <div className="sw-stage-line" />
+            <div className={`sw-stage-dot ${3 === stage ? 'active' : ''} ${3 < stage ? 'done' : ''}`}>3</div>
+          </div>
 
         {/* 단어 표시 */}
         <div className="sw-word">{currentWord}</div>
@@ -241,12 +253,13 @@ export default function StudyWrite() {
               />
             ))}
           </div>
-          <span className="sw-progress">{learnedCount}/{words.length} 완료</span>
+          <span className="sw-progress">{learnedCount}/{words.length}</span>
           {currentIdx === words.length - 1 && stage === 3 && result?.correct && (
             <button className="sw-next-stage-btn" onClick={() => navigate(-1)}>
               🎉 학습 완료!
             </button>
           )}
+        </div>
         </div>
       </div>
     </div>
