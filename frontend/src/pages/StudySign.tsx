@@ -566,11 +566,11 @@ export default function StudySign() {
     if (!signLoading && !signVrmSrc) return '수어 예시 없음'
     if (visionLoading) return '준비 중...'
     if (phase === 'demo') return '예시 보는 중'
-    if (phase === 'recording') return '🔴 촬영중'
+    if (phase === 'recording') return '촬영중'
     if (phase === 'checking') return '비교 중...'
-    if (phase === 'passed') return '✅ 통과!'
-    if (phase === 'retry') return '🔴 촬영 준비'
-    return '🔴 촬영 준비'
+    if (phase === 'passed') return '통과!'
+    if (phase === 'retry') return '촬영 준비'
+    return '촬영 준비'
   })()
 
   // AI 튜터에게 피드백 트리거
