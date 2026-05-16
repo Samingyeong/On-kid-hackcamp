@@ -338,8 +338,6 @@ export default function Reader() {
             <div className="reader-springs">
               <img src="/svg/spring.png" alt="" className="reader-spring" />
               <img src="/svg/spring.png" alt="" className="reader-spring" />
-              <img src="/svg/spring.png" alt="" className="reader-spring" />
-              <img src="/svg/spring.png" alt="" className="reader-spring" />
             </div>
             <div className="reader-page-right-inner">
             <div className="reader-subtitle-list">
