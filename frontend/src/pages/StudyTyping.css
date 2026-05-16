@@ -272,3 +272,90 @@
 }
 .st-cloud-left { left: -150px; }
 .st-cloud-right { right: -150px; }
+
+/* ── 점자 키패드 (시각장애인 전용) ── */
+.st-braille-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 28px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 20px;
+  box-shadow: inset -4px -4px 0px rgba(140,140,140,0.5), inset 3px 3px 0px rgba(128,128,128,0.25);
+  filter: drop-shadow(2px 4px 4px #D97C0C);
+}
+.st-braille-label {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
+}
+.st-braille-hint {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  margin-top: -6px;
+}
+.st-braille-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.st-braille-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.st-braille-key {
+  width: 90px;
+  height: 90px;
+  background: #fff;
+  border: none;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.1s;
+  box-shadow: 0 4px 0 #ccc;
+  user-select: none;
+}
+.st-braille-key:active,
+.st-braille-key.active {
+  background: #FFB256;
+  box-shadow: 0 1px 0 #c87c00;
+  transform: translateY(3px);
+}
+.st-braille-num {
+  font-size: 28px;
+  font-weight: 900;
+  color: #333;
+  line-height: 1;
+}
+.st-braille-key.active .st-braille-num,
+.st-braille-key.active .st-braille-dot {
+  color: #fff;
+}
+.st-braille-dot {
+  font-size: 12px;
+  font-weight: 600;
+  color: #888;
+}
+.st-braille-back {
+  width: 190px;
+  height: 60px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #555;
+  background: #fff;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #ccc;
+}
+.st-braille-back:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #ccc;
+}
