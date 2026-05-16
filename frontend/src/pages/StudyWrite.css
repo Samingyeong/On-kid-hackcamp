@@ -157,6 +157,8 @@
   font-size: 24px;
   font-weight: 700;
   color: #ADADAD;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
 }
 
 .sw-stage-dot.active {
@@ -171,8 +173,15 @@
 
 .sw-stage-line {
   width: 60px;
-  height: 0;
-  border-top: 4px dashed #ADADAD;
+  height: 4px;
+  border: none;
+  background: linear-gradient(90deg, #ADADAD 0%, #ADADAD 50%, transparent 50%);
+  background-size: 12px 4px;
+}
+
+.sw-stage-line.done {
+  background: linear-gradient(90deg, #75D069 0%, #75D069 50%, transparent 50%);
+  background-size: 12px 4px;
 }
 
 /* 단어 표시 */

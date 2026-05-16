@@ -177,11 +177,11 @@ export default function StudyWrite() {
         <div className="sw-main">
           {/* 단계 표시 */}
           <div className="sw-stages">
-            <div className={`sw-stage-dot ${1 === stage ? 'active' : ''} ${1 < stage ? 'done' : ''}`}>1</div>
-            <div className="sw-stage-line" />
-            <div className={`sw-stage-dot ${2 === stage ? 'active' : ''} ${2 < stage ? 'done' : ''}`}>2</div>
-            <div className="sw-stage-line" />
-            <div className={`sw-stage-dot ${3 === stage ? 'active' : ''} ${3 < stage ? 'done' : ''}`}>3</div>
+            <div className={`sw-stage-dot ${1 === stage ? 'active' : ''} ${1 < stage ? 'done' : ''}`} onClick={() => { setStage(1); clearAllCanvas() }}>1</div>
+            <div className={`sw-stage-line ${1 < stage ? 'done' : ''}`} />
+            <div className={`sw-stage-dot ${2 === stage ? 'active' : ''} ${2 < stage ? 'done' : ''}`} onClick={() => { setStage(2); clearAllCanvas() }}>2</div>
+            <div className={`sw-stage-line ${2 < stage ? 'done' : ''}`} />
+            <div className={`sw-stage-dot ${3 === stage ? 'active' : ''} ${3 < stage ? 'done' : ''}`} onClick={() => { setStage(3); clearAllCanvas() }}>3</div>
           </div>
 
         {/* 단어 표시 */}
