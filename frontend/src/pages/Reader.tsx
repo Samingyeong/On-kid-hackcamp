@@ -195,6 +195,21 @@ export default function Reader() {
   // ─── 단어 클릭 ──────────────────────────────────────────────
   async function openWord(word: string, sentenceContext?: string) {
     setWordPanel({ word, baseForm: word, items: null, writeMode: 'none' })
+    // 공책 넘기는 효과음 (Web Audio 합성)
+    try {
+      const ctx = new AudioContext()
+      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.15, ctx.sampleRate)
+      const data = buf.getChannelData(0)
+      for (let i = 0; i < data.length; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.03))
+      }
+      const src = ctx.createBufferSource()
+      src.buffer = buf
+      const gain = ctx.createGain()
+      gain.gain.value = 0.15
+      src.connect(gain).connect(ctx.destination)
+      src.start()
+    } catch {}
     drawGuide(word)
 
     let searchWord = word
@@ -441,7 +456,7 @@ export default function Reader() {
                   ) : (
                     exact?.definitions.map((d, i) => (
                       <div key={i} className="dict-def">
-                        <span className="dict-def-num">{i + 1}</span>
+                        <span className={`dict-def-num level-${exact?.grade || '중급'}`}>{i + 1}</span>
                         <span className="dict-def-text">{d}</span>
                       </div>
                     ))
