@@ -103,7 +103,7 @@
   border-radius: 20px;
   margin: 24px 24px 24px 12px;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   flex-shrink: 0;
   width: 48%;
 }
@@ -121,7 +121,7 @@
 /* 스프링 장식 */
 .reader-springs {
   position: absolute;
-  right: -12px;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -132,6 +132,7 @@
 .reader-spring {
   width: 44px;
   height: auto;
+  margin-right: -18px;
 }
 
 .reader-video {
