@@ -252,7 +252,7 @@
 /* 단어 패널 — 피그마 노트 카드 스타일 */
 .reader-word-panel {
   position: fixed;
-  right: 40px;
+  right: 60px;
   top: 50%;
   transform: translateY(-50%);
   width: 500px;
@@ -261,8 +261,21 @@
   box-shadow: -5px 4px 18px #DCD0C4;
   border-radius: 20px;
   z-index: 200;
-  overflow-y: auto;
+  overflow: visible;
   animation: panelIn 0.35s ease;
+}
+/* 스프링 이미지 (카드 오른쪽에 꽂힌 느낌) */
+.reader-word-panel::after {
+  content: '';
+  position: absolute;
+  right: -24px;
+  top: 10px;
+  bottom: 10px;
+  width: 48px;
+  background: url('/svg/spring.png') repeat-y center;
+  background-size: 48px auto;
+  z-index: 202;
+  pointer-events: none;
 }
 @keyframes panelIn {
   from { opacity: 0; transform: translateY(-50%) scale(0.95); }
@@ -277,6 +290,9 @@
   );
   background-position: 0 32px;
   min-height: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 20px;
 }
 .word-panel-close {
   float: right;
