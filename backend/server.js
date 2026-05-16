@@ -10,6 +10,7 @@ const { syncBooks }          = require('./sync')
 const { downloadAllImages }  = require('./images')
 const { downloadBookVideos, getLocalVideoPath, VIDEO_DIR } = require('./videos')
 const { extractKeywords, getBaseForm } = require('./groq_nlp')
+const { getLearningFeedback, generateQuiz, explainWord, generateWeeklyReport } = require('./midm')
 
 const app  = express()
 const PORT = 4000
@@ -532,6 +533,78 @@ app.post('/api/writing/check', async (req, res) => {
     const correct = recognized.includes(targetWord)
 
     res.json({ recognized, targetWord, correct })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+// ─── KT 믿음 (Mi:dm) AI 엔드포인트 ──────────────────────────
+// POST /api/midm/feedback — 학습 수준 진단 + 맞춤 추천
+app.post('/api/midm/feedback', async (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+  try {
+    // DB에서 사용자 학습 데이터 수집
+    const unknownWords = db.prepare(`SELECT base_form FROM word_study WHERE user_id=? AND known=0`).all(userId).map(r => r.base_form)
+    const booksRead = db.prepare(`SELECT DISTINCT title FROM reading_history WHERE user_id=?`).all(userId).map(r => r.title)
+
+    // 따라쓰기 정답률은 클라이언트에서 전달 (DB에 없으므로)
+    const { accuracy = 0 } = req.body
+
+    const result = await getLearningFeedback({ unknownWords, accuracy, booksRead })
+    res.json(result)
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+// POST /api/midm/quiz — 동화 요약 + 퀴즈 생성
+app.post('/api/midm/quiz', async (req, res) => {
+  const { subtitleText, bookTitle } = req.body
+  if (!subtitleText || !bookTitle) return res.status(400).json({ error: 'subtitleText and bookTitle required' })
+  try {
+    const result = await generateQuiz(subtitleText, bookTitle)
+    res.json(result)
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+// POST /api/midm/explain — 단어 설명 (아이 눈높이)
+app.post('/api/midm/explain', async (req, res) => {
+  const { word, definition } = req.body
+  if (!word) return res.status(400).json({ error: 'word required' })
+  try {
+    const result = await explainWord(word, definition || '')
+    res.json({ word, explanation: result })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+// POST /api/midm/report — 학부모 주간 리포트
+app.post('/api/midm/report', async (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+  try {
+    // 최근 7일 데이터 수집
+    const booksRead = db.prepare(`
+      SELECT DISTINCT title FROM reading_history
+      WHERE user_id=? AND read_at >= date('now', '-7 days')
+    `).all(userId).map(r => r.title)
+
+    const newWords = db.prepare(`
+      SELECT COUNT(*) as cnt FROM word_study
+      WHERE user_id=? AND created_at >= datetime('now', '-7 days')
+    `).get(userId).cnt
+
+    const studyDays = db.prepare(`
+      SELECT COUNT(DISTINCT date(read_at)) as cnt FROM reading_history
+      WHERE user_id=? AND read_at >= date('now', '-7 days')
+    `).get(userId).cnt
+
+    const { accuracy = 0 } = req.body
+
+    const result = await generateWeeklyReport({ booksRead, newWords, accuracy, studyDays })
+    res.json(result)
   } catch (e) {
     res.status(500).json({ error: e.message })
   }
