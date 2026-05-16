@@ -15,6 +15,7 @@
   justify-content: center;
   padding: 20px;
   min-height: 0;
+  position: relative;
 }
 
 .sceneImg {
@@ -148,4 +149,21 @@
 @media (max-width: 768px) {
   .choiceGrid { grid-template-columns: repeat(2, 1fr); }
   .sceneImg { max-height: 45vh; }
+}
+
+.caption {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.6;
+  max-width: 80%;
+  text-align: center;
+  animation: fadeUp 0.3s ease;
 }

@@ -42,12 +42,14 @@ export default function ScenarioModule() {
   const [scenario, setScenario] = useState<'DESTRUCTION' | 'COOPERATION' | ''>('')
   const [narrating, setNarrating] = useState(false)
   const [showNext, setShowNext] = useState(false)
+  const [caption, setCaption] = useState('')
 
   const charName = CHARACTERS.find(c => c.id === character)?.label || '동물'
 
   const narrate = useCallback((text: string, nextPhase?: Phase) => {
     setNarrating(true)
     setShowNext(false)
+    setCaption(text)
     speak(text, () => {
       setNarrating(false)
       if (nextPhase) setPhase(nextPhase)
@@ -135,6 +137,9 @@ export default function ScenarioModule() {
     <div className={styles.container}>
       <div className={styles.scene}>
         <img src={IMAGES[phase]} alt="장면" className={styles.sceneImg} />
+        {caption && narrating && (
+          <div className={styles.caption}>{caption}</div>
+        )}
       </div>
 
       <div className={styles.controls}>
