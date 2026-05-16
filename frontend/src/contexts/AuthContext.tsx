@@ -27,20 +27,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   async function fetchChildName(userId: string) {
-    const { data } = await supabase
-      .from('children')
-      .select('name, disability, birth_date')
-      .eq('parent_id', userId)
-      .limit(1)
-      .single()
-    if (data?.name) {
-      setChildName(data.name)
-      setChildCharacter(data.disability || '')
-      setChildBirthDate(data.birth_date || '')
-    } else {
-      // children 테이블에 없으면 user_metadata에서 가져오기
-      const { data: { session } } = await supabase.auth.getSession()
-      const meta = session?.user?.user_metadata
+    try {
+      const { data } = await supabase
+        .from('children')
+        .select('name, disability, birth_date')
+        .eq('parent_id', userId)
+        .limit(1)
+        .single()
+      setChildName(data?.name || '')
+      setChildCharacter(data?.disability || '')
+      setChildBirthDate(data?.birth_date || '')
+    } catch {
+      // 테이블 없거나 데이터 없으면 metadata에서 가져오기
+      const meta = user?.user_metadata
       setChildName(meta?.child_name || '')
       setChildCharacter(meta?.disability || '')
       setChildBirthDate(meta?.child_birth || '')
@@ -48,28 +47,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setUser(session?.user ?? null)
-      if (session?.user) await fetchChildName(session.user.id)
+      if (session?.user) fetchChildName(session.user.id)
       setLoading(false)
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_OUT') {
-        setSession(null)
-        setUser(null)
-        setChildName('')
-        setChildCharacter('')
-        setChildBirthDate('')
-        return
-      }
-      if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
-        setSession(session)
-        setUser(session?.user ?? null)
-        if (session?.user) await fetchChildName(session.user.id)
-      }
-      // TOKEN_REFRESHED 등 다른 이벤트는 무시 (불필요한 API 호출 방지)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+      setUser(session?.user ?? null)
+      if (session?.user) fetchChildName(session.user.id)
     })
 
     return () => subscription.unsubscribe()
@@ -91,7 +79,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     })
     if (error) return { error: error.message }
 
-    // 세션이 있으면 바로 테이블에 저장 (이메일 확인 꺼진 경우)
     if (data.session && data.user) {
       await saveProfileAndChild(data.user.id, name, email, childData)
     }
@@ -100,31 +87,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function saveProfileAndChild(userId: string, name: string, email: string, childData?: { childName: string; childBirth: string; childGender: string; disability: string }) {
-    const { error: pErr } = await supabase.from('profiles').upsert({
-      id: userId,
-      name,
-      email,
-    })
-    if (pErr) console.error('profiles upsert error:', pErr)
+    try {
+      await supabase.from('profiles').upsert({ id: userId, name, email })
+    } catch {}
 
     if (childData?.childName) {
-      // 중복 방지: 이미 있는지 확인
-      const { data: existing } = await supabase
-        .from('children')
-        .select('id')
-        .eq('parent_id', userId)
-        .limit(1)
+      try {
+        const { data: existing } = await supabase
+          .from('children')
+          .select('id')
+          .eq('parent_id', userId)
+          .limit(1)
 
-      if (!existing || existing.length === 0) {
-        const { error: cErr } = await supabase.from('children').insert({
-          parent_id: userId,
-          name: childData.childName,
-          birth_date: childData.childBirth || null,
-          gender: childData.childGender || null,
-          disability: childData.disability || null,
-        })
-        if (cErr) console.error('children insert error:', cErr)
-      }
+        if (!existing || existing.length === 0) {
+          await supabase.from('children').insert({
+            parent_id: userId,
+            name: childData.childName,
+            birth_date: childData.childBirth || null,
+            gender: childData.childGender || null,
+            disability: childData.disability || null,
+          })
+        }
+      } catch {}
     }
   }
 
@@ -134,7 +118,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) return { error: error.message }
 
-    // 첫 로그인 시 metadata에서 테이블로 저장 (이메일 확인 켜진 경우 대비)
     if (data.user) {
       const meta = data.user.user_metadata
       if (meta?.name) {
@@ -151,10 +134,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signOut() {
-    try { await supabase.auth.signOut() } catch {}
-    // 강제로 로컬 스토리지 세션 제거
-    const keys = Object.keys(localStorage)
-    keys.forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k) })
+    await supabase.auth.signOut()
     setUser(null)
     setSession(null)
     setChildName('')
