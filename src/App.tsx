@@ -5,6 +5,7 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react'
 import BrailleDisplay from './components/BrailleDisplay'
+import VoicePractice from './components/VoicePractice'
 import { useBrailleChording } from './hooks/useBrailleChording'
 import type { SpecialKey } from './hooks/useBrailleChording'
 import {
@@ -100,6 +101,7 @@ export default function App() {
   const [dots, setDots] = useState<Dots>([false, false, false, false, false, false])
   const [input, setInput] = useState<InputState>(INITIAL_INPUT)
   const [muted, setMuted] = useState(false)
+  const [activeTab, setActiveTab] = useState<'braille' | 'voice'>('braille')
 
   // 연습 모드 상태
   const [practiceMode, setPracticeMode] = useState(false)
@@ -342,105 +344,109 @@ export default function App() {
         ⠿ 점자 타자 연습기
       </h1>
 
-      {/* ── 연습 모드 패널 ── */}
-      <div className="w-full max-w-2xl flex flex-col gap-4">
+      {/* ── 탭 전환 ── */}
+      <div className="w-full max-w-2xl flex gap-2">
+        <button
+          onClick={() => setActiveTab('braille')}
+          aria-label="점자 입력 연습 탭"
+          className={`
+            flex-1 py-3 rounded-xl border-4 font-black text-xl
+            transition-all duration-150
+            focus:outline-none focus:ring-4 focus:ring-yellow-300
+            ${activeTab === 'braille'
+              ? 'border-yellow-400 bg-yellow-400 text-black'
+              : 'border-yellow-700 bg-black text-yellow-700 hover:border-yellow-400 hover:text-yellow-400'}
+          `}
+        >
+          ⠿ 점자 연습
+        </button>
+        <button
+          onClick={() => setActiveTab('voice')}
+          aria-label="음성 따라말하기 연습 탭"
+          className={`
+            flex-1 py-3 rounded-xl border-4 font-black text-xl
+            transition-all duration-150
+            focus:outline-none focus:ring-4 focus:ring-yellow-300
+            ${activeTab === 'voice'
+              ? 'border-yellow-400 bg-yellow-400 text-black'
+              : 'border-yellow-700 bg-black text-yellow-700 hover:border-yellow-400 hover:text-yellow-400'}
+          `}
+        >
+          🎤 음성 연습
+        </button>
+      </div>
 
-        {/* 연습 모드 토글 버튼 */}
-        {!practiceMode ? (
-          <button
-            onClick={startPractice}
-            aria-label="단어 연습 모드 시작"
-            className="
-              w-full py-4 rounded-2xl
-              border-4 border-yellow-400 bg-black
-              text-yellow-400 font-black text-2xl
-              hover:bg-yellow-400 hover:text-black
-              transition-all duration-150
-              focus:outline-none focus:ring-4 focus:ring-yellow-300
-            "
-          >
-            🎯 단어 연습 시작
-          </button>
-        ) : (
-          <div className="flex flex-col gap-3">
-            {/* 목표 단어 표시 */}
-            <div
-              className="w-full rounded-2xl border-4 border-yellow-400 bg-black p-4 text-center"
-              aria-label={`목표 단어: ${targetWord}`}
-            >
-              <p className="text-yellow-600 text-lg mb-1">목표 단어</p>
-              <p className="text-yellow-400 font-black" style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)' }}>
-                {targetWord}
-              </p>
-            </div>
-
-            {/* 피드백 표시 */}
-            {feedback && (
-              <div
-                className={`
-                  w-full rounded-2xl border-4 p-4 text-center font-black
-                  ${feedback === 'correct'
-                    ? 'border-green-400 bg-green-950 text-green-400'
-                    : 'border-red-400 bg-red-950 text-red-400'}
-                `}
-                style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)' }}
-                aria-live="assertive"
-              >
-                {feedback === 'correct' ? '🎉 잘했어요!' : '😊 아쉬워요!'}
-              </div>
-            )}
-
-            {/* 다음 단어 / 그만하기 버튼 */}
-            <div className="flex gap-3">
+      {/* ── 점자 연습 탭 ── */}
+      {activeTab === 'braille' && (
+        <>
+          <div className="w-full max-w-2xl flex flex-col gap-4">
+            {!practiceMode ? (
               <button
-                onClick={nextWord}
+                onClick={startPractice}
+                aria-label="단어 연습 모드 시작"
                 className="
-                  flex-1 py-3 rounded-xl
+                  w-full py-4 rounded-2xl
                   border-4 border-yellow-400 bg-black
-                  text-yellow-400 font-black text-xl
+                  text-yellow-400 font-black text-2xl
                   hover:bg-yellow-400 hover:text-black
                   transition-all duration-150
                   focus:outline-none focus:ring-4 focus:ring-yellow-300
                 "
               >
-                다음 단어 →
+                🎯 단어 연습 시작
               </button>
-              <button
-                onClick={() => {
-                  setPracticeMode(false)
-                  setFeedback(null)
-                  setTargetWord('')
-                  setInput(INITIAL_INPUT)
-                }}
-                className="
-                  flex-1 py-3 rounded-xl
-                  border-4 border-yellow-700 bg-black
-                  text-yellow-700 font-black text-xl
-                  hover:bg-yellow-700 hover:text-black
-                  transition-all duration-150
-                  focus:outline-none focus:ring-4 focus:ring-yellow-600
-                "
-              >
-                그만하기
-              </button>
-            </div>
+            ) : (
+              <div className="flex flex-col gap-3">
+                <div className="w-full rounded-2xl border-4 border-yellow-400 bg-black p-4 text-center"
+                  aria-label={`목표 단어: ${targetWord}`}>
+                  <p className="text-yellow-600 text-lg mb-1">목표 단어</p>
+                  <p className="text-yellow-400 font-black" style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)' }}>
+                    {targetWord}
+                  </p>
+                </div>
+                {feedback && (
+                  <div
+                    className={`
+                      w-full rounded-2xl border-4 p-4 text-center font-black
+                      ${feedback === 'correct'
+                        ? 'border-green-400 bg-green-950 text-green-400'
+                        : 'border-red-400 bg-red-950 text-red-400'}
+                    `}
+                    style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)' }}
+                    aria-live="assertive"
+                  >
+                    {feedback === 'correct' ? '🎉 잘했어요!' : '😊 아쉬워요!'}
+                  </div>
+                )}
+                <div className="flex gap-3">
+                  <button onClick={nextWord}
+                    className="flex-1 py-3 rounded-xl border-4 border-yellow-400 bg-black text-yellow-400 font-black text-xl hover:bg-yellow-400 hover:text-black transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-yellow-300">
+                    다음 단어 →
+                  </button>
+                  <button onClick={() => { setPracticeMode(false); setFeedback(null); setTargetWord(''); setInput(INITIAL_INPUT) }}
+                    className="flex-1 py-3 rounded-xl border-4 border-yellow-700 bg-black text-yellow-700 font-black text-xl hover:bg-yellow-700 hover:text-black transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-yellow-600">
+                    그만하기
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      {/* 입력 표시 */}
-      <BrailleDisplay
-        dots={dots}
-        text={displayText}
-        preview=""
-      />
+          <BrailleDisplay dots={dots} text={displayText} preview="" />
 
-      {/* 연습 모드 안내 */}
-      {practiceMode && (
-        <p className="text-yellow-700 text-center text-lg">
-          입력 후 <span className="text-yellow-400 font-bold">Numpad Enter</span> 를 누르면 정답을 확인해요
-        </p>
+          {practiceMode && (
+            <p className="text-yellow-700 text-center text-lg">
+              입력 후 <span className="text-yellow-400 font-bold">Numpad Enter</span> 를 누르면 정답을 확인해요
+            </p>
+          )}
+        </>
       )}
+
+      {/* ── 음성 연습 탭 ── */}
+      {activeTab === 'voice' && (
+        <VoicePractice speakIfOn={speakIfOn} muted={muted} />
+      )}
+
     </main>
   )
 }
