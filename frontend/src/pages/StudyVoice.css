@@ -3,16 +3,10 @@
   height: calc(100vh - 64px);
   background: #FFB256;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
 }
-
-/* 크림색 배경 (따라쓰기와 동일 구조) */
 .sv-content-area {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   height: calc(100% - 40px);
   background: #FAF4EE;
   border-radius: 80px 80px 0 0;
@@ -21,95 +15,78 @@
   overflow: hidden;
 }
 
-/* 왼쪽: 원숭이 + 말풍선 */
+/* 왼쪽: 원숭이 */
 .sv-left {
-  position: relative;
-  z-index: 2;
   width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0;
-  padding: 20px;
+  justify-content: flex-end;
+  padding: 0 20px;
   flex-shrink: 0;
-}
-.sv-speech-bubble {
-  background: #FFFFFF;
-  border: 3px dashed #B8B8B8;
-  border-radius: 30px;
-  padding: 14px 24px;
-  font-size: 17px;
-  font-weight: 700;
-  color: #000;
-  text-align: center;
-  box-shadow: 2px 4px 5.3px rgba(0, 0, 0, 0.12);
-  margin-bottom: 16px;
-  max-width: 280px;
-  white-space: nowrap;
-  position: relative;
-}
-.sv-speech-bubble::after {
-  content: '';
-  position: absolute;
-  bottom: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 12px solid #fff;
-}
-.sv-speech-bubble::before {
-  content: '';
-  position: absolute;
-  bottom: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  border-top: 15px solid #B8B8B8;
-}
-.sv-monkey {
-  width: 280px;
-  max-height: 380px;
-  object-fit: contain;
-}
-
-/* 오른쪽: 단어 카드 */
-.sv-right {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 24px;
-  gap: 20px;
   position: relative;
   z-index: 2;
 }
-.sv-card {
-  background: #FFFFFF;
-  border-radius: 30px;
-  padding: 40px 32px 28px;
+.sv-monkey {
+  width: 320px;
+  max-height: 460px;
+  object-fit: contain;
+}
+
+/* 오른쪽: 메인 카드 */
+.sv-right {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  box-shadow: 2px 4px 5.3px rgba(0, 0, 0, 0.12);
-  flex: 1;
-  max-width: 500px;
+  justify-content: center;
+  padding: 24px 40px;
+  gap: 0;
+}
+
+/* 스텝 표시 */
+.sv-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 20px;
+}
+.sv-step {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 3px solid #ddd;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: #aaa;
+  background: #fff;
+}
+.sv-step.active {
+  border-color: #FFB256;
+  color: #FFB256;
+}
+.sv-step.done {
+  border-color: #FFB256;
+  background: #FFB256;
+  color: #fff;
+}
+.sv-step-line {
+  width: 40px; height: 0;
+  border-top: 3px dashed #ddd;
+}
+
+/* 큰 단어 */
+.sv-word-big {
+  font-size: 72px;
+  font-weight: 900;
+  color: #1F1F1F;
+  margin-bottom: 20px;
 }
 
 /* 글자 박스 */
-.sv-chars-row {
+.sv-chars-section {
   display: flex;
   align-items: center;
   gap: 16px;
-  width: 100%;
-  justify-content: center;
+  margin-bottom: 20px;
 }
 .sv-chars {
   display: flex;
@@ -117,125 +94,124 @@
   border: 2px solid #ddd;
   border-radius: 12px;
   overflow: hidden;
+  background: #fff;
 }
 .sv-char {
-  width: 110px;
-  height: 140px;
-  border-right: 2px dashed #ddd;
+  width: 100px;
+  height: 120px;
+  border-right: 2px dashed #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 64px;
+  font-size: 56px;
   font-weight: 900;
-  color: #1F1F1F;
+  color: rgba(0,0,0,0.15);
   background: #fff;
+  position: relative;
   transition: all 0.3s;
 }
-.sv-char:last-child {
-  border-right: none;
-}
+.sv-char:last-child { border-right: none; }
 .sv-char.correct {
-  background: #e8f5e9;
-  color: #2e7d32;
+  color: #478025;
+  background: #f0fbe8;
+}
+.sv-char.active-char {
+  color: #1F1F1F;
+}
+/* 점선 가이드 */
+.sv-char::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px dashed #e0e0e0;
+  border-radius: 4px;
+  pointer-events: none;
 }
 .sv-arrow {
-  width: 48px;
-  height: 48px;
-  border: none;
-  background: transparent;
-  font-size: 40px;
-  color: #444;
-  cursor: pointer;
-  font-weight: 700;
+  width: 48px; height: 48px;
+  border: none; background: transparent;
+  font-size: 40px; color: #888;
+  cursor: pointer; font-weight: 900;
   flex-shrink: 0;
 }
-.sv-arrow:hover { color: #111; }
-.sv-arrow:disabled { opacity: 0.2; cursor: not-allowed; }
+.sv-arrow:hover { color: #333; }
+.sv-arrow:disabled { opacity: 0.15; cursor: not-allowed; }
 
 /* 버튼 */
 .sv-actions {
   display: flex;
   gap: 12px;
   align-items: center;
+  margin-bottom: 16px;
 }
-.sv-listen-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: none;
-  background: #FF8B8B;
-  font-size: 24px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.sv-listen-btn:hover { opacity: 0.85; }
-.sv-mic-btn {
-  padding: 12px 24px;
-  border-radius: 28px;
-  border: none;
-  background: #e0e0e0;
+.sv-btn {
+  padding: 12px 28px;
+  border-radius: 12px;
+  border: 2px solid #ddd;
+  background: #fff;
   font-size: 16px;
   font-weight: 700;
-  color: #555;
+  color: #333;
   cursor: pointer;
   transition: all 0.2s;
 }
-.sv-mic-btn:hover { background: #d0d0d0; }
-.sv-mic-btn.listening {
+.sv-btn:hover { border-color: #FFB256; }
+.sv-btn.primary {
+  background: #FF8B8B;
+  border-color: #FF8B8B;
+  color: #fff;
+}
+.sv-btn.primary:hover { background: #e07070; }
+.sv-btn.listening {
   background: #FF6B6B;
+  border-color: #FF6B6B;
   color: #fff;
   animation: svPulse 1.5s infinite;
 }
-@keyframes svPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes svPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
 /* 피드백 */
 .sv-feedback {
-  font-size: 20px;
-  font-weight: 900;
-  padding: 10px 24px;
-  border-radius: 30px;
-  animation: svFadeIn 0.3s;
+  font-size: 20px; font-weight: 900;
+  padding: 10px 28px; border-radius: 30px;
+  margin-bottom: 12px;
+  animation: svFade 0.3s;
 }
-@keyframes svFadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes svFade { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 .sv-feedback.correct { background: #CFF2B9; color: #478025; }
 .sv-feedback.wrong { background: #FFE0E0; color: #c62828; }
 
 /* 진행도 */
-.sv-progress {
-  font-size: 16px;
-  color: #999;
-  font-weight: 600;
+.sv-progress-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.sv-progress-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #FFB256;
+}
+.sv-progress-text {
+  font-size: 16px; color: #999; font-weight: 600;
 }
 
 /* 빈 상태 */
 .sv-empty {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  color: #fff;
-  font-size: 18px;
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 16px; color: #fff; font-size: 18px;
 }
 .sv-empty button {
-  padding: 10px 24px;
-  background: #fff;
-  border: none;
-  border-radius: 20px;
-  color: #FFB256;
-  font-weight: 700;
-  cursor: pointer;
+  padding: 10px 24px; background: #fff;
+  border: none; border-radius: 20px;
+  color: #FFB256; font-weight: 700; cursor: pointer;
 }
 
 @media (max-width: 768px) {
   .sv-content-area { flex-direction: column; border-radius: 40px 40px 0 0; }
-  .sv-left { width: 100%; height: 35%; padding: 12px; }
-  .sv-right { width: 100%; height: 65%; }
+  .sv-left { width: 100%; height: 30%; justify-content: center; }
+  .sv-right { padding: 16px; }
   .sv-monkey { width: 180px; }
-  .sv-card { min-width: auto; padding: 20px; }
-  .sv-char { width: 56px; height: 72px; font-size: 32px; }
+  .sv-word-big { font-size: 48px; }
+  .sv-char { width: 70px; height: 90px; font-size: 40px; }
 }
