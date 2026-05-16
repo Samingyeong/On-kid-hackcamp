@@ -64,6 +64,11 @@ const BOOK_SVG_LIST = [
 let _cachedFeatured: Book | null = null
 let _cachedRanking: Book[] = []
 
+export function clearHomeCache() {
+  _cachedFeatured = null
+  _cachedRanking = []
+}
+
 export default function Home() {
   const navigate = useNavigate()
   const sliderRef = useRef<HTMLDivElement>(null)

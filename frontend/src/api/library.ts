@@ -229,6 +229,10 @@ export function extractBase(word: string): string {
 }
 
 const dictCache = new Map<string, DictItem[]>()
+
+export function clearDictCache() {
+  dictCache.clear()
+}
 export async function lookupDict(word: string): Promise<DictItem[]> {
   const base = extractBase(word)
   for (const q of [...new Set([base, word])]) {

@@ -5,6 +5,27 @@
   overflow: hidden;
 }
 
+.home-topbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 0;
+}
+
+.home-logout-btn {
+  padding: 8px 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #666;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.home-logout-btn:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
 /* 배경 장식은 home-background.svg로 대체 */
 .home-bg-left, .home-bg-right { display: none; }
 
