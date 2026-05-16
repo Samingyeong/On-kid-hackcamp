@@ -1,0 +1,365 @@
+.study-quiz {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #ffb052;
+  color: #202020;
+  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
+}
+
+.study-quiz,
+.study-quiz * {
+  box-sizing: border-box;
+}
+
+.sq-topbar {
+  position: relative;
+  z-index: 3;
+  height: 158px;
+  display: grid;
+  grid-template-columns: 260px 1fr 360px;
+  align-items: center;
+  padding: 26px 46px 0 55px;
+}
+
+.sq-home-button {
+  width: 86px;
+  height: 86px;
+  border: 4px solid #ffd216;
+  border-radius: 50%;
+  background: #fff7df;
+  color: #ffc400;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.sq-home-button:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 18px rgba(150, 94, 16, 0.18);
+}
+
+.sq-home-button svg {
+  width: 44px;
+  height: 44px;
+  fill: currentColor;
+}
+
+.sq-logo {
+  width: 285px;
+  height: auto;
+  justify-self: center;
+  display: block;
+}
+
+.sq-profile {
+  justify-self: end;
+  width: 286px;
+  height: 80px;
+  border-radius: 999px;
+  background: #ffd59f;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  padding: 8px 10px 8px 28px;
+}
+
+.sq-profile-name {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0;
+  color: #222;
+}
+
+.sq-profile-type {
+  margin-top: 8px;
+  font-size: 15px;
+  font-weight: 900;
+  color: #574433;
+}
+
+.sq-profile-avatar {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin-left: 8px;
+}
+
+.sq-stage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 158px;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 640px;
+  gap: 64px;
+  padding: 30px 27px 22px 110px;
+  background: #f4eee8;
+  border-radius: 74px 74px 0 0;
+  overflow: hidden;
+}
+
+.sq-stage::before,
+.sq-stage::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.sq-stage::before {
+  width: 760px;
+  height: 760px;
+  left: -208px;
+  bottom: -365px;
+  background: #fff;
+}
+
+.sq-stage::after {
+  width: 560px;
+  height: 560px;
+  right: -260px;
+  top: 74px;
+  background: #fffaf6;
+}
+
+.sq-question-area {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 78px 0 82px;
+}
+
+.sq-question-area h1 {
+  margin: 0 0 92px;
+  font-size: clamp(58px, 5vw, 92px);
+  line-height: 1.04;
+  font-weight: 900;
+  letter-spacing: 0;
+  color: #202020;
+  word-break: keep-all;
+}
+
+.sq-question-card {
+  width: min(100%, 1035px);
+  min-height: 330px;
+  border: 6px solid #1298d0;
+  border-radius: 29px;
+  background: #26aee6;
+  box-shadow: inset 0 -5px 0 rgba(7, 112, 164, 0.16);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 42px 76px;
+  text-align: center;
+  white-space: pre-line;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  font-size: clamp(42px, 3.75vw, 72px);
+  line-height: 1.58;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.sq-dot-row {
+  width: min(100%, 870px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.sq-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #d0d0d0;
+  flex: 0 0 auto;
+}
+
+.sq-dot.active {
+  background: #25aee6;
+}
+
+.sq-command-card {
+  position: relative;
+  z-index: 1;
+  align-self: stretch;
+  width: 100%;
+  border: 1px solid #ecc6c6;
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.86);
+  padding: 29px 46px;
+  display: grid;
+  gap: 30px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+.sq-menu-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 110px;
+  border: 0;
+  border-radius: 13px;
+  color: #fff;
+  font-family: inherit;
+  font-size: clamp(38px, 2.7vw, 52px);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease;
+}
+
+.sq-menu-button:hover {
+  transform: scale(1.045);
+  filter: brightness(1.03);
+  box-shadow: 0 12px 22px rgba(43, 43, 43, 0.14);
+}
+
+.sq-menu-button:focus-visible {
+  outline: 4px solid rgba(255, 210, 22, 0.75);
+  outline-offset: 4px;
+  transform: scale(1.045);
+}
+
+.sq-menu-button.replay {
+  background: #68c9c5;
+}
+
+.sq-menu-button.previous {
+  background: #29aae3;
+}
+
+.sq-menu-button.next {
+  background: #ff714f;
+}
+
+.sq-menu-button.hint {
+  background: #70c962;
+}
+
+.sq-menu-button.explain {
+  background: #ff8185;
+}
+
+.sq-menu-button.quiz {
+  background: #ffb04e;
+}
+
+@media (max-width: 1280px) {
+  .sq-stage {
+    grid-template-columns: minmax(0, 1fr) 420px;
+    gap: 34px;
+    padding-left: 48px;
+  }
+
+  .sq-command-card {
+    padding: 28px;
+    gap: 22px;
+  }
+
+  .sq-menu-button {
+    min-height: 88px;
+  }
+
+  .sq-question-card {
+    min-height: 270px;
+  }
+}
+
+@media (max-width: 900px) {
+  .study-quiz {
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+  }
+
+  .sq-topbar {
+    height: 118px;
+    grid-template-columns: 90px 1fr 190px;
+    padding: 18px 18px 0;
+  }
+
+  .sq-home-button {
+    width: 66px;
+    height: 66px;
+  }
+
+  .sq-logo {
+    width: 170px;
+  }
+
+  .sq-profile {
+    width: 180px;
+    height: 62px;
+    padding-left: 16px;
+  }
+
+  .sq-profile-name {
+    font-size: 17px;
+  }
+
+  .sq-profile-type {
+    font-size: 11px;
+  }
+
+  .sq-profile-avatar {
+    width: 54px;
+    height: 54px;
+  }
+
+  .sq-stage {
+    position: relative;
+    top: auto;
+    min-height: calc(100vh - 118px);
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding: 34px 18px 28px;
+    border-radius: 42px 42px 0 0;
+  }
+
+  .sq-question-area {
+    padding: 20px 0 0;
+  }
+
+  .sq-question-area h1 {
+    margin-bottom: 28px;
+  }
+
+  .sq-question-card {
+    width: 100%;
+    min-height: 220px;
+    padding: 32px 24px;
+  }
+
+  .sq-dot-row {
+    width: 100%;
+    gap: 10px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+
+  .sq-dot {
+    width: 22px;
+    height: 22px;
+  }
+
+  .sq-command-card {
+    grid-template-columns: 1fr;
+    padding: 22px;
+    gap: 16px;
+  }
+}
