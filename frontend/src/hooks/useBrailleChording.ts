@@ -1,36 +1,39 @@
 ﻿/**
  * useBrailleChording.ts
- * ?レ옄?⑤뱶 ?숈떆 ?낅젰(Key Chording) 媛먯? 而ㅼ뒪? ?? *
- * 留ㅽ븨: 7?믪젏1, 4?믪젏2, 1?믪젏3, 8?믪젏4, 5?믪젏5, 2?믪젏6
- * ?뱀닔?? 0?믪뒪?섏씠?? Enter(numpad)?믪쟾泥댁씫湲? .(Decimal)?믪??곌린
+ * 숫자패드 동시 입력(Key Chording) 감지 커스텀 훅
+ *
+ * 매핑: 7→점1, 4→점2, 1→점3, 8→점4, 5→점5, 2→점6
+ * 특수키: 0→스페이스, Enter(numpad)→전체읽기, .(Decimal)→지우기
  */
 
 import { useEffect, useRef, useCallback } from 'react'
 import type { Dots } from '../utils/brailleConverter'
 
-// ?レ옄?⑤뱶 ?ㅼ퐫???????몃뜳??(0-based)
+// 숫자패드 키코드 → 점 인덱스 (0-based)
 const KEY_TO_DOT: Record<string, number> = {
-  Numpad7: 0, // ??
-  Numpad4: 1, // ??
-  Numpad1: 2, // ??
-  Numpad8: 3, // ??
-  Numpad5: 4, // ??
-  Numpad2: 5, // ??
+  Numpad7: 0, // 점1
+  Numpad4: 1, // 점2
+  Numpad1: 2, // 점3
+  Numpad8: 3, // 점4
+  Numpad5: 4, // 점5
+  Numpad2: 5, // 점6
 }
 
 export type SpecialKey = 'space' | 'readAll' | 'delete'
 
 export interface ChordingCallbacks {
-  onChord: (dots: Dots) => void          // ?먯옄 議고빀 ?꾩꽦 ??  onSpecial: (key: SpecialKey) => void   // ?뱀닔???낅젰 ??  onDotsChange: (dots: Dots) => void     // ?ㅼ떆媛????곹깭 蹂????(UI ?낅뜲?댄듃??
+  onChord: (dots: Dots) => void
+  onSpecial: (key: SpecialKey) => void
+  onDotsChange: (dots: Dots) => void
 }
 
-const DEBOUNCE_MS = 50 // 留덉?留?keyup ???湲??쒓컙
+const DEBOUNCE_MS = 50
 
 export function useBrailleChording(callbacks: ChordingCallbacks) {
   const pressedDotsRef = useRef<boolean[]>([false, false, false, false, false, false])
   const activeKeysRef = useRef<Set<string>>(new Set())
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const chordStartedRef = useRef(false) // ?먯옄 ?ㅺ? ?섎굹?쇰룄 ?뚮졇?붿?
+  const chordStartedRef = useRef(false)
 
   const callbacksRef = useRef(callbacks)
   useEffect(() => {
@@ -43,19 +46,16 @@ export function useBrailleChording(callbacks: ChordingCallbacks) {
     if (hasAny) {
       callbacksRef.current.onChord(dots)
     }
-    // ?곹깭 珥덇린??    pressedDotsRef.current = [false, false, false, false, false, false]
+    pressedDotsRef.current = [false, false, false, false, false, false]
     chordStartedRef.current = false
     callbacksRef.current.onDotsChange([false, false, false, false, false, false])
   }, [])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // 諛섎났 ?낅젰 臾댁떆
       if (e.repeat) return
-
       const code = e.code
 
-      // ?먯옄 ??泥섎━
       if (code in KEY_TO_DOT) {
         e.preventDefault()
         const dotIdx = KEY_TO_DOT[code]!
@@ -63,20 +63,15 @@ export function useBrailleChording(callbacks: ChordingCallbacks) {
           activeKeysRef.current.add(code)
           pressedDotsRef.current[dotIdx] = true
           chordStartedRef.current = true
-          // 吏꾪뻾 以묒씤 ??대㉧ 痍⑥냼
           if (timerRef.current) {
             clearTimeout(timerRef.current)
             timerRef.current = null
           }
-          // ?ㅼ떆媛?UI ?낅뜲?댄듃
-          callbacksRef.current.onDotsChange(
-            pressedDotsRef.current.slice() as Dots
-          )
+          callbacksRef.current.onDotsChange(pressedDotsRef.current.slice() as Dots)
         }
         return
       }
 
-      // ?뱀닔??泥섎━
       if (code === 'Numpad0') {
         e.preventDefault()
         callbacksRef.current.onSpecial('space')
@@ -96,13 +91,11 @@ export function useBrailleChording(callbacks: ChordingCallbacks) {
 
     const handleKeyUp = (e: KeyboardEvent) => {
       const code = e.code
-
       if (!(code in KEY_TO_DOT)) return
       e.preventDefault()
 
       activeKeysRef.current.delete(code)
 
-      // 紐⑤뱺 ?먯옄 ?ㅺ? ?⑥뼱議뚯쓣 ???붾컮?댁뒪 ??대㉧ ?쒖옉
       if (activeKeysRef.current.size === 0 && chordStartedRef.current) {
         if (timerRef.current) clearTimeout(timerRef.current)
         timerRef.current = setTimeout(() => {
