@@ -64,8 +64,8 @@ const INITIAL_BRAILLE: BrailleInputState = { committed: '', composing: EMPTY_STA
 function getNextContext(state: HangulState): JamoType {
   if (!state.cho) return 'chosung'
   if (!state.jung) return 'jungsung'
-  if (state.jong2) return 'chosung'
   if (!state.jong) return 'jongsung'
+  if (!state.jong2) return 'jongsung' // 겹받침 가능성
   return 'chosung'
 }
 
