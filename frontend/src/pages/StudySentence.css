@@ -1,120 +1,167 @@
 .study-sentence {
-  display: flex;
+  position: relative;
   height: calc(100vh - 64px);
-  background: #2C2C2C;
+  background: #FFB256;
+  overflow: hidden;
+}
+.ss-content-area {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: calc(100% - 40px);
+  background: #FAF4EE;
+  border-radius: 80px 80px 0 0;
+  display: flex;
+  align-items: stretch;
   overflow: hidden;
 }
 
+/* 왼쪽 */
 .ss-left {
-  width: 240px;
+  width: 280px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
   padding: 20px;
   flex-shrink: 0;
 }
 .ss-speech-bubble {
   background: #fff;
-  border-radius: 16px;
-  padding: 12px 16px;
-  font-size: 14px;
+  border: 3px dashed #B8B8B8;
+  border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 16px;
   font-weight: 700;
-  color: #333;
-  text-align: center;
+  color: #000;
+  margin-bottom: 12px;
+  box-shadow: 2px 4px 5px rgba(0,0,0,0.12);
+  position: relative;
 }
-.ss-monkey-placeholder {
-  width: 160px;
-  height: 200px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 20px;
+.ss-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px; left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #fff;
+}
+.ss-monkey {
+  width: 220px;
+  object-fit: contain;
+}
+
+/* 오른쪽 */
+.ss-right {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 64px;
-  border: 2px dashed rgba(255,255,255,0.3);
+  gap: 20px;
+  padding: 20px;
 }
-
-.ss-main {
-  flex: 1;
-  background: #FAF4EE;
-  border-radius: 40px 0 0 40px;
+.ss-card {
+  background: #fff;
+  border-radius: 30px;
+  padding: 36px 32px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
-  padding: 32px;
+  gap: 20px;
+  box-shadow: 2px 4px 5px rgba(0,0,0,0.12);
+  flex: 1;
+  max-width: 600px;
 }
-
-.ss-progress-bar {
-  font-size: 15px;
-  color: #888;
-  font-weight: 600;
+.ss-arrow {
+  width: 48px; height: 48px;
+  border: none; background: transparent;
+  font-size: 40px; color: #444;
+  cursor: pointer; font-weight: 700;
+  flex-shrink: 0;
 }
+.ss-arrow:hover { color: #111; }
+.ss-arrow:disabled { opacity: 0.2; cursor: not-allowed; }
 
-.ss-card {
-  background: #fff;
-  border-radius: 24px;
-  padding: 40px 48px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  max-width: 700px;
-  width: 100%;
-  text-align: center;
-}
-
-.ss-sentence-text {
-  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
-  font-size: clamp(22px, 3vw, 36px);
+/* 문장 */
+.ss-sentence {
+  font-size: 24px;
   font-weight: 700;
-  color: #333;
+  color: #1F1F1F;
   line-height: 1.6;
-  margin: 0;
+  text-align: center;
+  word-break: keep-all;
+}
+.ss-keyword {
+  background: #FFF3CD;
+  color: #E65100;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 900;
 }
 
-.ss-nav {
-  display: flex;
-  gap: 16px;
+/* 타자치기 */
+.ss-typing-area { width: 100%; }
+.ss-typing-input {
+  width: 100%;
+  padding: 14px 20px;
+  border: 2px solid #ddd;
+  border-radius: 16px;
+  font-size: 18px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
 }
-.ss-nav-btn {
-  padding: 12px 28px;
-  background: #FFB256;
-  border: none;
-  border-radius: 20px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.ss-nav-btn:hover:not(:disabled) { background: #e09a3e; }
-.ss-nav-btn:disabled { opacity: 0.4; cursor: default; }
+.ss-typing-input:focus { border-color: #FFB256; }
 
-.ss-dots {
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 400px;
+/* 따라말하기 */
+.ss-speak-area {
+  display: flex; gap: 12px; align-items: center;
 }
-.ss-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #ddd;
+.ss-listen-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%; border: none;
+  background: #FF8B8B; font-size: 22px;
   cursor: pointer;
-  transition: all 0.2s;
 }
-.ss-dot.current { background: #FFB256; transform: scale(1.4); }
-.ss-dot.done { background: #7DD3C0; }
+.ss-mic-btn {
+  padding: 12px 24px;
+  border-radius: 28px; border: none;
+  background: #e0e0e0;
+  font-size: 16px; font-weight: 700; color: #555;
+  cursor: pointer;
+}
+.ss-mic-btn.listening {
+  background: #FF6B6B; color: #fff;
+  animation: ssPulse 1.5s infinite;
+}
+@keyframes ssPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-.ss-back {
-  padding: 10px 24px;
-  background: #FFB256;
-  border: none;
-  border-radius: 20px;
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
+/* 피드백 */
+.ss-feedback {
+  font-size: 20px; font-weight: 900;
+  padding: 10px 24px; border-radius: 30px;
+}
+.ss-feedback.correct { background: #CFF2B9; color: #478025; }
+.ss-feedback.wrong { background: #FFE0E0; color: #c62828; }
+
+.ss-progress { font-size: 15px; color: #999; font-weight: 600; }
+
+/* 빈 상태 */
+.ss-empty {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 16px; color: #fff; font-size: 18px; text-align: center;
+}
+.ss-empty button {
+  padding: 10px 24px; background: #fff;
+  border: none; border-radius: 20px;
+  color: #FFB256; font-weight: 700; cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .ss-content-area { flex-direction: column; border-radius: 40px 40px 0 0; }
+  .ss-left { width: 100%; height: 30%; }
+  .ss-right { height: 70%; }
+  .ss-monkey { width: 150px; }
+  .ss-sentence { font-size: 18px; }
 }

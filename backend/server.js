@@ -792,6 +792,41 @@ app.get('/api/tutor/quiz-data', (req, res) => {
   })
 })
 
+// GET /api/study/sentences?book=... — 모르는 단어가 포함된 핵심 문장 추출
+app.get('/api/study/sentences', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+  const { book } = req.query
+
+  // 모르는 단어 목록
+  const unknownWords = book
+    ? db.prepare(`SELECT base_form FROM word_study WHERE user_id=? AND known=0 AND from_book=?`).all(userId, book)
+    : db.prepare(`SELECT base_form FROM word_study WHERE user_id=? AND known=0`).all(userId)
+
+  if (unknownWords.length === 0) {
+    return res.json({ sentences: [], words: [] })
+  }
+
+  // 해당 단어가 포함된 문장 추출
+  const wordList = unknownWords.map(w => w.base_form)
+  const sentences = []
+  const bookFilter = book
+    ? db.prepare(`SELECT sentence FROM book_sentences WHERE user_id=? AND title=? ORDER BY id`).all(userId, book)
+    : db.prepare(`SELECT sentence FROM book_sentences WHERE user_id=? ORDER BY id`).all(userId)
+
+  for (const row of bookFilter) {
+    const s = row.sentence
+    const matchedWord = wordList.find(w => s.includes(w))
+    if (matchedWord) {
+      sentences.push({ sentence: s, keyword: matchedWord })
+    }
+  }
+
+  // 중복 제거 + 최대 15개
+  const unique = sentences.filter((s, i, arr) => arr.findIndex(x => x.sentence === s.sentence) === i).slice(0, 15)
+
+  res.json({ sentences: unique, words: wordList })
+})
+
 // ─── KT 믿음 (Mi:dm) AI 엔드포인트 ──────────────────────────
 // POST /api/midm/feedback — 학습 수준 진단 + 맞춤 추천
 app.post('/api/midm/feedback', async (req, res) => {

@@ -414,3 +414,16 @@ export async function fetchTutorQuizData(): Promise<TutorQuizData> {
   const res = await fetch(`${BASE}/api/tutor/quiz-data`, { headers: { 'x-user-id': uid } })
   return res.json()
 }
+
+// ─── 문장학습 데이터 ──────────────────────────────────────────
+export interface StudySentenceData {
+  sentences: { sentence: string; keyword: string }[]
+  words: string[]
+}
+
+export async function fetchStudySentences(book?: string): Promise<StudySentenceData> {
+  const uid = await getUserId()
+  const q = book ? `?book=${encodeURIComponent(book)}` : ''
+  const res = await fetch(`${BASE}/api/study/sentences${q}`, { headers: { 'x-user-id': uid } })
+  return res.json()
+}

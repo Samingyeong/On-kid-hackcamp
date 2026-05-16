@@ -18,7 +18,29 @@ const MODES = [
   },
   {
     id: 'speak',
-    label: '단어 따라말하기',
+    label: '따라말하기',
+    bg: '/svg/따라말하기배경.png',
+    monkey: '/svg/따라말하기원숭이.png',
+  },
+  {
+    id: 'sign',
+    label: '수화하기',
+    bg: '/svg/수화하기배경.png',
+    monkey: '/svg/수화하기원숭이.png',
+  },
+]
+
+// 문장학습 모드 (따라쓰기 제외)
+const SENTENCE_MODES = [
+  {
+    id: 'type',
+    label: '타자치기',
+    bg: '/svg/타자치기배경.png',
+    monkey: '/svg/타자치기원숭이.png',
+  },
+  {
+    id: 'speak',
+    label: '따라말하기',
     bg: '/svg/따라말하기배경.png',
     monkey: '/svg/따라말하기원숭이.png',
   },
@@ -54,7 +76,13 @@ export default function StudySelect() {
 
   function selectMode(modeId: string) {
     if (studyType === 'sentence') {
-      navigate(`/study/sentence?book=${encodeURIComponent(selectedBook)}`)
+      if (modeId === 'type') {
+        navigate(`/study/sentence?book=${encodeURIComponent(selectedBook)}&mode=type`)
+      } else if (modeId === 'speak') {
+        navigate(`/study/sentence?book=${encodeURIComponent(selectedBook)}&mode=speak`)
+      } else if (modeId === 'sign') {
+        navigate(`/study/sign?book=${encodeURIComponent(selectedBook)}&mode=sentence`)
+      }
     } else if (modeId === 'type') {
       navigate(`/study/typing?book=${encodeURIComponent(selectedBook)}`)
     } else if (modeId === 'speak') {
@@ -94,12 +122,8 @@ export default function StudySelect() {
                 key={book.title}
                 className={`study-book-card ${selectedBook === book.title ? 'selected' : ''}`}
                 onClick={() => {
-                  if (studyType === 'sentence') {
-                    navigate(`/study/sentence?book=${encodeURIComponent(book.title)}`)
-                  } else {
-                    setSelectedBook(book.title)
-                    setStep('mode')
-                  }
+                  setSelectedBook(book.title)
+                  setStep('mode')
                 }}
               >
                 {book.thumbnail && <img src={book.thumbnail} alt={book.title} className="study-book-thumb" />}
@@ -134,7 +158,7 @@ export default function StudySelect() {
         「{selectedBook}」 {studyType === 'word' ? '단어' : '문장'}를 학습해볼까요?
       </h1>
       <div className="study-select-cards">
-        {MODES.map(mode => (
+        {(studyType === 'sentence' ? SENTENCE_MODES : MODES).map(mode => (
           <div
             key={mode.id}
             className={`study-mode-card ${mode.id}`}
