@@ -142,6 +142,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function signOut() {
     try { await supabase.auth.signOut() } catch {}
+    // 강제로 로컬 스토리지 세션 제거
+    const keys = Object.keys(localStorage)
+    keys.forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k) })
     setUser(null)
     setSession(null)
     setChildName('')
