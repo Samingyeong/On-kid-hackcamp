@@ -23,6 +23,7 @@ const KEY_MAP: Record<string, string> = {
   z:'ㅋ', x:'ㅌ', c:'ㅊ', v:'ㅍ', b:'ㅠ', n:'ㅜ', m:'ㅡ',
 }
 const LEFT_KEYS = new Set('qwertasdfgzxcvb'.split(''))
+const VISION_FALLBACK_WORDS = ['암탉', '누렁이', '강아지', '마당', '꼬리', '약속']
 
 // ── TTS ──────────────────────────────────────────
 const PREFERRED_VOICES = ['Google 한국의', 'Microsoft SunHi', 'Microsoft Heami', 'Yuna']
@@ -105,10 +106,11 @@ export default function StudyTyping() {
     fetchStudyWords(0)
       .then(list => {
         const filtered = book ? list.filter(w => w.from_book === book) : list
-        setWords(filtered.map(w => w.base_form))
+        const nextWords = filtered.map(w => w.base_form).filter(Boolean)
+        setWords(nextWords.length > 0 ? nextWords : isVision ? VISION_FALLBACK_WORDS : [])
       })
-      .catch(() => setWords([]))
-  }, [book])
+      .catch(() => setWords(isVision ? VISION_FALLBACK_WORDS : []))
+  }, [book, isVision])
 
   const currentWord = words[currentIdx] || ''
   const isCorrect = typed === currentWord

@@ -261,6 +261,31 @@
   background-color: #effbea;
 }
 
+.sv-sentence-card {
+  width: min(100%, 795px);
+  min-height: 240px;
+  border: 1px solid #cdd6e6;
+  border-radius: 18px;
+  background: #fff;
+  color: #4b403c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 42px 48px;
+  text-align: center;
+  font-size: clamp(36px, 3.2vw, 62px);
+  line-height: 1.28;
+  font-weight: 900;
+  letter-spacing: 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.sv-sentence-card.correct {
+  color: #278c58;
+  background: #effbea;
+}
+
 .sv-actions {
   display: flex;
   align-items: center;
@@ -531,6 +556,11 @@
     border-radius: 30px;
     gap: 34px;
     padding: 30px 16px;
+  }
+
+  .sv-sentence-card {
+    min-height: 180px;
+    padding: 28px 18px;
   }
 
   .sv-arrow {

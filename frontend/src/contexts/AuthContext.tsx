@@ -12,7 +12,7 @@ interface AuthContextType {
   childBirthDate: string
   loading: boolean
   signUp: (email: string, password: string, name: string, childData?: { childName: string; childBirth: string; childGender: string; disability: string }) => Promise<{ error: string | null }>
-  signIn: (email: string, password: string) => Promise<{ error: string | null }>
+  signIn: (email: string, password: string) => Promise<{ error: string | null; childCharacter?: string }>
   signOut: () => Promise<void>
 }
 
@@ -37,27 +37,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setChildName(data?.name || '')
       setChildCharacter(data?.disability || '')
       setChildBirthDate(data?.birth_date || '')
+      return data
     } catch {
       // 테이블 없거나 데이터 없으면 metadata에서 가져오기
       const meta = user?.user_metadata
       setChildName(meta?.child_name || '')
       setChildCharacter(meta?.disability || '')
       setChildBirthDate(meta?.child_birth || '')
+      return {
+        name: meta?.child_name || '',
+        disability: meta?.disability || '',
+        birth_date: meta?.child_birth || '',
+      }
     }
   }
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session)
       setUser(session?.user ?? null)
-      if (session?.user) fetchChildName(session.user.id)
+      if (session?.user) await fetchChildName(session.user.id)
       setLoading(false)
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      setLoading(true)
       setSession(session)
       setUser(session?.user ?? null)
-      if (session?.user) fetchChildName(session.user.id)
+      if (session?.user) await fetchChildName(session.user.id)
+      else {
+        setChildName('')
+        setChildCharacter('')
+        setChildBirthDate('')
+      }
+      setLoading(false)
     })
 
     return () => subscription.unsubscribe()
@@ -120,6 +133,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (data.user) {
       const meta = data.user.user_metadata
+      let childProfile = null
       if (meta?.name) {
         await saveProfileAndChild(data.user.id, meta.name, email, {
           childName: meta.child_name || '',
@@ -128,6 +142,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           disability: meta.disability || '',
         })
       }
+      childProfile = await fetchChildName(data.user.id)
+      return { error: null, childCharacter: childProfile?.disability || meta?.disability || '' }
     }
 
     return { error: null }

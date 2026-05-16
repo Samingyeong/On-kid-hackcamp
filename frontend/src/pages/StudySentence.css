@@ -71,6 +71,12 @@
   flex: 1;
   max-width: 600px;
 }
+.ss-card.vision-braille-card {
+  max-width: 760px;
+  padding: 26px 28px 22px;
+  gap: 14px;
+  border-radius: 28px;
+}
 .ss-arrow {
   width: 48px; height: 48px;
   border: none; background: transparent;
@@ -111,6 +117,164 @@
   transition: border-color 0.2s;
 }
 .ss-typing-input:focus { border-color: #FFB256; }
+
+/* 시각장애인 문장 점자 입력 */
+.study-sentence.vision-type .ss-content-area {
+  background:
+    radial-gradient(circle at 12% 88%, rgba(255,255,255,0.75) 0 110px, transparent 112px),
+    radial-gradient(circle at 92% 15%, rgba(255,255,255,0.65) 0 140px, transparent 142px),
+    #FAF4EE;
+}
+.study-sentence.vision-type .ss-left {
+  width: 240px;
+}
+.study-sentence.vision-type .ss-speech-bubble {
+  border-color: #F1C96B;
+  color: #5C3C11;
+}
+.study-sentence.vision-type .ss-right {
+  gap: 14px;
+}
+.ss-braille-area {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 320px;
+  gap: 18px;
+  align-items: stretch;
+}
+.ss-braille-input {
+  min-height: 230px;
+  background: #FFF9EF;
+  border: 3px solid #FFDCA8;
+  border-radius: 24px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.9);
+}
+.ss-braille-input-label {
+  font-size: 14px;
+  font-weight: 900;
+  color: #D9851A;
+  margin-bottom: 10px;
+}
+.ss-braille-text {
+  min-height: 82px;
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1.5;
+  font-weight: 900;
+  color: #1F1F1F;
+  word-break: keep-all;
+}
+.ss-braille-cursor {
+  display: inline-block;
+  width: 12px;
+  color: #FF900C;
+  font-size: 34px;
+  font-weight: 900;
+  animation: ssBlink 1s infinite;
+}
+@keyframes ssBlink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0; } }
+.ss-braille-pad {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  background: #FFB256;
+  border-radius: 24px;
+  box-shadow: inset -4px -4px 0 rgba(198,116,10,0.45), inset 3px 3px 0 rgba(255,255,255,0.35), 0 8px 16px rgba(196,112,0,0.2);
+}
+.ss-braille-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ss-braille-title {
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+}
+.ss-braille-read {
+  border: 2px solid rgba(255,255,255,0.9);
+  background: #fff;
+  color: #B86800;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.ss-braille-hint {
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.9);
+  font-weight: 700;
+}
+.ss-braille-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.ss-braille-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.ss-braille-row.special {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ss-braille-key {
+  width: 92px;
+  height: 78px;
+  border: none;
+  border-radius: 16px;
+  background: #fff;
+  color: #303030;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #D6D6D6;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease;
+  user-select: none;
+}
+.ss-braille-key:active,
+.ss-braille-key.active {
+  background: #FFF0D9;
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #C77A0A;
+}
+.ss-braille-num {
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 900;
+}
+.ss-braille-dot {
+  font-size: 12px;
+  font-weight: 800;
+  color: #8C8C8C;
+}
+.ss-braille-special {
+  min-width: 84px;
+  height: 42px;
+  border: none;
+  border-radius: 14px;
+  background: #fff;
+  color: #5C3C11;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #D6D6D6;
+}
+.ss-braille-special:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #D6D6D6;
+}
 
 /* 따라말하기 */
 .ss-speak-area {
@@ -164,4 +328,28 @@
   .ss-right { height: 70%; }
   .ss-monkey { width: 150px; }
   .ss-sentence { font-size: 18px; }
+  .study-sentence.vision-type .ss-left {
+    width: 100%;
+    height: auto;
+    padding-bottom: 0;
+  }
+  .study-sentence.vision-type .ss-right {
+    height: auto;
+    align-items: flex-start;
+    overflow: auto;
+  }
+  .ss-card.vision-braille-card {
+    padding: 20px 16px;
+  }
+  .ss-braille-area {
+    grid-template-columns: 1fr;
+  }
+  .ss-braille-pad {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .ss-braille-key {
+    width: 82px;
+    height: 70px;
+  }
 }

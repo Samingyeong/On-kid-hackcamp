@@ -54,13 +54,46 @@
   height: 36px;
   margin-right: auto;
 }
+
+.tutor-close-btn {
+  height: 40px;
+  min-width: 72px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #4b403c;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 0 16px;
+}
+
+.tutor-close-btn:hover {
+  background: #fff;
+}
+
+.tutor-profile-menu {
+  position: relative;
+}
+
 .tutor-user-pill {
   display: flex;
   align-items: center;
   gap: 8px;
   background: rgba(255, 242, 217, 0.5);
   border-radius: 80px;
+  border: 0;
   padding: 6px 14px 6px 16px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.tutor-user-pill:focus-visible,
+.tutor-close-btn:focus-visible,
+.tutor-profile-dropdown-item:focus-visible {
+  outline: 3px solid rgba(31, 167, 225, 0.55);
+  outline-offset: 3px;
 }
 .tutor-user-name {
   font-size: 16px;
@@ -81,6 +114,35 @@
 .tutor-user-avatar img {
   width: 36px; height: 36px;
   object-fit: contain;
+}
+
+.tutor-profile-dropdown {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  z-index: 40;
+  min-width: 124px;
+  padding: 8px 0;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(73, 54, 41, 0.18);
+}
+
+.tutor-profile-dropdown-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #333;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  text-align: left;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.tutor-profile-dropdown-item:hover {
+  background: #fff3df;
 }
 
 /* 메인 씬 */
@@ -358,6 +420,18 @@
   text-decoration: underline; padding: 4px 8px 5px;
 }
 .tutor-skip-btn:hover { color: #fff; }
+
+.tutor-voice-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 /* 모바일 */
 @media (max-width: 768px) {

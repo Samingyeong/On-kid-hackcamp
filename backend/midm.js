@@ -4,7 +4,7 @@
  * 
  * - 프롬프트 = AI 성격과 규칙 (거의 안 바뀜)
  * - 입력 JSON = 현재 상황 (step + child_profile + context)
- * - 판단 = 백엔드, 말하기 = AI
+ * - 결정/채점 = 백엔드, 말하기/흐름 안내 = AI
  */
 const http = require('http')
 
@@ -34,6 +34,10 @@ const SYSTEM_PROMPT = `너는 5세부터 10세 아동을 위한 AI 동화 학습
 - 청각장애 아동에게는 듣기 중심 표현을 피하고 자막/그림/손동작 중심으로 말한다.
 - 문해력이 낮은 아동에게는 문장을 짧게 쓰고 어려운 단어를 풀어서 설명한다.
 - 반드시 지정된 JSON 형식으로만 출력한다.
+- STT 인식, TTS 재생, 정답 채점 자체를 하지 않는다.
+- context.flow_policy.llm_role이 "narration_only"이면 새 결정을 내리지 말고, 이미 정해진 다음 행동을 아이에게 자연스럽게 안내하는 문장만 만든다.
+- context.flow_policy.fixed_next_action이 있으면 next_action은 반드시 그 값으로만 반환한다.
+- context.flow_policy.fixed_recommendation_title이 있으면 추천 책 제목은 반드시 그 제목만 사용한다.
 
 나이별 말투 규칙:
 
@@ -104,6 +108,8 @@ const SYSTEM_PROMPT = `너는 5세부터 10세 아동을 위한 AI 동화 학습
 - "너에게 딱 맞는 재미있는 동화를 찾았어!" 같은 표현을 사용한다.
 - "오늘은 네가 좋아하는 책을 추천해줄게" 같은 표현은 사용하지 않는다.
 - context에 storybook_db가 있으면 그 중에서 추천한다.
+- context.flow_policy.fixed_recommendation_title이 있으면 그 책을 이미 선택된 추천으로 보고, 다른 책을 고르거나 바꾸지 않는다.
+- context.flow_policy.llm_role이 "narration_only"이면 추천 결정이 아니라 추천으로 넘어가는 이유와 다음 음성 선택지를 짧게 안내한다.
 - message_to_child는 1문장으로 짧게. 예: "너에게 딱 맞는 동화를 찾았어! 어떤 걸 읽어볼까?"
 - recommended_content에 추천 책 제목을 넣는다.
 - next_action: "START_LEARNING"
@@ -260,11 +266,23 @@ async function routeVoiceDialog(childProfile, voiceData) {
 STT 결과를 현재 학습 상태에서 가능한 action 중 하나로만 매핑한다.
 STT, TTS, 정답 채점 자체를 하지 않는다.
 명확한 고정 명령은 그대로 intent로 반환하고, 애매한 자연어만 해석한다.
+allowed_intents 배열에 없는 intent는 절대 반환하지 않는다.
+context.flowPolicy.decisionOwner가 "rules"이면 다음 화면 전환과 채점 결정은 이미 정해진 규칙이 담당한다고 보고, 너는 intent 매핑과 짧은 안내문만 만든다.
+context.flowPolicy.forbiddenTasks에 포함된 작업은 nextAction으로 제안하지 않는다.
+홈, 처음으로는 GO_HOME으로 매핑한다.
+밖으로, 나가기만 말하면 GO_HOME으로 매핑하되, 단어 공부나 동화 목록처럼 목적 메뉴가 함께 있으면 목적 메뉴 intent를 우선한다.
+오늘 학습, 튜터는 OPEN_TUTOR로 매핑한다.
+동화 내용, 동화 듣기, 이야기 듣기는 OPEN_STORY_LEARNING으로 매핑한다.
+단어 공부, 단어 학습은 OPEN_WORD_STUDY로 매핑한다.
+문장 공부, 문장 학습, 문장 따라 말하기는 OPEN_SENTENCE_STUDY로 매핑한다.
+말하기, 음성 학습, 따라 말하기는 OPEN_VOICE_STUDY로 매핑한다.
+책 목록, 동화 목록, 책 찾기는 OPEN_BOOK_LIST로 매핑한다.
+학부모, 부모 화면은 OPEN_PARENT_DASHBOARD로 매핑한다.
 아이에게 말할 문장은 짧고 음성으로 듣기 쉽게 쓴다.
 반드시 JSON 객체 하나만 출력한다.
 출력 schema:
 {
-  "intent": "START | START_QUIZ | ANSWER_QUIZ | REPEAT | HINT | TODAY_RESULT | NEXT | PREVIOUS | STOP | CHANGE_BOOK | LEVEL_DOWN | LEVEL_UP | EXPLAIN_WORD | UNKNOWN",
+  "intent": "START | START_QUIZ | ANSWER_QUIZ | REPEAT | HINT | TODAY_RESULT | NEXT | PREVIOUS | STOP | CHANGE_BOOK | LEVEL_DOWN | LEVEL_UP | EXPLAIN_WORD | GO_HOME | OPEN_TUTOR | OPEN_STUDY_MENU | OPEN_STORY_LEARNING | OPEN_WORD_STUDY | OPEN_SENTENCE_STUDY | OPEN_VOICE_STUDY | OPEN_BOOK_LIST | OPEN_PARENT_DASHBOARD | UNKNOWN",
   "confidence": 0.0,
   "slots": {
     "answerText": "",
@@ -408,7 +426,7 @@ async function generateWeeklyReport(childProfile, weekData) {
 
 // ─── 5. 튜토리얼 범용 ────────────────────────────────────────
 async function tutorialStep(childProfile, step, context = {}) {
-  return callTutor({
+  const result = await callTutor({
     step,
     child_profile: {
       name: childProfile.name || '친구',
@@ -417,6 +435,13 @@ async function tutorialStep(childProfile, step, context = {}) {
     },
     context,
   })
+  if (context?.flow_policy?.fixed_next_action) {
+    result.next_action = context.flow_policy.fixed_next_action
+  }
+  if (context?.flow_policy?.fixed_recommendation_title) {
+    result.recommended_content = [context.flow_policy.fixed_recommendation_title]
+  }
+  return result
 }
 
 // ─── 학습 AI 피드백 ────────────────────────────────────────────

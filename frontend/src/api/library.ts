@@ -360,6 +360,15 @@ export type VoiceIntent =
   | 'LEVEL_DOWN'
   | 'LEVEL_UP'
   | 'EXPLAIN_WORD'
+  | 'GO_HOME'
+  | 'OPEN_TUTOR'
+  | 'OPEN_STUDY_MENU'
+  | 'OPEN_STORY_LEARNING'
+  | 'OPEN_WORD_STUDY'
+  | 'OPEN_SENTENCE_STUDY'
+  | 'OPEN_VOICE_STUDY'
+  | 'OPEN_BOOK_LIST'
+  | 'OPEN_PARENT_DASHBOARD'
   | 'UNKNOWN'
 
 export interface VoiceDialogResult {

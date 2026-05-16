@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { CATEGORIES } from '../constants/categories'
 import { fetchBooks, fetchBookForReader } from '../api/library'
 import type { Book } from '../types'
 import CalendarModal from '../components/CalendarModal'
+import { useAuth } from '../contexts/AuthContext'
 import './Home.css'
 
 const DAYS = ['일','월','화','수','목','금','토']
@@ -71,6 +72,11 @@ export function clearHomeCache() {
 
 export default function Home() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { childCharacter } = useAuth()
+  const [skipTutorForThisHomeMount] = useState(() => (
+    Boolean((location.state as { skipVisionTutor?: boolean } | null)?.skipVisionTutor)
+  ))
   const sliderRef = useRef<HTMLDivElement>(null)
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchVal, setSearchVal] = useState('')
@@ -89,6 +95,19 @@ export default function Home() {
   const [flipped, setFlipped] = useState(false)
   const [featured, setFeatured] = useState<Book | null>(_cachedFeatured)
   const [rankingBooks, setRankingBooks] = useState<Book[]>(_cachedRanking)
+  const visibleStudyCards = childCharacter === 'vision'
+    ? STUDY_CARDS.filter(card => card.id !== 'quiz')
+    : STUDY_CARDS
+
+  useEffect(() => {
+    if (skipTutorForThisHomeMount && location.state) {
+      navigate('/', { replace: true, state: null })
+      return
+    }
+    if (childCharacter === 'vision' && !skipTutorForThisHomeMount) {
+      navigate('/tutor?entry=home', { replace: true })
+    }
+  }, [childCharacter, location.state, navigate, skipTutorForThisHomeMount])
 
   // 연관 검색어
   useEffect(() => {
@@ -146,6 +165,14 @@ export default function Home() {
     } catch {
       navigate(`/books?q=${encodeURIComponent(title)}`)
     }
+  }
+
+  function openStudyCard(card: (typeof STUDY_CARDS)[number]) {
+    if (childCharacter === 'vision' && card.id === 'today') {
+      navigate('/tutor?entry=level')
+      return
+    }
+    navigate(card.path)
   }
 
   function scrollSlider(dir: number) {
@@ -322,8 +349,8 @@ export default function Home() {
           {/* 오른쪽: 학습 카드 2×2 */}
           <div className="panel panel-study">
             <div className="study-grid">
-              {STUDY_CARDS.map(card => (
-                <div key={card.label} className="study-card" onClick={() => navigate(card.path)}>
+              {visibleStudyCards.map(card => (
+                <div key={card.label} className="study-card" onClick={() => openStudyCard(card)}>
                   <div className="study-card-inner">
                     <img src={card.img} alt={card.label} className="study-card-img" />
                   </div>

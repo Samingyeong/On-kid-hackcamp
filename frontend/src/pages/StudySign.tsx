@@ -541,10 +541,9 @@ export default function StudySign() {
       } else {
         setPhase('retry')
         // 평가 결과를 AI 튜터에게 전달
-        const feedback = result.feedback || result.message || ''
-        const detail = result.details ? JSON.stringify(result.details) : ''
+        const feedback = Array.isArray(result.feedback) ? result.feedback.join(' ') : ''
         window.dispatchEvent(new CustomEvent('ai-tutor-trigger', {
-          detail: { context: `수어 학습 - ${currentWord} 틀림 (${nextAttempt}회). 피드백: ${feedback} ${detail}` }
+          detail: { context: `수어 학습 - ${currentWord} 틀림 (${nextAttempt}회). 피드백: ${feedback}` }
         }))
       }
     } catch (error) {
