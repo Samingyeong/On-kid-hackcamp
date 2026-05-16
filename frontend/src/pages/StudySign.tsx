@@ -563,15 +563,25 @@ export default function StudySign() {
   }
 
   const practiceText = (() => {
-    if (!signLoading && !signVrmSrc) return '평가할 수어 예시가 없어요'
-    if (visionLoading) return '평가 모델 준비 중'
-    if (phase === 'demo') return '먼저 아바타 동작을 볼게요'
-    if (phase === 'recording') return '촬영중'
-    if (phase === 'checking') return '동작을 비교하고 있어요'
-    if (phase === 'passed') return '정답! 다음 단어로 갈게요'
-    if (phase === 'retry') return '조금 달라요. 다시 해볼까요?'
-    return '동작을 따라 해볼까요?'
+    if (!signLoading && !signVrmSrc) return '수어 예시 없음'
+    if (visionLoading) return '준비 중...'
+    if (phase === 'demo') return '예시 보는 중'
+    if (phase === 'recording') return '🔴 촬영중'
+    if (phase === 'checking') return '비교 중...'
+    if (phase === 'passed') return '✅ 통과!'
+    if (phase === 'retry') return '🔴 촬영 준비'
+    return '🔴 촬영 준비'
   })()
+
+  // AI 튜터에게 피드백 트리거
+  useEffect(() => {
+    if (phase === 'retry' && attempts > 0) {
+      window.dispatchEvent(new CustomEvent('ai-tutor-trigger', { detail: { context: `수어 학습 - ${currentWord} 틀림 ${attempts}회` } }))
+    }
+    if (phase === 'passed') {
+      window.dispatchEvent(new CustomEvent('ai-tutor-trigger', { detail: { context: `수어 학습 - ${currentWord} 성공!` } }))
+    }
+  }, [phase, attempts, currentWord])
 
   return (
     <div className="study-sign">
@@ -662,9 +672,6 @@ export default function StudySign() {
 
           <div className="ss-feedback" aria-live="polite">
             {cameraError && <span className="ss-camera-error">{cameraError}</span>}
-            {attempts === 0 && phase === 'ready' && (
-              <span>아바타 예시와 같은 동작으로 따라 해요.</span>
-            )}
           </div>
 
           <div className="ss-page-count">
