@@ -252,26 +252,6 @@ export default function StudyTyping() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [isVision])
 
-  // 화면 버튼 클릭으로 점자 입력 (터치/마우스)
-  const screenDotsRef = useRef<Set<number>>(new Set())
-  const screenTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const handleScreenDot = useCallback((dotIdx: number) => {
-    screenDotsRef.current.add(dotIdx)
-    setBrailleDots(prev => {
-      const next = [...prev] as Dots
-      next[dotIdx] = true
-      return next
-    })
-    if (screenTimerRef.current) clearTimeout(screenTimerRef.current)
-    screenTimerRef.current = setTimeout(() => {
-      const dots: Dots = [false,false,false,false,false,false]
-      screenDotsRef.current.forEach(i => { dots[i] = true })
-      handleChord(dots)
-      screenDotsRef.current.clear()
-      setBrailleDots([false,false,false,false,false,false])
-    }, 350)
-  }, [handleChord])
-
   // 자동 포커스
   useEffect(() => { inputRef.current?.focus() }, [currentIdx])
 
@@ -357,39 +337,30 @@ export default function StudyTyping() {
           {isVision ? (
             /* 점자 키패드 (시각장애인 전용) */
             <div className="st-braille-pad">
-              <div className="st-braille-header">
-                <div className="st-braille-label">점자 입력</div>
-              </div>
-              <div className="st-braille-hint">숫자패드 7·8·4·5·1·2 동시 입력 | 0=띄어쓰기 | .=지우기 | Enter=전체읽기</div>
               <div className="st-braille-grid">
                 <div className="st-braille-row">
                   {[{k:'7',b:0,label:'점1'},{k:'8',b:3,label:'점4'}].map(({k,b,label}) => (
-                    <button key={k} className={`st-braille-key ${brailleDots[b] ? 'active' : ''}`} onPointerDown={() => handleScreenDot(b)}>
+                    <div key={k} className={`st-braille-key ${brailleDots[b] ? 'active' : ''}`}>
                       <span className="st-braille-num">{k}</span>
                       <span className="st-braille-dot">{label}</span>
-                    </button>
+                    </div>
                   ))}
                 </div>
                 <div className="st-braille-row">
                   {[{k:'4',b:1,label:'점2'},{k:'5',b:4,label:'점5'}].map(({k,b,label}) => (
-                    <button key={k} className={`st-braille-key ${brailleDots[b] ? 'active' : ''}`} onPointerDown={() => handleScreenDot(b)}>
+                    <div key={k} className={`st-braille-key ${brailleDots[b] ? 'active' : ''}`}>
                       <span className="st-braille-num">{k}</span>
                       <span className="st-braille-dot">{label}</span>
-                    </button>
+                    </div>
                   ))}
                 </div>
                 <div className="st-braille-row">
                   {[{k:'1',b:2,label:'점3'},{k:'2',b:5,label:'점6'}].map(({k,b,label}) => (
-                    <button key={k} className={`st-braille-key ${brailleDots[b] ? 'active' : ''}`} onPointerDown={() => handleScreenDot(b)}>
+                    <div key={k} className={`st-braille-key ${brailleDots[b] ? 'active' : ''}`}>
                       <span className="st-braille-num">{k}</span>
                       <span className="st-braille-dot">{label}</span>
-                    </button>
+                    </div>
                   ))}
-                </div>
-                <div className="st-braille-row">
-                  <button className="st-braille-key st-braille-back" onPointerDown={() => handleSpecial('delete')}>
-                    ← 지우기 (.)
-                  </button>
                 </div>
               </div>
             </div>
