@@ -11,6 +11,7 @@
     "install:python": "node scripts/install_python_deps.js",
     "install:voice-models": "node scripts/install_python_deps.js requirements-voice.txt",
     "install:midm-model": "node scripts/install_python_deps.js requirements-midm.txt",
+    "import:sign-motion": "node scripts/import_sign_motion_manifest.js",
     "check:setup": "node scripts/check_setup.js"
   },
   "dependencies": {
