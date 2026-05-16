@@ -404,16 +404,18 @@ export default function Reader() {
                         {exact?.pos && <div className="dict-meta">{exact.pos}</div>}
                         <div className="word-know-btns">
                           <button className="know-btn know-yes" onClick={async e => {
+                            const btn = e.currentTarget
                             try {
                               await saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 1, from_book: title })
                             } catch (err) { console.error('saveWord error:', err) }
-                            const btn = e.currentTarget; btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
+                            btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
                           }}>알아요</button>
                           <button className="know-btn know-no" onClick={async e => {
+                            const btn = e.currentTarget
                             try {
                               await saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 0, from_book: title })
                             } catch (err) { console.error('saveWord error:', err) }
-                            const btn = e.currentTarget; btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
+                            btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
                           }}>몰라요</button>
                         </div>
                         <hr className="dict-divider" />
