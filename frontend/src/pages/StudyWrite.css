@@ -1,0 +1,287 @@
+.study-write {
+  display: flex;
+  height: calc(100vh - 64px);
+  background: #2C2C2C;
+  overflow: hidden;
+}
+
+/* 왼쪽: 원숭이 영역 */
+.sw-left {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px;
+  flex-shrink: 0;
+}
+
+.sw-speech-bubble {
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.sw-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #fff;
+}
+
+.sw-monkey-placeholder {
+  width: 180px;
+  height: 220px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  border: 2px dashed rgba(255,255,255,0.3);
+}
+
+/* 오른쪽: 메인 학습 영역 */
+.sw-main {
+  flex: 1;
+  background: #FAF4EE;
+  border-radius: 40px 0 0 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 32px;
+  position: relative;
+}
+
+/* 단계 표시 */
+.sw-stages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sw-stage-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #bbb;
+  position: relative;
+}
+.sw-stage-dot.active {
+  border-color: #FFB256;
+  color: #FFB256;
+}
+.sw-stage-dot.done {
+  border-color: #FFB256;
+  color: #FFB256;
+}
+.sw-stage-dot + .sw-stage-dot::before {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 8px;
+  height: 2px;
+  background: #ddd;
+}
+.sw-stage-dot.active + .sw-stage-dot::before,
+.sw-stage-dot.done + .sw-stage-dot::before {
+  background: #FFB256;
+}
+
+/* 단어 */
+.sw-word {
+  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 900;
+  color: #333;
+}
+
+/* 쓰기 영역 */
+.sw-canvas-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sw-nav-btn {
+  background: none;
+  border: none;
+  font-size: 36px;
+  color: #999;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.15s;
+}
+.sw-nav-btn:hover:not(:disabled) { color: #FFB256; }
+.sw-nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+.sw-cells {
+  display: flex;
+  gap: 4px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.sw-cell {
+  width: 120px;
+  height: 120px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  /* 점선 가이드 */
+  background-image:
+    linear-gradient(to right, #eee 1px, transparent 1px),
+    linear-gradient(to bottom, #eee 1px, transparent 1px);
+  background-size: 50% 50%;
+  background-position: center;
+}
+
+.sw-guide-char {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+  user-select: none;
+}
+
+.sw-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* 힌트 */
+.sw-hint-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.sw-hint-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #7DD3C0;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.15s;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+.sw-hint-btn:active { transform: scale(0.92); }
+.sw-hint-label {
+  font-size: 13px;
+  color: #888;
+  font-weight: 600;
+}
+
+/* 하단 */
+.sw-footer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.sw-progress {
+  font-size: 15px;
+  color: #888;
+  font-weight: 600;
+}
+.sw-next-stage-btn {
+  padding: 10px 24px;
+  background: #FFB256;
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sw-next-stage-btn:hover { background: #e09a3e; }
+
+/* 채점 */
+.sw-check-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sw-check-btn {
+  padding: 10px 24px;
+  background: #5B7FD6;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sw-check-btn:hover:not(:disabled) { background: #4568b8; }
+.sw-check-btn:disabled { opacity: 0.6; cursor: default; }
+
+.sw-result {
+  font-size: 16px;
+  font-weight: 700;
+}
+.sw-result.correct { color: #2e7d32; }
+.sw-result.wrong { color: #e53935; }
+
+.sw-clear-btn {
+  padding: 10px 24px;
+  background: #f5f5f5;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #666;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sw-clear-btn:hover { background: #eee; }
+
+/* 단어 진행 도트 */
+.sw-word-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.sw-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ddd;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sw-dot.done { background: #7DD3C0; }
+.sw-dot.current { background: #FFB256; transform: scale(1.3); }
