@@ -112,15 +112,12 @@ export default function StudyVoice() {
 
         {/* 오른쪽: 단어 카드 */}
         <div className="sv-right">
+          <button className="sv-arrow" onClick={handlePrev} disabled={currentIdx === 0}>‹</button>
           <div className="sv-card">
-            <div className="sv-chars-row">
-              <button className="sv-arrow" onClick={handlePrev} disabled={currentIdx === 0}>‹</button>
-              <div className="sv-chars">
-                {chars.map((ch, i) => (
-                  <div key={i} className={`sv-char ${feedback === 'correct' ? 'correct' : ''}`}>{ch}</div>
-                ))}
-              </div>
-              <button className="sv-arrow" onClick={handleNext} disabled={currentIdx >= words.length - 1}>›</button>
+            <div className="sv-chars">
+              {chars.map((ch, i) => (
+                <div key={i} className={`sv-char ${feedback === 'correct' ? 'correct' : ''}`}>{ch}</div>
+              ))}
             </div>
 
             <div className="sv-actions">
@@ -138,6 +135,7 @@ export default function StudyVoice() {
 
             <div className="sv-progress">{currentIdx + 1}/{words.length}</div>
           </div>
+          <button className="sv-arrow" onClick={handleNext} disabled={currentIdx >= words.length - 1}>›</button>
         </div>
       </div>
     </div>
