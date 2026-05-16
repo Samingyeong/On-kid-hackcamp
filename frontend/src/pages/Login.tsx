@@ -17,7 +17,9 @@ export default function Login() {
 
   // Step 1 fields
   const [name, setName] = useState('')
-  const [birth, setBirth] = useState('')
+  const [birthYear, setBirthYear] = useState('')
+  const [birthMonth, setBirthMonth] = useState('')
+  const [birthDay, setBirthDay] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -129,7 +131,20 @@ export default function Login() {
             </div>
             <div className="signup-field">
               <span className="signup-label">생년월일</span>
-              <input type="text" placeholder="주민등록상 생년월일 8자리를 입력하세요." value={birth} onChange={e => setBirth(e.target.value)} className="signup-input" />
+              <div className="signup-phone-row">
+                <select className="signup-input signup-select signup-birth" value={birthYear} onChange={e => setBirthYear(e.target.value)}>
+                  <option value="">년</option>
+                  {Array.from({ length: 60 }, (_, i) => 2025 - i).map(y => <option key={y} value={y}>{y}</option>)}
+                </select>
+                <select className="signup-input signup-select signup-birth" value={birthMonth} onChange={e => setBirthMonth(e.target.value)}>
+                  <option value="">월</option>
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map(m => <option key={m} value={m}>{m}</option>)}
+                </select>
+                <select className="signup-input signup-select signup-birth" value={birthDay} onChange={e => setBirthDay(e.target.value)}>
+                  <option value="">일</option>
+                  {Array.from({ length: 31 }, (_, i) => i + 1).map(d => <option key={d} value={d}>{d}</option>)}
+                </select>
+              </div>
             </div>
             <div className="signup-field">
               <span className="signup-label">아이디</span>
@@ -194,7 +209,20 @@ export default function Login() {
             </div>
             <div className="signup-field">
               <span className="signup-label">생년월일</span>
-              <input type="text" placeholder="주민등록상 생년월일 8자리를 입력하세요." value={childBirth} onChange={e => setChildBirth(e.target.value)} className="signup-input" />
+              <div className="signup-phone-row">
+                <select className="signup-input signup-select signup-birth" value={childBirth.split('-')[0] || ''} onChange={e => setChildBirth(`${e.target.value}-${childBirth.split('-')[1] || ''}-${childBirth.split('-')[2] || ''}`)}>
+                  <option value="">년</option>
+                  {Array.from({ length: 20 }, (_, i) => 2025 - i).map(y => <option key={y} value={y}>{y}</option>)}
+                </select>
+                <select className="signup-input signup-select signup-birth" value={childBirth.split('-')[1] || ''} onChange={e => setChildBirth(`${childBirth.split('-')[0] || ''}-${e.target.value}-${childBirth.split('-')[2] || ''}`)}>
+                  <option value="">월</option>
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map(m => <option key={m} value={m}>{m}</option>)}
+                </select>
+                <select className="signup-input signup-select signup-birth" value={childBirth.split('-')[2] || ''} onChange={e => setChildBirth(`${childBirth.split('-')[0] || ''}-${childBirth.split('-')[1] || ''}-${e.target.value}`)}>
+                  <option value="">일</option>
+                  {Array.from({ length: 31 }, (_, i) => i + 1).map(d => <option key={d} value={d}>{d}</option>)}
+                </select>
+              </div>
             </div>
             <div className="signup-field">
               <span className="signup-label">선호 동화</span>

@@ -351,3 +351,5 @@
   font-size: 20px;
   color: #1F1F1F;
 }
+
+.signup-birth { flex: 1; min-width: 0; }
