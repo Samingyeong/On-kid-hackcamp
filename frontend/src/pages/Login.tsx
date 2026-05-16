@@ -151,29 +151,55 @@ export default function Login() {
         {step === 2 && (
           <div className="signup-form">
             <div className="signup-field">
-              <span className="signup-label">아이 이름</span>
+              <span className="signup-label">이름</span>
               <input type="text" placeholder="아이의 이름을 입력하세요." value={childName} onChange={e => setChildName(e.target.value)} className="signup-input" />
             </div>
             <div className="signup-field">
-              <span className="signup-label">아이 생년월일</span>
-              <input type="text" placeholder="생년월일 8자리를 입력하세요." value={childBirth} onChange={e => setChildBirth(e.target.value)} className="signup-input" />
+              <span className="signup-label">생년월일</span>
+              <input type="text" placeholder="주민등록상 생년월일 8자리를 입력하세요." value={childBirth} onChange={e => setChildBirth(e.target.value)} className="signup-input" />
+            </div>
+            <div className="signup-field">
+              <span className="signup-label">선호 동화</span>
+              <select className="signup-input signup-select" defaultValue="">
+                <option value="" disabled>장르를 선택해 주세요.</option>
+                <option value="korean">한국전래동화</option>
+                <option value="foreign">외국전래동화</option>
+                <option value="creative">창작동화</option>
+                <option value="kpicture">K-그림책</option>
+              </select>
             </div>
             <div className="signup-field">
               <span className="signup-label">성별</span>
               <div className="signup-gender">
-                <button className={`gender-btn ${childGender === '남' ? 'active' : ''}`} onClick={() => setChildGender('남')}>남</button>
-                <button className={`gender-btn ${childGender === '여' ? 'active' : ''}`} onClick={() => setChildGender('여')}>여</button>
+                <button className={`gender-btn ${childGender === '여' ? 'active' : ''}`} onClick={() => setChildGender('여')}>여자아이</button>
+                <button className={`gender-btn ${childGender === '남' ? 'active' : ''}`} onClick={() => setChildGender('남')}>남자아이</button>
               </div>
             </div>
-            <div className="signup-field">
-              <span className="signup-label">장애 유형</span>
-              <input type="text" placeholder="해당 시 입력 (선택사항)" value={disability} onChange={e => setDisability(e.target.value)} className="signup-input" />
+
+            {/* 아이 유형 선택 카드 */}
+            <div className="signup-child-types">
+              {[
+                { id: 'slow', label: '학습이\n느린아이', img: '/svg/문해력.png' },
+                { id: 'study', label: '공부가\n필요한 아이', img: '/svg/공부가필요한.png' },
+                { id: 'hearing', label: '귀가\n불편한 아이', img: '/svg/귀가불편한.png' },
+                { id: 'vision', label: '눈이\n불편한 아이', img: '/svg/눈이불편한.png' },
+              ].map(type => (
+                <div
+                  key={type.id}
+                  className={`child-type-card ${disability === type.id ? 'selected' : ''}`}
+                  onClick={() => setDisability(disability === type.id ? '' : type.id)}
+                >
+                  <img src={type.img} alt={type.label} className="child-type-img" />
+                  <span className="child-type-label">{type.label}</span>
+                </div>
+              ))}
             </div>
+
             {error && <p className="login-error">{error}</p>}
             <div className="signup-btn-row">
               <button className="signup-prev-btn" onClick={() => setStep(1)}>이전</button>
               <button className="signup-next-btn" onClick={handleNextStep} disabled={loading}>
-                {loading ? '가입 중...' : '가입완료'}
+                {loading ? '가입 중...' : '다음단계로'}
               </button>
             </div>
           </div>
