@@ -101,7 +101,7 @@
   background: #F16F6F;
   padding: 12px;
   border-radius: 20px;
-  margin: 24px 24px 24px 12px;
+  margin: 40px 24px 40px 12px;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
@@ -178,14 +178,11 @@
 .reader-subtitle-list {
   flex: 1;
   overflow: hidden;
-  scrollbar-width: none;
   padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 0;
 }
-.reader-subtitle-list::-webkit-scrollbar { display: none; }
 .reader-loading {
   color: #aaa;
   font-size: 16px;
@@ -200,14 +197,14 @@
   transition: background 0.2s;
   align-items: center;
   border-radius: 0;
-  flex: 1;
-  min-height: 0;
+  height: 25%;
+  flex-shrink: 0;
 }
-.reader-cue:last-child { border-bottom: none; margin-bottom: 0; }
+.reader-cue:last-child { border-bottom: none; }
 .reader-cue.active {
   background: #FFF1D6;
   border-radius: 10px;
-  border-bottom: none;
+  border-bottom-color: transparent;
 }
 .reader-cue-time {
   font-size: 13px;

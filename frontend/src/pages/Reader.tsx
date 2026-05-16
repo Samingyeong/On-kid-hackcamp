@@ -165,8 +165,16 @@ export default function Reader() {
     setActiveCue(idx)
   }
 
+  const subtitleListRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
-    activeCueRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    if (activeCue >= 0 && subtitleListRef.current) {
+      const container = subtitleListRef.current
+      const rowHeight = container.clientHeight / 4
+      // 활성 자막이 4번째 줄(맨 아래)에 오도록 스크롤
+      const targetScroll = Math.max(0, (activeCue - 3) * rowHeight)
+      container.scrollTop = targetScroll
+    }
   }, [activeCue])
 
   // ─── 언어 변경 ──────────────────────────────────────────────
@@ -340,16 +348,12 @@ export default function Reader() {
               <img src="/svg/spring.png" alt="" className="reader-spring" />
             </div>
             <div className="reader-page-right-inner">
-            <div className="reader-subtitle-list">
+            <div className="reader-subtitle-list" ref={subtitleListRef}>
               {subtitleLoading && <p className="reader-loading">자막을 불러오는 중...</p>}
               {!subtitleLoading && cues.length === 0 && (
                 <p className="reader-loading">이 언어의 자막이 없어요.</p>
               )}
-              {cues.map((cue, idx) => {
-                // 활성 자막 기준 4줄만 표시 (이전 3개 + 현재)
-                const center = activeCue >= 0 ? activeCue : 3
-                if (idx < center - 3 || idx > center) return null
-                return (
+              {cues.map((cue, idx) => (
                 <div
                   key={idx}
                   className={`reader-cue ${idx === activeCue ? 'active' : ''} ${idx === 1 || idx === 2 ? 'cue-author' : ''}`}
@@ -366,8 +370,7 @@ export default function Reader() {
                     }
                   </span>
                 </div>
-                )
-              })}
+              ))}
             </div>
             </div>
           </div>
