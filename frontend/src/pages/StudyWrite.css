@@ -50,6 +50,13 @@
   border: 2px dashed rgba(255,255,255,0.3);
 }
 
+.sw-monkey-img {
+  width: 200px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+}
+
 /* 오른쪽: 메인 학습 영역 */
 .sw-main {
   flex: 1;

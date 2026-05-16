@@ -149,14 +149,16 @@ export default function StudyWrite() {
 
   return (
     <div className="study-write">
-      {/* 왼쪽: 원숭이 + 말풍선 (임시 박스) */}
+      {/* 왼쪽: 원숭이 + 말풍선 */}
       <div className="sw-left">
         <div className="sw-speech-bubble">
-          {STAGE_MESSAGES[stage - 1]}
+          {result && !result.correct ? '다시 한번 써볼까요?' : STAGE_MESSAGES[stage - 1]}
         </div>
-        <div className="sw-monkey-placeholder">
-          🐵
-        </div>
+        <img
+          src={stage === 1 && !result?.correct ? '/svg/word_study_first.png' : '/svg/word_study_retry.png'}
+          alt="원숭이 캐릭터"
+          className="sw-monkey-img"
+        />
       </div>
 
       {/* 오른쪽: 학습 영역 */}
