@@ -535,8 +535,8 @@
 .rank-4, .rank-5, .rank-6, .rank-7, .rank-8, .rank-9, .rank-10 { color: #CCCCCC; }
 
 .ranking-cover {
-  width: 52px;
-  height: 68px;
+  width: 90px;
+  height: 56px;
   border-radius: 6px;
   overflow: hidden;
   background: #E0E0E0;
