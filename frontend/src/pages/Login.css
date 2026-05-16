@@ -306,8 +306,7 @@
 .child-type-img {
   width: 160px;
   height: 220px;
-  object-fit: cover;
-  object-position: top;
+  object-fit: contain;
   border-radius: 16px;
 }
 
