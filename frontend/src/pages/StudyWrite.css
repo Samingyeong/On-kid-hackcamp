@@ -126,7 +126,6 @@
   position: relative;
   z-index: 2;
   flex: 1;
-  max-width: 700px;
   background: #FEFCF9;
   border: 1px solid rgba(91, 109, 158, 0.3);
   border-radius: 50px;
