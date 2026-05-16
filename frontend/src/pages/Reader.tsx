@@ -348,11 +348,11 @@ export default function Reader() {
               {cues.map((cue, idx) => (
                 <div
                   key={idx}
-                  className={`reader-cue ${idx === activeCue ? 'active' : ''} ${idx <= 2 ? 'cue-author' : ''}`}
+                  className={`reader-cue ${idx === activeCue ? 'active' : ''} ${idx === 1 || idx === 2 ? 'cue-author' : ''}`}
                   ref={idx === activeCue ? activeCueRef : null}
                 >
                   <span className="reader-cue-text">
-                    {idx <= 2
+                    {idx === 1 || idx === 2
                       ? <span className="reader-author">{cue.text}</span>
                       : cue.text.split(/(\s+)/).map((w, i) =>
                           w.trim()
