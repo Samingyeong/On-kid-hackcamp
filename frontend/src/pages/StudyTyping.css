@@ -1,67 +1,87 @@
 .study-typing {
   height: calc(100vh - 64px);
-  background: #FAF4EE;
+  background: #FFB256;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
 
+/* 상단: 단어 흐름 */
 .st-top {
   background: #FFB256;
-  padding: 20px;
+  padding: 16px 20px;
   display: flex;
   justify-content: center;
+  flex-shrink: 0;
 }
 .st-word-flow {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 40px;
 }
 .st-word-prev, .st-word-next {
-  font-size: clamp(16px, 2vw, 22px);
+  font-size: clamp(24px, 3vw, 40px);
   font-weight: 600;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.4);
   white-space: nowrap;
 }
+.st-word-next {
+  color: #FFB256;
+  background: linear-gradient(90deg, #FFB256 0%, #fff 140%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.st-word-prev {
+  color: #858585;
+  background: linear-gradient(270deg, #858585 0%, #fff 140%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .st-word-display {
-  background: #F5E6B8;
-  border-radius: 16px;
-  padding: 16px 40px;
+  background: #FFC549;
+  border-radius: 30px;
+  padding: 12px 48px;
   text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 .st-word-label {
   display: block;
-  font-size: 13px;
-  color: #888;
+  font-size: 14px;
+  color: #fff;
   margin-bottom: 4px;
 }
 .st-word {
-  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
-  font-size: clamp(32px, 4vw, 48px);
+  font-size: clamp(48px, 5vw, 80px);
   font-weight: 900;
-  color: #333;
+  color: #1F1F1F;
 }
 
+/* 중간: 입력 + 키보드 영역 */
 .st-middle {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 20px;
+  background: #FAF4EE;
+  border-radius: 80px 80px 0 0;
+  position: relative;
 }
 .st-typed-area {
-  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
-  font-size: clamp(28px, 3.5vw, 42px);
+  font-size: clamp(36px, 4vw, 60px);
   font-weight: 700;
-  color: #333;
-  border-bottom: 3px solid #FFB256;
+  color: #1F1F1F;
+  border-bottom: 3px solid #FF900C;
   padding: 8px 4px;
-  min-width: 200px;
+  min-width: 240px;
   text-align: center;
+  margin-bottom: 16px;
 }
 .st-cursor {
   animation: blink 1s infinite;
-  color: #FFB256;
+  color: #626262;
 }
 @keyframes blink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0; } }
 
@@ -71,94 +91,120 @@
   pointer-events: none;
 }
 
+/* 하단: 키보드 + 손 + 통계 */
 .st-bottom {
   display: flex;
-  gap: 20px;
-  padding: 16px 24px;
-  background: #F0EBE3;
-  align-items: flex-start;
+  gap: 0;
+  padding: 0;
+  align-items: flex-end;
+  position: relative;
+  background: #FFB256;
+  min-height: 380px;
 }
 
+/* 통계 카드 (왼쪽 하단) */
 .st-stats {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-width: 140px;
+  gap: 12px;
+  min-width: 240px;
   background: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.12), inset 4px 4px 4px rgba(0,0,0,0.05);
+  z-index: 20;
 }
-.st-stat { display: flex; align-items: center; gap: 8px; }
-.st-stat-label { font-size: 13px; color: #666; font-weight: 600; }
-.st-stat-value { font-size: 14px; font-weight: 700; color: #333; }
+.st-stat { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.st-stat-label { font-size: 16px; color: #1F1F1F; font-weight: 600; }
+.st-stat-value { font-size: 16px; font-weight: 700; color: #858585; }
 .st-progress-bar {
-  flex: 1;
-  height: 8px;
-  background: #eee;
-  border-radius: 4px;
+  width: 100%;
+  height: 14px;
+  background: #F0F0F0;
+  border-radius: 50px;
   overflow: hidden;
+  box-shadow: inset -1px 2px 4px rgba(0,0,0,0.12);
+  margin-top: 4px;
 }
 .st-progress-fill {
   height: 100%;
-  background: #5B7FD6;
-  border-radius: 4px;
+  background: #FFB256;
+  border-radius: 50px;
   transition: width 0.3s;
+  box-shadow: inset -1px 2px 2px #FFDCB2;
+}
+.st-progress-fill.accuracy {
+  background: #FE7A83;
+  box-shadow: inset -1px 2px 2px #FFB2B7;
 }
 
 /* 키보드 + 3D 손 */
 .st-keyboard-wrap {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  position: relative;
+  padding-bottom: 0;
 }
 
 .st-keyboard {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   align-items: center;
   position: relative;
+  z-index: 5;
+  padding: 16px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 20px;
+  box-shadow: inset -4px -4px 0px rgba(140,140,140,0.5), inset 3px 3px 0px rgba(128,128,128,0.25);
+  filter: drop-shadow(2px 4px 4px #D97C0C);
 }
 
 .st-hands-row {
-  width: 100%;
-  height: 320px;
   position: absolute;
-  bottom: -20px;
-  left: 0;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 360px;
   pointer-events: none;
   z-index: 10;
 }
+
 .st-kb-row {
   display: flex;
-  gap: 4px;
+  gap: 8px;
 }
 .st-key {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   background: #fff;
-  border: 2px solid #ddd;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
-  color: #333;
+  color: #000;
   transition: all 0.1s;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 .st-key.active {
   background: #FFB256;
-  border-color: #FFB256;
   color: #fff;
-  transform: scale(0.92);
+  transform: scale(0.9);
 }
 .st-space {
-  width: 200px;
+  width: 320px;
 }
 
+/* 빈 상태 */
 .st-main {
   flex: 1;
   display: flex;
@@ -177,10 +223,22 @@
   cursor: pointer;
 }
 
-/* 키 눌릴 때 효과는 .pressing 클래스로 처리 */
-
 /* 3D 손 컨테이너 */
 .hand3d-container {
   width: 100%;
   height: 100%;
 }
+
+/* 구름 장식 (양쪽) */
+.st-cloud-left, .st-cloud-right {
+  position: absolute;
+  bottom: 0;
+  width: 400px;
+  height: 400px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.6;
+  z-index: 1;
+}
+.st-cloud-left { left: -150px; }
+.st-cloud-right { right: -150px; }
