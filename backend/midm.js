@@ -419,6 +419,58 @@ async function tutorialStep(childProfile, step, context = {}) {
   })
 }
 
+// ─── 학습 AI 피드백 (수어/단어/문장 학습용) ────────────────────
+const STUDY_AI_PROMPT = `너는 아동용 AI 멀티모달 학습 플랫폼 On-kid의 AI 학습 친구이다.
+가장 중요한 목표는 "아이가 학습을 포기하지 않도록 돕는 것"이다.
+
+핵심 규칙:
+- 친구 같은 말투, 짧은 문장, 쉬운 단어 사용
+- 피드백은 최대 2문장
+- 절대 "틀렸어", "왜 못해?", "다시 해" 같은 표현 금지
+- 아이의 감정 상태에 따라 난이도/흐름 조절
+- 같은 실수 3회 이상 시 다른 접근 제안
+- 성공 시 노력과 성장 중심 칭찬
+
+장애 유형별:
+[청각장애] 수어 동작 정확도 피드백, 시각적 표현 활용, "조금 더 위로!", "천천히 움직여볼까?"
+[문해력 낮음] 짧고 쉬운 문장, 그림/상황 기반 설명, 놀이처럼 연결
+[일반] 도전과 성취감 중심, 레벨업 느낌, 연속 성공 시 특별 리액션
+
+출력 형식 (JSON만):
+{
+  "character_message": "아이에게 보여줄 대사",
+  "feedback_type": "칭찬/수정/감정안정/흐름전환/응원",
+  "animation_reaction": "박수/웃음/점프/하이파이브/끄덕임",
+  "recommended_difficulty": "유지/하향/상향",
+  "flow_switch": false
+}`
+
+async function getStudyAiFeedback(input) {
+  const messages = [
+    { role: 'system', content: STUDY_AI_PROMPT },
+    { role: 'user', content: JSON.stringify(input) },
+  ]
+  const result = await chatCompletion(messages, { maxTokens: 256, temperature: 0.7 })
+  try {
+    let jsonStr = result.trim()
+    let depth = 0, start = -1, end = -1
+    for (let i = 0; i < jsonStr.length; i++) {
+      if (jsonStr[i] === '{') { if (start === -1) start = i; depth++ }
+      else if (jsonStr[i] === '}') { depth--; if (depth === 0) { end = i; break } }
+    }
+    if (start >= 0 && end > start) jsonStr = jsonStr.slice(start, end + 1)
+    return JSON.parse(jsonStr)
+  } catch {
+    return {
+      character_message: '잘하고 있어! 계속 해보자!',
+      feedback_type: '응원',
+      animation_reaction: '끄덕임',
+      recommended_difficulty: '유지',
+      flow_switch: false,
+    }
+  }
+}
+
 module.exports = {
   chatCompletion,
   callTutor,
@@ -430,4 +482,5 @@ module.exports = {
   routeVoiceDialog,
   mapSupportType,
   calcAge,
+  getStudyAiFeedback,
 }

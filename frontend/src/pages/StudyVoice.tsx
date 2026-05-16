@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { fetchStudyWords, type StudyWord } from '../api/library'
 import './StudyVoice.css'
+import AiTutor from '../components/AiTutor'
 
 type SpeechRecognitionEventLike = {
   results: ArrayLike<ArrayLike<{ transcript: string }>>

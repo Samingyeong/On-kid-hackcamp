@@ -19,6 +19,7 @@ const {
   generateWeeklyReport,
   tutorialStep,
   routeVoiceDialog: routeVoiceDialogWithMidm,
+  getStudyAiFeedback,
 } = require('./midm')
 const { listSignMotions } = require('./sign_motion')
 const { evaluateSignPractice } = require('./sign_practice_eval')
@@ -317,6 +318,22 @@ app.post('/api/sign-practice/evaluate', (req, res) => {
     res.json(result)
   } catch (e) {
     res.status(e.statusCode || 500).json({ error: e.message })
+  }
+})
+
+// ─── 학습 AI 피드백 API ───────────────────────────────────────
+app.post('/api/learning/feedback', async (req, res) => {
+  try {
+    const result = await getStudyAiFeedback(req.body || {})
+    res.json(result)
+  } catch (e) {
+    res.json({
+      character_message: '잘하고 있어! 계속 해보자!',
+      feedback_type: '응원',
+      animation_reaction: '끄덕임',
+      recommended_difficulty: '유지',
+      flow_switch: false,
+    })
   }
 })
 
