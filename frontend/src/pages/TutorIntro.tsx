@@ -101,7 +101,7 @@ export default function TutorIntro() {
 
     // LEVEL_ANALYSIS 후 자동으로 책 추천으로 이동
     if (step === 'LEVEL_ANALYSIS') {
-      setTimeout(() => enterRecommendBook(), 2500)
+      setTimeout(() => enterRecommendBook(), 4000)
     } else {
       setTimeout(() => setShowChoices(true), 400)
     }
@@ -272,24 +272,9 @@ export default function TutorIntro() {
     }
     if (phase === 'RECOMMEND_BOOK') {
       return (
-        <>
-          <div className="tutor-book-cards">
-            {recommendedBooks.map((book, i) => (
-              <div key={i} className="tutor-book-card" onClick={() => selectBook(book)}>
-                <div className="tutor-book-cover">
-                  {book.thumbnail
-                    ? <img src={book.thumbnail} alt={book.title} />
-                    : <div className="tutor-book-placeholder">📖</div>}
-                </div>
-                <div className="tutor-book-title">{book.title}</div>
-                <div className="tutor-book-desc">{book.description?.slice(0, 40) || '재미있는 동화'}</div>
-              </div>
-            ))}
-          </div>
-          <button className="tutor-choice-btn tutor-home-btn" onClick={() => navigate('/')}>
-            나중에 읽을래
-          </button>
-        </>
+        <button className="tutor-choice-btn tutor-home-btn" onClick={() => navigate('/')}>
+          나중에 읽을래
+        </button>
       )
     }
     return null
@@ -315,19 +300,41 @@ export default function TutorIntro() {
       <div className="tutor-scene">
         <div className="tutor-speech-bubble">
           {loading ? (
-            <div className="tutor-speech-img-wrap">
-              <img src="/svg/말풍선.png" alt="" className="tutor-speech-img" />
-              <div className="tutor-speech-text">
-                <div className="tutor-typing"><span /><span /><span /></div>
-              </div>
+            <div className="tutor-speech-body">
+              <div className="tutor-typing"><span /><span /><span /></div>
+              <div className="tutor-speech-tail" />
             </div>
           ) : (
-            <div className="tutor-speech-img-wrap">
-              <img src="/svg/말풍선.png" alt="" className="tutor-speech-img" />
+            <div className="tutor-speech-body">
               <p className="tutor-speech-text">{bubbleText}</p>
+              <div className="tutor-speech-tail" />
             </div>
           )}
         </div>
+
+        {phase === 'RECOMMEND_BOOK' && showChoices && recommendedBooks[0] && (
+          <div className="tutor-book-card tutor-book-left" onClick={() => selectBook(recommendedBooks[0])}>
+            <div className="tutor-book-cover">
+              {recommendedBooks[0].thumbnail
+                ? <img src={recommendedBooks[0].thumbnail} alt={recommendedBooks[0].title} />
+                : <div className="tutor-book-placeholder">📖</div>}
+            </div>
+            <div className="tutor-book-title">{recommendedBooks[0].title}</div>
+            <div className="tutor-book-desc">{recommendedBooks[0].description?.slice(0, 40) || '재미있는 동화'}</div>
+          </div>
+        )}
+
+        {phase === 'RECOMMEND_BOOK' && showChoices && recommendedBooks[1] && (
+          <div className="tutor-book-card tutor-book-right" onClick={() => selectBook(recommendedBooks[1])}>
+            <div className="tutor-book-cover">
+              {recommendedBooks[1].thumbnail
+                ? <img src={recommendedBooks[1].thumbnail} alt={recommendedBooks[1].title} />
+                : <div className="tutor-book-placeholder">📖</div>}
+            </div>
+            <div className="tutor-book-title">{recommendedBooks[1].title}</div>
+            <div className="tutor-book-desc">{recommendedBooks[1].description?.slice(0, 40) || '재미있는 동화'}</div>
+          </div>
+        )}
 
         <div className="tutor-character">
           <div className="tutor-character-circle">
