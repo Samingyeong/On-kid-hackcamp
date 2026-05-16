@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { fetchReadingHistory, type ReadHistory } from '../api/library'
+import { useAuth } from '../contexts/AuthContext'
 import './StudySelect.css'
 
 type StudyMode = {
@@ -62,6 +63,8 @@ const SENTENCE_MODES: StudyMode[] = [
 export default function StudySelect() {
   const navigate = useNavigate()
   const [params] = useSearchParams()
+  const { childCharacter } = useAuth()
+  const isVision = childCharacter === 'vision'
   const studyType = params.get('type') || 'word'
 
   const [step, setStep] = useState<'book' | 'mode'>('book')
@@ -167,7 +170,9 @@ export default function StudySelect() {
         「{selectedBook}」 {studyType === 'word' ? '단어' : '문장'}를 학습해볼까요?
       </h1>
       <div className="study-select-cards">
-        {(studyType === 'sentence' ? SENTENCE_MODES : MODES).map(mode => (
+        {(studyType === 'sentence' ? SENTENCE_MODES : MODES)
+          .filter(mode => !(isVision && mode.id === 'sign'))
+          .map(mode => (
           <div
             key={mode.id}
             className={`study-mode-card ${mode.id}`}
