@@ -99,47 +99,45 @@ export default function StudyVoice() {
 
   return (
     <div className="study-voice">
-      {/* 왼쪽: 원숭이 + 말풍선 */}
-      <div className="sv-left">
-        <div className="sv-speech-bubble">한번 따라 말해볼까?</div>
-        <img
-          src={isListening ? '/svg/speakmonkey2.png' : '/svg/speakmonkey.png'}
-          alt="원숭이"
-          className="sv-monkey"
-        />
-      </div>
+      <div className="sv-content-area">
+        {/* 왼쪽: 원숭이 + 말풍선 */}
+        <div className="sv-left">
+          <div className="sv-speech-bubble">한번 따라 말해볼까?</div>
+          <img
+            src={isListening ? '/svg/speakmonkey2.png' : '/svg/speakmonkey.png'}
+            alt="원숭이"
+            className="sv-monkey"
+          />
+        </div>
 
-      {/* 오른쪽: 단어 카드 */}
-      <div className="sv-right">
-        <div className="sv-card">
-          {/* 글자 박스 */}
-          <div className="sv-chars-row">
-            <button className="sv-arrow" onClick={handlePrev} disabled={currentIdx === 0}>‹</button>
-            <div className="sv-chars">
-              {chars.map((ch, i) => (
-                <div key={i} className={`sv-char ${feedback === 'correct' ? 'correct' : ''}`}>{ch}</div>
-              ))}
+        {/* 오른쪽: 단어 카드 */}
+        <div className="sv-right">
+          <div className="sv-card">
+            <div className="sv-chars-row">
+              <button className="sv-arrow" onClick={handlePrev} disabled={currentIdx === 0}>‹</button>
+              <div className="sv-chars">
+                {chars.map((ch, i) => (
+                  <div key={i} className={`sv-char ${feedback === 'correct' ? 'correct' : ''}`}>{ch}</div>
+                ))}
+              </div>
+              <button className="sv-arrow" onClick={handleNext} disabled={currentIdx >= words.length - 1}>›</button>
             </div>
-            <button className="sv-arrow" onClick={handleNext} disabled={currentIdx >= words.length - 1}>›</button>
-          </div>
 
-          {/* 버튼 */}
-          <div className="sv-actions">
-            <button className="sv-listen-btn" onClick={() => speak(currentWord)}>🔊</button>
-            <button className={`sv-mic-btn ${isListening ? 'listening' : ''}`} onClick={handleListen}>
-              🎤 {isListening ? '듣는 중...' : '눌러서 말하기'}
-            </button>
-          </div>
-
-          {/* 피드백 */}
-          {feedback && (
-            <div className={`sv-feedback ${feedback}`}>
-              {feedback === 'correct' ? '🎉 정확해요!' : '😊 다시 해봐요!'}
+            <div className="sv-actions">
+              <button className="sv-listen-btn" onClick={() => speak(currentWord)}>🔊</button>
+              <button className={`sv-mic-btn ${isListening ? 'listening' : ''}`} onClick={handleListen}>
+                🎤 {isListening ? '듣는 중...' : '눌러서 말하기'}
+              </button>
             </div>
-          )}
 
-          {/* 진행도 */}
-          <div className="sv-progress">{currentIdx + 1}/{words.length}</div>
+            {feedback && (
+              <div className={`sv-feedback ${feedback}`}>
+                {feedback === 'correct' ? '🎉 정확해요!' : '😊 다시 해봐요!'}
+              </div>
+            )}
+
+            <div className="sv-progress">{currentIdx + 1}/{words.length}</div>
+          </div>
         </div>
       </div>
     </div>
