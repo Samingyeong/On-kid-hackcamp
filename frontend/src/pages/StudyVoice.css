@@ -6,6 +6,8 @@
   background: #ffb052;
   color: #202020;
   font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .study-voice,
@@ -16,11 +18,12 @@
 .sv-topbar {
   position: relative;
   z-index: 3;
-  height: 158px;
+  height: 120px;
   display: grid;
-  grid-template-columns: 260px 1fr 360px;
+  grid-template-columns: 200px 1fr 300px;
   align-items: center;
-  padding: 26px 46px 0 55px;
+  padding: 20px 36px 0 44px;
+  flex-shrink: 0;
 }
 
 .sv-home-button {
@@ -90,17 +93,15 @@
 }
 
 .sv-stage {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 158px;
-  bottom: 0;
+  position: relative;
+  flex: 1;
   display: grid;
   grid-template-columns: minmax(420px, 42%) minmax(0, 1fr);
   align-items: stretch;
   background: #f4eee8;
   border-radius: 74px 74px 0 0;
   overflow: hidden;
+  min-height: 0;
 }
 
 .sv-stage::before,
