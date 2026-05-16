@@ -11,6 +11,7 @@ import StudySentence from '../pages/StudySentence'
 import StudySign from '../pages/StudySign'
 import StudyVoice from '../pages/StudyVoice'
 import StudyQuiz from '../pages/StudyQuiz'
+import MyStory from '../pages/MyStory'
 import MidmTest from '../pages/MidmTest'
 import TutorIntro from '../pages/TutorIntro'
 import ParentDashboard from '../pages/ParentDashboard'
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       { path: 'books', element: <BookList /> },
       { path: 'reader', element: <Reader /> },
       { path: 'notes', element: <Placeholder title="내 오답노트" /> },
+      { path: 'my-story', element: <MyStory /> },
       { path: 'parent', element: <ParentDashboard /> },
       { path: 'study/select', element: <StudySelect /> },
       { path: 'study/practice', element: <StudyWrite /> },

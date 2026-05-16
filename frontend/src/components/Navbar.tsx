@@ -5,7 +5,7 @@ import './Navbar.css'
 
 const NAV_ITEMS = [
   { label: '동화학습', path: '/books' },
-  { label: '내 오답노트', path: '/notes' },
+  { label: '나만의 동화', path: '/my-story' },
   { label: '학부모케어', path: '/parent' },
 ]
 
