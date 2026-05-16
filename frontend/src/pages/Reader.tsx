@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
-import { getVideoUrl, getVttUrl, proxy, lookupDict, analyzeWord, analyzeSentence, analyzeBatch, saveWord, saveReadingHistory, type DictItem } from '../api/library'
+import { getVideoUrl, getVttUrl, proxy, lookupDict, analyzeWord, analyzeSentence, analyzeBatch, saveWord, saveReadingHistory, getUserId, type DictItem } from '../api/library'
 import type { Cue } from '../types'
 import './Reader.css'
 
@@ -97,18 +97,22 @@ export default function Reader() {
       if (l === 'ko' && title) {
         const sentences = parsed.filter((_, i) => i !== 1).map(c => c.text)
         // 문장 즉시 저장 (가벼운 작업)
-        fetch('http://localhost:4000/api/books/sentences', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title, sentences }),
-        }).catch(() => {})
-        // 단어 추출은 10초 후
-        setTimeout(() => {
-          fetch('http://localhost:4000/api/books/words', {
+        getUserId().then(uid => {
+          fetch('http://localhost:4000/api/books/sentences', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'x-user-id': uid },
             body: JSON.stringify({ title, sentences }),
           }).catch(() => {})
+        })
+        // 단어 추출은 10초 후
+        setTimeout(() => {
+          getUserId().then(uid => {
+            fetch('http://localhost:4000/api/books/words', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'x-user-id': uid },
+              body: JSON.stringify({ title, sentences }),
+            }).catch(() => {})
+          })
         }, 10000)
       }
 

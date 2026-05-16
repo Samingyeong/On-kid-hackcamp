@@ -818,8 +818,8 @@ app.get('/api/study/sentences', (req, res) => {
   const wordList = unknownWords.map(w => w.base_form)
   const sentences = []
   const bookFilter = book
-    ? db.prepare(`SELECT sentence FROM book_sentences WHERE user_id=? AND title=? ORDER BY id`).all(userId, book)
-    : db.prepare(`SELECT sentence FROM book_sentences WHERE user_id=? ORDER BY id`).all(userId)
+    ? db.prepare(`SELECT sentence FROM book_sentences WHERE (user_id=? OR user_id='') AND title=? ORDER BY id`).all(userId, book)
+    : db.prepare(`SELECT sentence FROM book_sentences WHERE (user_id=? OR user_id='') ORDER BY id`).all(userId)
 
   for (const row of bookFilter) {
     const s = row.sentence

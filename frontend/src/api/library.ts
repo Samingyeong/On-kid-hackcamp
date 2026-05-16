@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase'
 const BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000'
 
 // 현재 로그인된 유저 ID를 가져오는 헬퍼
-async function getUserId(): Promise<string> {
+export async function getUserId(): Promise<string> {
   const { data } = await supabase.auth.getSession()
   return data.session?.user?.id || ''
 }
