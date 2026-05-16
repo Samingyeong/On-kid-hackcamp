@@ -33,9 +33,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .eq('parent_id', userId)
       .limit(1)
       .single()
-    setChildName(data?.name || '')
-    setChildCharacter(data?.disability || '')
-    setChildBirthDate(data?.birth_date || '')
+    if (data?.name) {
+      setChildName(data.name)
+      setChildCharacter(data.disability || '')
+      setChildBirthDate(data.birth_date || '')
+    } else {
+      // children 테이블에 없으면 user_metadata에서 가져오기
+      const { data: { session } } = await supabase.auth.getSession()
+      const meta = session?.user?.user_metadata
+      setChildName(meta?.child_name || '')
+      setChildCharacter(meta?.disability || '')
+      setChildBirthDate(meta?.child_birth || '')
+    }
   }
 
   useEffect(() => {

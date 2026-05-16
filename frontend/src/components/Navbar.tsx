@@ -16,7 +16,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
-  const userName = childName || user?.user_metadata?.name || '게스트'
+  const userName = childName || user?.user_metadata?.child_name || user?.user_metadata?.name || '게스트'
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
