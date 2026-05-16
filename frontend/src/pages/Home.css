@@ -230,12 +230,12 @@
 .cat-arrow {
   background: none;
   border: none;
-  font-size: 32px;
+  font-size: 48px;
   color: #FFD940;
   cursor: pointer;
   font-weight: 900;
   line-height: 1;
-  padding: 0 4px;
+  padding: 0 8px;
   flex-shrink: 0;
   transition: color 0.15s;
 }
