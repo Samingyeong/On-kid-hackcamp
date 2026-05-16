@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import './Login.css'
@@ -8,6 +8,15 @@ const STEPS = [
   { label: 'Step 2', desc: '아이정보 등록', icon: '/svg/step2.png' },
   { label: 'Step 3', desc: '회원가입 완료', icon: '/svg/step3.png' },
 ]
+
+function AutoRedirect() {
+  const navigate = useNavigate()
+  useEffect(() => {
+    const timer = setTimeout(() => navigate('/'), 3000)
+    return () => clearTimeout(timer)
+  }, [navigate])
+  return null
+}
 
 export default function Login() {
   const navigate = useNavigate()
@@ -39,11 +48,17 @@ export default function Login() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+  // 로그인 fields
+  const [loginId, setLoginId] = useState('')
+  const [loginDomain, setLoginDomain] = useState('gmail.com')
+  const [loginPassword, setLoginPassword] = useState('')
+
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
     setError('')
     setLoading(true)
-    const { error } = await signIn(email, password)
+    const loginEmail = `${loginId}@${loginDomain}`
+    const { error } = await signIn(loginEmail, loginPassword)
     if (error) setError(error)
     else navigate('/')
     setLoading(false)
@@ -60,7 +75,12 @@ export default function Login() {
       setError('')
       setLoading(true)
       const fullEmail = `${emailId}@${emailDomain}`
-      const { error } = await signUp(fullEmail, password, name)
+      const { error } = await signUp(fullEmail, password, name, {
+        childName,
+        childBirth,
+        childGender,
+        disability,
+      })
       if (error) { setError(error); setLoading(false); return }
       setStep(3)
       setLoading(false)
@@ -80,8 +100,17 @@ export default function Login() {
             <p className="login-slogan">눈으로 듣고 마음으로 배우는 진짜 교육!<br/>차별은 빼고, 배움은 더했습니다!</p>
 
             <form onSubmit={handleLogin} className="login-form">
-              <input type="email" placeholder="아이디" value={email} onChange={e => setEmail(e.target.value)} className="login-input login-input-full" required />
-              <input type="password" placeholder="비밀번호" value={password} onChange={e => setPassword(e.target.value)} className="login-input login-input-full" required />
+              <div className="login-id-row">
+                <input type="text" placeholder="아이디" value={loginId} onChange={e => setLoginId(e.target.value)} className="login-input login-id-input" required />
+                <span className="signup-at">@</span>
+                <select className="login-input login-domain-select" value={loginDomain} onChange={e => setLoginDomain(e.target.value)}>
+                  <option>gmail.com</option>
+                  <option>naver.com</option>
+                  <option>daum.net</option>
+                  <option>hanmail.net</option>
+                </select>
+              </div>
+              <input type="password" placeholder="비밀번호" value={loginPassword} onChange={e => setLoginPassword(e.target.value)} className="login-input login-input-full" required />
               <div className="login-remember">
                 <label><input type="checkbox" /> 로그인 유지</label>
               </div>
@@ -279,9 +308,9 @@ export default function Login() {
         {/* Step 3: 완료 */}
         {step === 3 && (
           <div className="signup-complete">
-            <h2>회원가입이 완료되었습니다!</h2>
-            <p>모두의 동화에 오신 것을 환영합니다.</p>
-            <button className="signup-next-btn" onClick={() => navigate('/')}>시작하기</button>
+            <img src="/svg/signup_complete.png" alt="회원가입 완료 캐릭터" className="signup-complete-characters" />
+            <img src="/svg/signup_complete2.png" alt="회원가입 완료" className="signup-complete-message" />
+            <AutoRedirect />
           </div>
         )}
 

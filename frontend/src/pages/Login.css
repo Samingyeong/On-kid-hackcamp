@@ -38,6 +38,11 @@
   min-height: 0;
 }
 
+.login-body:has(.signup-complete) {
+  overflow: hidden;
+  padding: 24px 0;
+}
+
 /* 로그인 카드 */
 .login-card {
   width: 100%;
@@ -258,17 +263,28 @@
 
 .signup-complete {
   text-align: center;
-  padding: 60px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 0;
 }
-.signup-complete h2 {
-  font-size: 28px;
-  color: #333;
-  margin-bottom: 12px;
+
+.signup-complete-characters {
+  width: 400px;
+  max-width: 85%;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 20px;
 }
-.signup-complete p {
-  font-size: 16px;
-  color: #888;
-  margin-bottom: 32px;
+
+.signup-complete-message {
+  width: 320px;
+  max-width: 70%;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 24px;
 }
 
 /* 아이 유형 선택 카드 */
@@ -391,4 +407,27 @@
 .signup-step:nth-child(3) .signup-step-icon img {
   width: 36px;
   height: 36px;
+}
+
+/* 로그인 아이디 + 도메인 행 */
+.login-id-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.login-id-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.login-domain-select {
+  width: 150px;
+  flex-shrink: 0;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
 }
