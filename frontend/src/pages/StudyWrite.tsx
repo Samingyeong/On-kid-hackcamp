@@ -5,8 +5,8 @@ import './StudyWrite.css'
 
 const STAGE_MESSAGES = [
   '한번 따라써보아요!',
-  '와! 이번엔 없이 써볼까요?',
-  '마지막으로 한번더 써볼까요?',
+  '이번엔 없이 써볼까요?',
+  '마지막으로 한번더!',
 ]
 
 export default function StudyWrite() {
@@ -72,15 +72,10 @@ export default function StudyWrite() {
             setStage(s => s + 1)
             clearAllCanvas()
           } else {
-            // 3단계 완료 → known=1로 업데이트
+            // 3단계 완료 → known=1로 업데이트, 자동 이동 안 함 (사용자가 선택)
             const w = words[currentIdx]
             if (w) updateWordKnown(w.id, 1)
             setWords(prev => prev.map((item, i) => i === currentIdx ? { ...item, known: 1 } : item))
-            if (currentIdx < words.length - 1) {
-              setCurrentIdx(i => i + 1)
-              setStage(1)
-              clearAllCanvas()
-            }
           }
         }, 1200)
       }
@@ -177,11 +172,16 @@ export default function StudyWrite() {
         <div className="sw-main">
           {/* 단계 표시 */}
           <div className="sw-stages">
-            <div className={`sw-stage-dot ${1 === stage ? 'active' : ''} ${1 < stage ? 'done' : ''}`} onClick={() => { setStage(1); clearAllCanvas() }}>1</div>
-            <div className={`sw-stage-line ${1 < stage ? 'done' : ''}`} />
-            <div className={`sw-stage-dot ${2 === stage ? 'active' : ''} ${2 < stage ? 'done' : ''}`} onClick={() => { setStage(2); clearAllCanvas() }}>2</div>
-            <div className={`sw-stage-line ${2 < stage ? 'done' : ''}`} />
-            <div className={`sw-stage-dot ${3 === stage ? 'active' : ''} ${3 < stage ? 'done' : ''}`} onClick={() => { setStage(3); clearAllCanvas() }}>3</div>
+            {(() => {
+              const wordDone = words[currentIdx]?.known === 1
+              return <>
+                <div className={`sw-stage-dot ${1 === stage ? 'active' : ''} ${1 < stage || wordDone ? 'done' : ''}`} onClick={() => { setStage(1); clearAllCanvas() }}>1</div>
+                <div className={`sw-stage-line ${1 < stage || wordDone ? 'done' : ''}`} />
+                <div className={`sw-stage-dot ${2 === stage ? 'active' : ''} ${2 < stage || wordDone ? 'done' : ''}`} onClick={() => { setStage(2); clearAllCanvas() }}>2</div>
+                <div className={`sw-stage-line ${2 < stage || wordDone ? 'done' : ''}`} />
+                <div className={`sw-stage-dot ${3 === stage ? 'active' : ''} ${wordDone ? 'done' : ''}`} onClick={() => { setStage(3); clearAllCanvas() }}>3</div>
+              </>
+            })()}
           </div>
 
         {/* 단어 표시 */}
