@@ -3,6 +3,12 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import { fetchStudyWords } from '../api/library'
 import { useAuth } from '../contexts/AuthContext'
 import Hand3D from '../components/Hand3D'
+import { useBrailleChording } from '../hooks/useBrailleChording'
+import type { SpecialKey } from '../hooks/useBrailleChording'
+import {
+  dotsToJamo, feedJamo, previewSyllable, commitState, isEmptyDots, EMPTY_STATE,
+} from '../utils/brailleConverter'
+import type { Dots, HangulState, JamoType } from '../utils/brailleConverter'
 import './StudyTyping.css'
 
 const KR_ROWS = [
@@ -11,57 +17,56 @@ const KR_ROWS = [
   ['ㅋ','ㅌ','ㅊ','ㅍ','ㅠ','ㅜ','ㅡ'],
 ]
 
-// 물리 키 → 한글 자모 매핑
 const KEY_MAP: Record<string, string> = {
   q:'ㅂ', w:'ㅈ', e:'ㄷ', r:'ㄱ', t:'ㅅ', y:'ㅛ', u:'ㅕ', i:'ㅑ', o:'ㅐ', p:'ㅔ',
   a:'ㅁ', s:'ㄴ', d:'ㅇ', f:'ㄹ', g:'ㅎ', h:'ㅗ', j:'ㅓ', k:'ㅏ', l:'ㅣ',
   z:'ㅋ', x:'ㅌ', c:'ㅊ', v:'ㅍ', b:'ㅠ', n:'ㅜ', m:'ㅡ',
 }
-
-// 왼손 키 (qwert, asdfg, zxcvb)
 const LEFT_KEYS = new Set('qwertasdfgzxcvb'.split(''))
 
-// ── 점자 입력 ──────────────────────────────────────────────
-// 숫자키패드 배열: 7=점1, 8=점2, 4=점3, 5=점4, 1=점5, 2=점6
-// 점 번호 비트: 점1=bit0, 점2=bit1, 점3=bit2, 점4=bit3, 점5=bit4, 점6=bit5
-const BRAILLE_KEY_MAP: Record<string, number> = {
-  '7': 0, '8': 1, '4': 2, '5': 3, '1': 4, '2': 5,
+// ── TTS ──────────────────────────────────────────
+const PREFERRED_VOICES = ['Google 한국의', 'Microsoft SunHi', 'Microsoft Heami', 'Yuna']
+let cachedVoice: SpeechSynthesisVoice | null = null
+
+function getKoreanVoice(): SpeechSynthesisVoice | null {
+  if (cachedVoice) return cachedVoice
+  const voices = window.speechSynthesis.getVoices()
+  if (!voices.length) return null
+  for (const name of PREFERRED_VOICES) {
+    const found = voices.find(v => v.name.includes(name) && v.lang.startsWith('ko'))
+    if (found) { cachedVoice = found; return found }
+  }
+  cachedVoice = voices.find(v => v.lang.startsWith('ko')) ?? null
+  return cachedVoice
 }
 
-// 점자 패턴(비트마스크) → 한글 자모 (한국 점자 규정 기반)
-const BRAILLE_TO_JAMO: Record<number, string> = {
-  // 초성 자음
-  0b000001: 'ㄱ',  // 점1
-  0b000101: 'ㄴ',  // 점1,점3
-  0b000011: 'ㄷ',  // 점1,점2
-  0b001011: 'ㄹ',  // 점1,점2,점4
-  0b000111: 'ㅁ',  // 점1,점2,점3
-  0b001001: 'ㅂ',  // 점1,점4
-  0b001101: 'ㅅ',  // 점1,점3,점4
-  0b111111: 'ㅇ',  // 점1~6 (약자)
-  0b001111: 'ㅈ',  // 점1,점2,점3,점4
-  0b010001: 'ㅊ',  // 점1,점5
-  0b010101: 'ㅋ',  // 점1,점3,점5
-  0b010011: 'ㅌ',  // 점1,점2,점5
-  0b011001: 'ㅍ',  // 점1,점4,점5
-  0b011101: 'ㅎ',  // 점1,점3,점4,점5
-  // 모음
-  0b100000: 'ㅏ',  // 점6
-  0b110000: 'ㅑ',  // 점5,점6
-  0b100100: 'ㅓ',  // 점3,점6
-  0b110100: 'ㅕ',  // 점3,점5,점6
-  0b100010: 'ㅗ',  // 점2,점6
-  0b110010: 'ㅛ',  // 점2,점5,점6
-  0b100110: 'ㅜ',  // 점2,점3,점6
-  0b110110: 'ㅠ',  // 점2,점3,점5,점6
-  0b100001: 'ㅡ',  // 점1,점6
-  0b100101: 'ㅣ',  // 점1,점3,점6
-  0b100011: 'ㅐ',  // 점1,점2,점6
-  0b100111: 'ㅔ',  // 점1,점2,점3,점6
+function speak(text: string, rate = 0.95, pitch = 1.15) {
+  if (!window.speechSynthesis || !text) return
+  window.speechSynthesis.cancel()
+  const utter = new SpeechSynthesisUtterance(text)
+  utter.lang = 'ko-KR'; utter.pitch = pitch; utter.rate = rate; utter.volume = 1.0
+  const voice = getKoreanVoice()
+  if (voice) utter.voice = voice
+  window.speechSynthesis.speak(utter)
 }
 
-function brailleBitsToJamo(bits: number): string {
-  return BRAILLE_TO_JAMO[bits] || ''
+if (typeof window !== 'undefined') {
+  window.speechSynthesis.onvoiceschanged = () => { cachedVoice = null; getKoreanVoice() }
+}
+
+// ── 점자 입력 상태 ────────────────────────────────
+interface BrailleInputState {
+  committed: string
+  composing: HangulState
+}
+const INITIAL_BRAILLE: BrailleInputState = { committed: '', composing: EMPTY_STATE }
+
+function getNextContext(state: HangulState): JamoType {
+  if (!state.cho) return 'chosung'
+  if (!state.jung) return 'jungsung'
+  if (state.jong2) return 'chosung'
+  if (!state.jong) return 'jongsung'
+  return 'chosung'
 }
 
 
@@ -74,16 +79,27 @@ export default function StudyTyping() {
 
   const [words, setWords] = useState<string[]>([])
   const [currentIdx, setCurrentIdx] = useState(0)
-  const [typed, setTyped] = useState('')
+  const [typed, setTyped] = useState('')         // 일반 모드 입력
   const [lastKey, setLastKey] = useState('')
   const [activeHand, setActiveHand] = useState<'left' | 'right' | ''>('')
   const [errors, setErrors] = useState(0)
   const [startTime] = useState(Date.now())
   const inputRef = useRef<HTMLInputElement>(null)
 
-  // 점자 입력 상태
-  const [braillePressed, setBraillePressed] = useState<Set<number>>(new Set())
-  const brailleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // 점자 모드 상태
+  const [brailleDots, setBrailleDots] = useState<Dots>([false,false,false,false,false,false])
+  const [brailleInput, setBrailleInput] = useState<BrailleInputState>(INITIAL_BRAILLE)
+  const [muted, setMuted] = useState(false)
+  const mutedRef = useRef(false)
+  useEffect(() => { mutedRef.current = muted }, [muted])
+  const speakIfOn = useCallback((text: string, rate = 0.95, pitch = 1.15) => {
+    if (mutedRef.current) return
+    speak(text, rate, pitch)
+  }, [])
+
+  // 점자 입력 텍스트 (committed + 조합 중 미리보기)
+  const braillePreview = previewSyllable(brailleInput.composing)
+  const brailleText = brailleInput.committed + braillePreview
 
   useEffect(() => {
     fetchStudyWords(0)
@@ -120,62 +136,102 @@ export default function StudyTyping() {
     }
   }, [currentWord, currentIdx, words.length])
 
-  // 점자 키 입력 처리 (숫자키패드 7,8,4,5,1,2)
-  const handleBrailleKey = useCallback((bit: number) => {
-    setBraillePressed(prev => {
-      const next = new Set(prev)
-      next.add(bit)
-      return next
+  // ── 점자 조합 처리 (braille-input 브랜치 로직) ──
+  const handleChord = useCallback((newDots: Dots) => {
+    if (isEmptyDots(newDots)) return
+    setBrailleInput(prev => {
+      const context = getNextContext(prev.composing)
+      let jamo: string | null = null
+      let usedContext: JamoType = context
+
+      if (context === 'jongsung') {
+        const asJung = dotsToJamo(newDots, 'jungsung')
+        if (asJung) { jamo = asJung; usedContext = 'jungsung' }
+        else { jamo = dotsToJamo(newDots, 'jongsung'); usedContext = 'jongsung' }
+      } else if (context === 'chosung') {
+        const asJung = dotsToJamo(newDots, 'jungsung')
+        if (asJung) { jamo = asJung; usedContext = 'jungsung' }
+        else { jamo = dotsToJamo(newDots, 'chosung'); usedContext = 'chosung' }
+      } else {
+        jamo = dotsToJamo(newDots, context)
+        usedContext = context
+      }
+
+      if (!jamo) {
+        speakIfOn('인식할 수 없는 점자 조합입니다')
+        return prev
+      }
+
+      const { committed: newCommitted, newState } = feedJamo(prev.composing, jamo, usedContext)
+      const preview = previewSyllable(newState)
+      setTimeout(() => speakIfOn(preview || jamo!), 0)
+
+      const nextCommitted = prev.committed + newCommitted
+      const nextFull = nextCommitted + previewSyllable(newState)
+
+      if (nextFull === currentWord) {
+        setTimeout(() => {
+          speakIfOn('정답! 잘했어요!')
+          if (currentIdx < words.length - 1) {
+            setCurrentIdx(i => i + 1)
+            setBrailleInput(INITIAL_BRAILLE)
+          }
+        }, 500)
+      } else if (nextFull.length === currentWord.length && nextFull !== currentWord) {
+        setErrors(err => err + 1)
+        speakIfOn('아쉬워요, 다시 해봐요')
+      }
+
+      return { committed: nextCommitted, composing: newState }
     })
-    // 타이머 리셋 — 마지막 키 입력 후 300ms 뒤 조합 확정
-    if (brailleTimerRef.current) clearTimeout(brailleTimerRef.current)
-    brailleTimerRef.current = setTimeout(() => {
-      setBraillePressed(prev => {
-        let bits = 0
-        prev.forEach(b => { bits |= (1 << b) })
-        const jamo = brailleBitsToJamo(bits)
-        if (jamo) {
-          setTyped(t => {
-            const next = t + jamo
-            return next
-          })
-        }
-        return new Set()
+  }, [currentWord, currentIdx, words.length, speakIfOn])
+
+  const handleSpecial = useCallback((key: SpecialKey) => {
+    if (key === 'space') {
+      setBrailleInput(prev => {
+        const commit = commitState(prev.composing)
+        speakIfOn('띄어쓰기')
+        return { committed: prev.committed + commit + ' ', composing: EMPTY_STATE }
       })
-    }, 300)
-  }, [])
+    }
+    if (key === 'readAll') {
+      setBrailleInput(prev => {
+        const commit = commitState(prev.composing)
+        const full = (prev.committed + commit).trim()
+        speakIfOn(full || '아직 입력된 내용이 없어요', 0.88, 1.1)
+        return { committed: prev.committed + commit, composing: EMPTY_STATE }
+      })
+    }
+    if (key === 'delete') {
+      speakIfOn('지워졌어요')
+      setBrailleInput(prev => {
+        const c = prev.composing
+        if (c.jong2) return { ...prev, composing: { ...c, jong2: '' } }
+        if (c.jong) return { ...prev, composing: { ...c, jong: '' } }
+        if (c.jung) return { ...prev, composing: { ...c, jung: '' } }
+        if (c.cho) return { ...prev, composing: EMPTY_STATE }
+        return { committed: prev.committed.slice(0, -1), composing: EMPTY_STATE }
+      })
+    }
+  }, [speakIfOn])
 
-  // 점자 키보드 이벤트 (숫자키패드)
+  useBrailleChording(isVision ? {
+    onChord: handleChord,
+    onSpecial: handleSpecial,
+    onDotsChange: (dots) => setBrailleDots(dots),
+  } : {
+    onChord: () => {},
+    onSpecial: () => {},
+    onDotsChange: () => {},
+  })
+
+  // 단어 바뀔 때 점자 입력 초기화 + TTS
   useEffect(() => {
     if (!isVision) return
-    function onKeyDown(e: KeyboardEvent) {
-      const key = e.key
-      if (key in BRAILLE_KEY_MAP) {
-        e.preventDefault()
-        handleBrailleKey(BRAILLE_KEY_MAP[key])
-      }
-      if (key === 'Backspace') {
-        setTyped(t => t.slice(0, -1))
-      }
-    }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [isVision, handleBrailleKey])
-
-  // typed 변경 시 정답 체크 (점자 모드)
-  useEffect(() => {
-    if (!isVision) return
-    if (typed === currentWord && currentWord !== '') {
-      setTimeout(() => {
-        if (currentIdx < words.length - 1) {
-          setCurrentIdx(i => i + 1)
-          setTyped('')
-        }
-      }, 500)
-    } else if (typed.length === currentWord.length && typed !== currentWord && currentWord !== '') {
-      setErrors(err => err + 1)
-    }
-  }, [typed, currentWord, currentIdx, words.length, isVision])
+    setBrailleInput(INITIAL_BRAILLE)
+    const word = words[currentIdx]
+    if (word) setTimeout(() => speakIfOn(`${word} 를 입력해보세요`, 0.88, 1.2), 300)
+  }, [currentIdx, isVision])
 
   // 키보드 하이라이트 + 3D 손 연동 (일반 모드)
   useEffect(() => {
@@ -225,16 +281,18 @@ export default function StudyTyping() {
 
         {/* 입력 영역 */}
         <div className="st-typed-area">
-          <span className="st-typed">{typed}</span>
+          <span className="st-typed">{isVision ? brailleText : typed}</span>
           <span className="st-cursor">|</span>
         </div>
-        <input
-          ref={inputRef}
-          className="st-hidden-input"
-          value={typed}
-          onChange={handleInput}
-          autoFocus
-        />
+        {!isVision && (
+          <input
+            ref={inputRef}
+            className="st-hidden-input"
+            value={typed}
+            onChange={handleInput}
+            autoFocus
+          />
+        )}
       </div>
 
       {/* 하단: 키보드 + 통계 */}
@@ -270,52 +328,48 @@ export default function StudyTyping() {
           {isVision ? (
             /* 점자 키패드 (시각장애인 전용) */
             <div className="st-braille-pad">
-              <div className="st-braille-label">점자 입력</div>
-              <div className="st-braille-hint">키를 동시에 눌러 조합하세요</div>
+              <div className="st-braille-header">
+                <div className="st-braille-label">점자 입력</div>
+                <button className="st-braille-mute" onClick={() => setMuted(m => !m)} aria-label={muted ? '음소거 해제' : '음소거'}>
+                  {muted ? '🔇' : '🔊'}
+                </button>
+              </div>
+              <div className="st-braille-hint">숫자패드 7·8·4·5·1·2 동시 입력 | 0=띄어쓰기 | .=지우기 | Enter=전체읽기</div>
+              <div className="st-braille-dots-preview">
+                {[0,3,1,4,2,5].map((dotIdx, gridPos) => (
+                  <div key={dotIdx} className={`st-dot-cell ${brailleDots[dotIdx] ? 'active' : ''}`}>
+                    {['1','4','2','5','3','6'][gridPos]}
+                  </div>
+                ))}
+              </div>
               <div className="st-braille-grid">
-                {/* 왼손: 7(점1), 8(점2) / 오른손: 없음 → 상단 행 */}
                 <div className="st-braille-row">
-                  {[{k:'7',b:0,label:'점1'},{k:'8',b:1,label:'점2'}].map(({k,b,label}) => (
-                    <button
-                      key={k}
-                      className={`st-braille-key ${braillePressed.has(b) ? 'active' : ''}`}
-                      onPointerDown={() => handleBrailleKey(b)}
-                    >
+                  {[{k:'7',b:0,label:'점1'},{k:'8',b:3,label:'점4'}].map(({k,b,label}) => (
+                    <button key={k} className={`st-braille-key ${brailleDots[b] ? 'active' : ''}`}>
                       <span className="st-braille-num">{k}</span>
                       <span className="st-braille-dot">{label}</span>
                     </button>
                   ))}
                 </div>
                 <div className="st-braille-row">
-                  {[{k:'4',b:2,label:'점3'},{k:'5',b:3,label:'점4'}].map(({k,b,label}) => (
-                    <button
-                      key={k}
-                      className={`st-braille-key ${braillePressed.has(b) ? 'active' : ''}`}
-                      onPointerDown={() => handleBrailleKey(b)}
-                    >
+                  {[{k:'4',b:1,label:'점2'},{k:'5',b:4,label:'점5'}].map(({k,b,label}) => (
+                    <button key={k} className={`st-braille-key ${brailleDots[b] ? 'active' : ''}`}>
                       <span className="st-braille-num">{k}</span>
                       <span className="st-braille-dot">{label}</span>
                     </button>
                   ))}
                 </div>
                 <div className="st-braille-row">
-                  {[{k:'1',b:4,label:'점5'},{k:'2',b:5,label:'점6'}].map(({k,b,label}) => (
-                    <button
-                      key={k}
-                      className={`st-braille-key ${braillePressed.has(b) ? 'active' : ''}`}
-                      onPointerDown={() => handleBrailleKey(b)}
-                    >
+                  {[{k:'1',b:2,label:'점3'},{k:'2',b:5,label:'점6'}].map(({k,b,label}) => (
+                    <button key={k} className={`st-braille-key ${brailleDots[b] ? 'active' : ''}`}>
                       <span className="st-braille-num">{k}</span>
                       <span className="st-braille-dot">{label}</span>
                     </button>
                   ))}
                 </div>
                 <div className="st-braille-row">
-                  <button
-                    className="st-braille-key st-braille-back"
-                    onPointerDown={() => setTyped(t => t.slice(0, -1))}
-                  >
-                    ← 지우기
+                  <button className="st-braille-key st-braille-back" onPointerDown={() => handleSpecial('delete')}>
+                    ← 지우기 (.)
                   </button>
                 </div>
               </div>
