@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "6481",
+  "title": "빼다,깎다,덜다,제하다,배제,감면,빼기,제외,공제,생략,경감",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/6481_빼다_깎다_덜다_제하다_배제_감면_빼기_제외_공제_생략_경감.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6481_빼다_깎다_덜다_제하다_배제_감면_빼기_제외_공제_생략_경감_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/6481_빼다_깎다_덜다_제하다_배제_감면_빼기_제외_공제_생략_경감.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/6481_빼다_깎다_덜다_제하다_배제_감면_빼기_제외_공제_생략_경감_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 100,
+    "pose_frames": 100,
+    "face_frames": 100,
+    "hand_frames": 46,
+    "hands_total": 86
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 54,
+      "1": 6,
+      "2": 40
+    },
+    "hand_identity_label_mismatches": 1,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/6481_빼다_깎다_덜다_제하다_배제_감면_빼기_제외_공제_생략_경감_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/6481_빼다_깎다_덜다_제하다_배제_감면_빼기_제외_공제_생략_경감_smooth.jsonl",
+    "frames": 100,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 6,
+    "after_hand_count_frames": {
+      "0": 53,
+      "1": 2,
+      "2": 45
+    },
+    "face_frames_after": 100,
+    "hand_frames_after": 47,
+    "hands_total_after": 92
+  }
+}

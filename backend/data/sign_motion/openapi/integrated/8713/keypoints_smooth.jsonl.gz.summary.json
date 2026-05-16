@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "8713",
+  "title": "갑자기,냅다,별안간,갑작스럽다,갑작스레",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/8713_갑자기_냅다_별안간_갑작스럽다_갑작스레.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8713_갑자기_냅다_별안간_갑작스럽다_갑작스레_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/8713_갑자기_냅다_별안간_갑작스럽다_갑작스레.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/8713_갑자기_냅다_별안간_갑작스럽다_갑작스레_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 105,
+    "pose_frames": 105,
+    "face_frames": 105,
+    "hand_frames": 57,
+    "hands_total": 59
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 48,
+      "1": 55,
+      "2": 2
+    },
+    "hand_identity_label_mismatches": 52,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/8713_갑자기_냅다_별안간_갑작스럽다_갑작스레_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/8713_갑자기_냅다_별안간_갑작스럽다_갑작스레_smooth.jsonl",
+    "frames": 105,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 5,
+    "after_hand_count_frames": {
+      "0": 46,
+      "1": 54,
+      "2": 5
+    },
+    "face_frames_after": 105,
+    "hand_frames_after": 59,
+    "hands_total_after": 64
+  }
+}

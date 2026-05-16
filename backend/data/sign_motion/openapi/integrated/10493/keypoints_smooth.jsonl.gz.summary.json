@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "10493",
+  "title": "참다,견디다,인내,자제,억제",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/10493_참다_견디다_인내_자제_억제.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10493_참다_견디다_인내_자제_억제_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/10493_참다_견디다_인내_자제_억제.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/10493_참다_견디다_인내_자제_억제_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 59.94005994005994,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 211,
+    "pose_frames": 211,
+    "face_frames": 211,
+    "hand_frames": 133,
+    "hands_total": 176
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 78,
+      "1": 90,
+      "2": 43
+    },
+    "hand_identity_label_mismatches": 43,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/10493_참다_견디다_인내_자제_억제_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/10493_참다_견디다_인내_자제_억제_smooth.jsonl",
+    "frames": 211,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 1,
+    "after_hand_count_frames": {
+      "0": 78,
+      "1": 89,
+      "2": 44
+    },
+    "face_frames_after": 211,
+    "hand_frames_after": 133,
+    "hands_total_after": 177
+  }
+}

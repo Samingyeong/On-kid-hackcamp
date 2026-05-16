@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "12461",
+  "title": "자라 왔다,자라다",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/12461_자라_왔다_자라다.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12461_자라_왔다_자라다_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/12461_자라_왔다_자라다.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12461_자라_왔다_자라다_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 59.94005994005994,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 182,
+    "pose_frames": 182,
+    "face_frames": 182,
+    "hand_frames": 178,
+    "hands_total": 279
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 4,
+      "1": 77,
+      "2": 101
+    },
+    "hand_identity_label_mismatches": 6,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12461_자라_왔다_자라다_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12461_자라_왔다_자라다_smooth.jsonl",
+    "frames": 182,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 15,
+    "after_hand_count_frames": {
+      "0": 3,
+      "1": 64,
+      "2": 115
+    },
+    "face_frames_after": 182,
+    "hand_frames_after": 179,
+    "hands_total_after": 294
+  }
+}

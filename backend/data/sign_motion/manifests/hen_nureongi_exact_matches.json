@@ -1,0 +1,2461 @@
+{
+  "summary": {
+    "items": 67,
+    "matched_terms": 65
+  },
+  "items": [
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "321",
+      "title": "괴롭히다",
+      "title_variants": [
+        "괴롭히다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20221013/1039302/MOV000360328_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20221013/1039302/MOV000360328_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=321",
+      "sign_description": "약간 구부린 오른 손끝을 가슴에 대고 왼쪽으로 한 바퀴 돌린 다음, 왼 주먹의 5지를 펴서 바닥이 밖으로 향하게 세우고, 그 등에 손바닥이 위로 향하게 편 오른 손끝을 두 번 댄다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151117/211310/IMG000201581_700X466.jpg,http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151117/211311/IMG000201582_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "괴롭히다"
+      ],
+      "matched_term_counts": {
+        "괴롭히다": 2
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/321_괴롭히다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/321_괴롭히다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/321/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/321/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.687,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.687338,
+      "frames": 221,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "1276",
+      "title": "막다,막히다,먹다",
+      "title_variants": [
+        "막다",
+        "막히다",
+        "먹다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735123/MOV000241825_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735123/MOV000241825_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=1276",
+      "sign_description": "가볍게 주먹을 쥐고 모로 세운 왼 주먹의 1·5지 옆면을 오른 손바닥으로 덮는다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151130/219037/IMG000210659_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "먹다"
+      ],
+      "matched_term_counts": {
+        "먹다": 5
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/1276_막다_막히다_먹다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/1276_막다_막히다_먹다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/1276/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/1276/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.103,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.103376,
+      "frames": 186,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "2238",
+      "title": "상하다,다치다,부상,상처,손상",
+      "title_variants": [
+        "다치다",
+        "부상",
+        "상처",
+        "상하다",
+        "손상"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630040/MOV000238621_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630040/MOV000238621_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=2238",
+      "sign_description": "두 주먹의 1지를 펴서 머리 양옆에서 두 번 엇갈리게 그어 내린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151123/214901/IMG000205851_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "삶",
+      "matched_terms": [
+        "다치다"
+      ],
+      "matched_term_counts": {
+        "다치다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/2238_상하다_다치다_부상_상처_손상_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/2238_상하다_다치다_부상_상처_손상_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/2238/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/2238/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.338,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.337905,
+      "frames": 260,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "3024",
+      "title": "백,하양,하얗다,허옇다,희다,백색,흰색,치아,이,이빨",
+      "title_variants": [
+        "백",
+        "백색",
+        "이",
+        "이빨",
+        "치아",
+        "하양",
+        "하얗다",
+        "허옇다",
+        "희다",
+        "흰색"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735147/MOV000244266_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735147/MOV000244266_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=3024",
+      "sign_description": "오른 주먹의 1지를 펴서 끝으로 치아를 가리킨다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151205/222334/IMG000214417_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "이빨"
+      ],
+      "matched_term_counts": {
+        "이빨": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/3024_백_하양_하얗다_허옇다_희다_백색_흰색_치아_이_이빨_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/3024_백_하양_하얗다_허옇다_희다_백색_흰색_치아_이_이빨_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/3024/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/3024/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 2.87,
+      "segment_start_sec": 0,
+      "segment_end_sec": 2.869557,
+      "frames": 172,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "3237",
+      "title": "따르다",
+      "title_variants": [
+        "따르다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200821/733705/MOV000239609_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200821/733705/MOV000239609_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=3237",
+      "sign_description": "오른 주먹의 4·5지를 펴서 끝이 아래로 향하게 하였다가 5지 끝을 아래로 향하게 기울인다(주전자로 따르는 경우).",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151125/216377/IMG000207449_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "따르다"
+      ],
+      "matched_term_counts": {
+        "따르다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/3237_따르다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/3237_따르다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/3237/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/3237/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.32,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.32022,
+      "frames": 199,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "3743",
+      "title": "개,강아지",
+      "title_variants": [
+        "강아지",
+        "개"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191007/624830/MOV000248704_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191007/624830/MOV000248704_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=3743",
+      "sign_description": "두 손을 자연스럽게 펴서 손바닥이 밖으로 손끝이 위로 향하게 세워 두 5지 끝을 머리 양쪽에 대고 두 손의 1·2·3·4지를 전후로 약간 흔든다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151214/227844/IMG000220880_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "동식물",
+      "matched_terms": [
+        "개",
+        "강아지"
+      ],
+      "matched_term_counts": {
+        "개": 9,
+        "강아지": 4
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/3743_개_강아지_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/3743_개_강아지_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/3743/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/3743/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.004,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.004743,
+      "frames": 120,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "3944",
+      "title": "눈길,시선,바라보다,응시하다,쳐다보다",
+      "title_variants": [
+        "눈길",
+        "바라보다",
+        "시선",
+        "응시하다",
+        "쳐다보다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735154/MOV000242928_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735154/MOV000242928_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=3944",
+      "sign_description": "오른 주먹의 1·2지를 펴서 끝이 밖으로 향하게 하여 오른쪽 눈앞에서 밖으로 내민다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151202/220572/IMG000212392_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "쳐다보다",
+        "바라보다"
+      ],
+      "matched_term_counts": {
+        "쳐다보다": 2,
+        "바라보다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/3944_눈길_시선_바라보다_응시하다_쳐다보다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/3944_눈길_시선_바라보다_응시하다_쳐다보다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/3944/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/3944/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 2.953,
+      "segment_start_sec": 0,
+      "segment_end_sec": 2.953894,
+      "frames": 177,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "4434",
+      "title": "고함,비명,아우성,부르짖다,외치다,지르다,소리를 지르다,소리치다",
+      "title_variants": [
+        "고함",
+        "부르짖다",
+        "비명",
+        "소리를 지르다",
+        "소리치다",
+        "아우성",
+        "외치다",
+        "지르다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/632038/MOV000248314_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/632038/MOV000248314_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=4434",
+      "sign_description": "1·5지 끝을 맞댄 두 손을 입가에 나란히 댔다가 밖으로 벌리며 힘주어 내민다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20190730/605326/IMG000220393_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "소리치다"
+      ],
+      "matched_term_counts": {
+        "소리치다": 2
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/4434_고함_비명_아우성_부르짖다_외치다_지르다_소리를_지르다_소리치다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/4434_고함_비명_아우성_부르짖다_외치다_지르다_소리를_지르다_소리치다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/4434/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/4434/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.67,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.670767,
+      "frames": 110,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "4703",
+      "title": "끈기,끈덕지다,끈질기다",
+      "title_variants": [
+        "끈기",
+        "끈덕지다",
+        "끈질기다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200818/730479/MOV000354359_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200818/730479/MOV000354359_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=4703",
+      "sign_description": "오른 주먹의 1지를 펴서 구부려 턱 중앙에 대고 지그시 누르면서 좌·우로 비틀어 흔든다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151214/227716/IMG000220657_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "끈질기다"
+      ],
+      "matched_term_counts": {
+        "끈질기다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/4703_끈기_끈덕지다_끈질기다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/4703_끈기_끈덕지다_끈질기다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/4703/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/4703/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.021,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.021386,
+      "frames": 241,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "5511",
+      "title": "낳다,나다,태어나다,분만,생식,출산,출생,탄생,해산",
+      "title_variants": [
+        "나다",
+        "낳다",
+        "분만",
+        "생식",
+        "출산",
+        "출생",
+        "탄생",
+        "태어나다",
+        "해산"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191011/626405/MOV000251718_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191011/626405/MOV000251718_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=5511",
+      "sign_description": "두 손의 손끝이 아래로 향하게 하여 4지 옆면을 배 양옆에 댔다가 아래로 힘주어 내린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151219/230828/IMG000224662_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "낳다"
+      ],
+      "matched_term_counts": {
+        "낳다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/5511_낳다_나다_태어나다_분만_생식_출산_출생_탄생_해산_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/5511_낳다_나다_태어나다_분만_생식_출산_출생_탄생_해산_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/5511/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/5511/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.338,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.338178,
+      "frames": 130,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "5514",
+      "title": "내년,명년,이듬해,다음해",
+      "title_variants": [
+        "내년",
+        "다음해",
+        "명년",
+        "이듬해"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191011/626459/MOV000251726_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191011/626459/MOV000251726_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=5514",
+      "sign_description": "오른 주먹의 1지를 펴서 끝을 왼 주먹의 5지 위에 댔다가 밖으로 내민다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151219/230834/IMG000224672_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "이듬해"
+      ],
+      "matched_term_counts": {
+        "이듬해": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/5514_내년_명년_이듬해_다음해_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/5514_내년_명년_이듬해_다음해_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/5514/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/5514/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.171,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.171347,
+      "frames": 125,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "5956",
+      "title": "크다,꽤,매우,몹시,무척,아주,대,대단히",
+      "title_variants": [
+        "꽤",
+        "대",
+        "대단히",
+        "매우",
+        "몹시",
+        "무척",
+        "아주",
+        "크다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191029/632469/MOV000250657_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191029/632469/MOV000250657_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=5956",
+      "sign_description": "오른 주먹의 1·5지를 펴서 등이 밖으로 향하게 하여 왼쪽에서 오른쪽으로 이동시킨다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151218/229884/IMG000223382_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "크다"
+      ],
+      "matched_term_counts": {
+        "크다": 2
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/5956_크다_꽤_매우_몹시_무척_아주_대_대단히_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/5956_크다_꽤_매우_몹시_무척_아주_대_대단히_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/5956/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/5956/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.57,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.571189,
+      "frames": 107,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "6324",
+      "title": "물러나다",
+      "title_variants": [
+        "물러나다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191014/627218/MOV000250854_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191014/627218/MOV000250854_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=6324",
+      "sign_description": "오른손의 손가락 끝을 맞대어 끝을, 손바닥이 위로 향하게 편 왼 손바닥에 올려놓았다가 아래로 내린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151218/230046/IMG000223625_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "물러나다"
+      ],
+      "matched_term_counts": {
+        "물러나다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6324_물러나다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6324_물러나다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/6324/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/6324/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.403,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.403724,
+      "frames": 102,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "6481",
+      "title": "빼다,깎다,덜다,제하다,배제,감면,빼기,제외,공제,생략,경감",
+      "title_variants": [
+        "감면",
+        "경감",
+        "공제",
+        "깎다",
+        "덜다",
+        "배제",
+        "빼기",
+        "빼다",
+        "생략",
+        "제외",
+        "제하다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191014/627316/MOV000253641_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191014/627316/MOV000253641_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=6481",
+      "sign_description": "왼손을 펴서 손끝이 오른쪽으로 향하게 모로 세우고, 그 바닥을 손끝이 왼쪽으로 향하게 펴서 모로 세운 오른손의 손등으로 스쳐 내린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151222/232649/IMG000227028_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "빼다"
+      ],
+      "matched_term_counts": {
+        "빼다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6481_빼다_깎다_덜다_제하다_배제_감면_빼기_제외_공제_생략_경감_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6481_빼다_깎다_덜다_제하다_배제_감면_빼기_제외_공제_생략_경감_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/6481/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/6481/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.337,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.337148,
+      "frames": 100,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "6548",
+      "title": "돌다,미치다",
+      "title_variants": [
+        "돌다",
+        "미치다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200821/733608/MOV000252615_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200821/733608/MOV000252615_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=6548",
+      "sign_description": "오른 주먹의 1지를 펴서 끝을 머리 오른쪽 가까이 대고 두 바퀴 돌린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151221/231676/IMG000225749_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "돌다"
+      ],
+      "matched_term_counts": {
+        "돌다": 2
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6548_돌다_미치다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6548_돌다_미치다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/6548/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/6548/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.153,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.153698,
+      "frames": 189,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "6747",
+      "title": "닭",
+      "title_variants": [
+        "닭"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191015/627572/MOV000251174_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191015/627572/MOV000251174_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=6747",
+      "sign_description": "오른손을 펴서 세워 5지를 이마에 대고 나머지 손가락을 좌우로 약간 흔든다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151218/230333/IMG000224010_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "동식물",
+      "matched_terms": [
+        "닭"
+      ],
+      "matched_term_counts": {
+        "닭": 4
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6747_닭_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6747_닭_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/6747/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/6747/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.77,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.77118,
+      "frames": 113,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "6836",
+      "title": "가시,날카롭다,뾰족하다,예리하다,예민하다",
+      "title_variants": [
+        "가시",
+        "날카롭다",
+        "뾰족하다",
+        "예리하다",
+        "예민하다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20221014/1039895/MOV000360444_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20221014/1039895/MOV000360444_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=6836",
+      "sign_description": "오른 주먹의 1·5지를 펴서 5지는 코앞에 1지는 콧등에 댔다가 천천히 약간 아래로 잡아당기며 1·5지 끝 바닥을 맞댄다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151216/229123/IMG000222428_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "동식물",
+      "matched_terms": [
+        "날카롭다"
+      ],
+      "matched_term_counts": {
+        "날카롭다": 2
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6836_가시_날카롭다_뾰족하다_예리하다_예민하다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6836_가시_날카롭다_뾰족하다_예리하다_예민하다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/6836/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/6836/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 2.686,
+      "segment_start_sec": 0,
+      "segment_end_sec": 2.686853,
+      "frames": 161,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "6886",
+      "title": "가장,가구주,주인,호주",
+      "title_variants": [
+        "가구주",
+        "가장",
+        "주인",
+        "호주"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20201223/790888/MOV000357847_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20201223/790888/MOV000357847_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=6886",
+      "sign_description": "두 손의 손끝을 맞대어 좌우로 비스듬히 세운 다음, 오른 주먹의 5지를 펴서 세운다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151216/229138/IMG000222454_700X466.jpg,http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151216/229139/IMG000222455_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "삶",
+      "matched_terms": [
+        "주인"
+      ],
+      "matched_term_counts": {
+        "주인": 10
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6886_가장_가구주_주인_호주_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6886_가장_가구주_주인_호주_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/6886/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/6886/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.537,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.537753,
+      "frames": 212,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "6937",
+      "title": "주위,주변,둘레",
+      "title_variants": [
+        "둘레",
+        "주변",
+        "주위"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191029/632391/MOV000257373_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191029/632391/MOV000257373_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=6937",
+      "sign_description": "왼 주먹의 5지를 펴서 세우고, 그 둘레에 오른 주먹의 1지를 펴서 끝이 아래로 향하게 하여 원을 그린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151228/236213/IMG000231639_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "주변"
+      ],
+      "matched_term_counts": {
+        "주변": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6937_주위_주변_둘레_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6937_주위_주변_둘레_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/6937/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/6937/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.004,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.004937,
+      "frames": 120,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "7362",
+      "title": "다니다",
+      "title_variants": [
+        "다니다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191016/628099/MOV000250725_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191016/628099/MOV000250725_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=7362",
+      "sign_description": "손등이 위로 손끝이 오른쪽으로 향하게 편 왼팔 약간 위에 오른 손목이 놓이게 하여 오른 손목을 좌우로 흔든다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151218/229935/IMG000223467_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "삶",
+      "matched_terms": [
+        "다니다"
+      ],
+      "matched_term_counts": {
+        "다니다": 2
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7362_다니다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7362_다니다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/7362/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/7362/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.004,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.004362,
+      "frames": 120,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "7480",
+      "title": "준비,장만,채비,마련,차리다,챙기다",
+      "title_variants": [
+        "마련",
+        "장만",
+        "준비",
+        "차리다",
+        "채비",
+        "챙기다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191016/628158/MOV000257528_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191016/628158/MOV000257528_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=7480",
+      "sign_description": "두 손을 펴서 손끝이 밖으로 향하게 마주 보게 세워 오른쪽에서 왼쪽으로 또는 왼쪽에서 오른쪽으로 두 번 옮긴다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151228/236356/IMG000231830_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "마련"
+      ],
+      "matched_term_counts": {
+        "마련": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7480_준비_장만_채비_마련_차리다_챙기다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7480_준비_장만_채비_마련_차리다_챙기다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/7480/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/7480/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.57,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.570713,
+      "frames": 214,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "7528",
+      "title": "멍하다,멍하니",
+      "title_variants": [
+        "멍하니",
+        "멍하다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220801/1004431/MOV000359624_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220801/1004431/MOV000359624_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=7528",
+      "sign_description": "오른 주먹의 1지를 펴서 끝을 오른쪽 관자놀이에 댔다가 뗀 다음, 오른손의 1·5지 끝을 맞대어 동그라미를 만들어 입에 댔다가 내밀어 튕기면서 입김을 내쉰다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151218/230215/IMG000223738_700X466.jpg,http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151218/230216/IMG000223739_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "멍하니"
+      ],
+      "matched_term_counts": {
+        "멍하니": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7528_멍하다_멍하니_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7528_멍하다_멍하니_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/7528/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/7528/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.021,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.021211,
+      "frames": 241,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "7643",
+      "title": "지저귀다,주둥이,부리",
+      "title_variants": [
+        "부리",
+        "주둥이",
+        "지저귀다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220801/1004439/MOV000359632_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220801/1004439/MOV000359632_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=7643",
+      "sign_description": "오른 주먹 등을 입 가까이에 대고 1·5지를 펴서 두 번 붙였다 뗀다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151230/237202/IMG000232900_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "부리"
+      ],
+      "matched_term_counts": {
+        "부리": 6
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7643_지저귀다_주둥이_부리_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7643_지저귀다_주둥이_부리_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/7643/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/7643/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.52,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.520826,
+      "frames": 211,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "7859",
+      "title": "울다",
+      "title_variants": [
+        "울다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200811/727660/MOV000255309_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200811/727660/MOV000255309_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=7859",
+      "sign_description": "양 주먹의 1·5지 끝을 맞대어 양 눈 밑에서 아래로 두 번 내린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20210108/796320/IMG000358145_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "울다"
+      ],
+      "matched_term_counts": {
+        "울다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7859_울다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7859_울다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/7859/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/7859/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.52,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.521042,
+      "frames": 211,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "7912",
+      "title": "자라다,발육,성숙,성장,장성",
+      "title_variants": [
+        "발육",
+        "성숙",
+        "성장",
+        "자라다",
+        "장성"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191018/628618/MOV000255365_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191018/628618/MOV000255365_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=7912",
+      "sign_description": "두 손의 손가락을 약간 구부려 양쪽 어깨 위에서 위로 조금씩 올린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151225/234310/IMG000229180_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "동식물",
+      "matched_terms": [
+        "자라다"
+      ],
+      "matched_term_counts": {
+        "자라다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7912_자라다_발육_성숙_성장_장성_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7912_자라다_발육_성숙_성장_장성_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/7912/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/7912/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.004,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.004912,
+      "frames": 120,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "8217",
+      "title": "어울리다",
+      "title_variants": [
+        "어울리다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/734972/MOV000254991_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/734972/MOV000254991_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=8217",
+      "sign_description": "손바닥이 밖으로 손끝이 위로 향하게 펴서 세운 오른손을 약간 아래로 내리며 2·5지를 맞댄다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20210105/794900/IMG000358109_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "어울리다"
+      ],
+      "matched_term_counts": {
+        "어울리다": 2
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8217_어울리다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8217_어울리다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/8217/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/8217/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.02,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.0199,
+      "frames": 181,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "8240",
+      "title": "사랑,-애",
+      "title_variants": [
+        "-애",
+        "사랑"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629620/MOV000253928_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629620/MOV000253928_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=8240",
+      "sign_description": "5지 바닥을 1지 옆면에 대고 손등이 왼쪽으로 향하게 모로 세운 왼 주먹 위에 오른 손바닥을 대고 오른손만 오른쪽으로 돌린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151223/232946/IMG000227380_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "사랑"
+      ],
+      "matched_term_counts": {
+        "사랑": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8240_사랑_-애_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8240_사랑_-애_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/8240/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/8240/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.204,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.20444,
+      "frames": 252,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "8291",
+      "title": "살다,삶,생활",
+      "title_variants": [
+        "살다",
+        "삶",
+        "생활"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629642/MOV000254514_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629642/MOV000254514_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=8291",
+      "sign_description": "1·5지를 펴서 바닥이 밖으로 향하게 쥔 두 주먹을 동시에 오른쪽으로 한 바퀴 돌린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151224/233498/IMG000228108_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "삶",
+      "matched_terms": [
+        "살다"
+      ],
+      "matched_term_counts": {
+        "살다": 3
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8291_살다_삶_생활_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8291_살다_삶_생활_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/8291/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/8291/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.004,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.004291,
+      "frames": 240,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "8334",
+      "title": "바쁘다,분주하다",
+      "title_variants": [
+        "바쁘다",
+        "분주하다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629657/MOV000254000_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629657/MOV000254000_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=8334",
+      "sign_description": "손바닥이 위로 향하게 편 두 손을, 손끝이 마주 보게 하여 상하로 엇갈리게 움직인다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151223/233004/IMG000227474_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "삶",
+      "matched_terms": [
+        "바쁘다"
+      ],
+      "matched_term_counts": {
+        "바쁘다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8334_바쁘다_분주하다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8334_바쁘다_분주하다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/8334/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/8334/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.67,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.670667,
+      "frames": 110,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "8608",
+      "title": "강하다,견고하다,굳다,단단하다,딱딱하다,공고하다,세다,억세다",
+      "title_variants": [
+        "강하다",
+        "견고하다",
+        "공고하다",
+        "굳다",
+        "단단하다",
+        "딱딱하다",
+        "세다",
+        "억세다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629708/MOV000248694_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629708/MOV000248694_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=8608",
+      "sign_description": "오른 주먹의 1·5지를 펴서 약간 구부려 오른쪽 어깨 높이에서 가슴 앞으로 힘주어 내린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151214/227838/IMG000220869_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "굳다"
+      ],
+      "matched_term_counts": {
+        "굳다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8608_강하다_견고하다_굳다_단단하다_딱딱하다_공고하다_세다_억세다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8608_강하다_견고하다_굳다_단단하다_딱딱하다_공고하다_세다_억세다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/8608/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/8608/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.137,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.138075,
+      "frames": 124,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "8713",
+      "title": "갑자기,냅다,별안간,갑작스럽다,갑작스레",
+      "title_variants": [
+        "갑자기",
+        "갑작스럽다",
+        "갑작스레",
+        "냅다",
+        "별안간"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629720/MOV000241898_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629720/MOV000241898_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=8713",
+      "sign_description": "4지 옆면이 밖으로 향하게 가볍게 쥔 오른주먹을 얼굴 오른쪽에서 얼굴 앞으로 재빠르게 돌리며 활짝 펴서 얼굴을 가린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151130/219146/IMG000210756_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "냅다"
+      ],
+      "matched_term_counts": {
+        "냅다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8713_갑자기_냅다_별안간_갑작스럽다_갑작스레_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8713_갑자기_냅다_별안간_갑작스럽다_갑작스레_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/8713/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/8713/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.504,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.504213,
+      "frames": 105,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "9376",
+      "title": "결과,결말,마지막,최종,최후,결국,드디어,마침내",
+      "title_variants": [
+        "결과",
+        "결국",
+        "결말",
+        "드디어",
+        "마지막",
+        "마침내",
+        "최종",
+        "최후"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630093/MOV000249534_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630093/MOV000249534_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=9376",
+      "sign_description": "오른 주먹의 5지를 펴서 세워 왼 손등에 힘주어 내려놓는다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20190730/605367/IMG000221956_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "드디어"
+      ],
+      "matched_term_counts": {
+        "드디어": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/9376_결과_결말_마지막_최종_최후_결국_드디어_마침내_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/9376_결과_결말_마지막_최종_최후_결국_드디어_마침내_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/9376/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/9376/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.37,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.370409,
+      "frames": 101,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "9588",
+      "title": "재빠르다,기미,눈치",
+      "title_variants": [
+        "기미",
+        "눈치",
+        "재빠르다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20201211/785549/MOV000357193_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20201211/785549/MOV000357193_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=9588",
+      "sign_description": "오른 주먹의 1지를 펴서 끝을 오른쪽 눈 밑에 댄 다음, 오른 주먹의 1·5지를 펴서 왼쪽으로 빠르게 움직이며 1·5지 끝을 맞댄다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151231/237873/IMG000233760_700X466.jpg,http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151231/237874/IMG000233761_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "눈치"
+      ],
+      "matched_term_counts": {
+        "눈치": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/9588_재빠르다_기미_눈치_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/9588_재빠르다_기미_눈치_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/9588/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/9588/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.554,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.554138,
+      "frames": 213,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "9689",
+      "title": "장난",
+      "title_variants": [
+        "장난"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200825/735706/MOV000258634_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200825/735706/MOV000258634_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=9689",
+      "sign_description": "두 주먹의 1지를 펴서 바닥이 밖으로 향하게 하여 양어깨 위에 세워 좌우로 두 번 엇갈리게 흔든다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151230/237457/IMG000233213_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "장난"
+      ],
+      "matched_term_counts": {
+        "장난": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/9689_장난_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/9689_장난_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/9689/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/9689/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 2.819,
+      "segment_start_sec": 0,
+      "segment_end_sec": 2.820172,
+      "frames": 169,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "10085",
+      "title": "뒤따르다,수행,따라가다,따르다,좇다,쫓다,쫓아가다",
+      "title_variants": [
+        "뒤따르다",
+        "따라가다",
+        "따르다",
+        "수행",
+        "좇다",
+        "쫓다",
+        "쫓아가다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200811/727699/MOV000240877_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200811/727699/MOV000240877_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=10085",
+      "sign_description": "왼 주먹의 5지를 펴서 세우고, 그 뒤에 오른 주먹의 5지를 펴서 세워 같이 밖으로 내민다",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151128/217931/IMG000209342_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "쫓다",
+        "따라가다",
+        "따르다",
+        "쫓아가다"
+      ],
+      "matched_term_counts": {
+        "쫓다": 4,
+        "따라가다": 1,
+        "따르다": 1,
+        "쫓아가다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10085_뒤따르다_수행_따라가다_따르다_좇다_쫓다_쫓아가다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10085_뒤따르다_수행_따라가다_따르다_좇다_쫓다_쫓아가다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/10085/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/10085/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.003,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.003085,
+      "frames": 180,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "10402",
+      "title": "만족,여유,자신,충족,넉넉하다,늠름하다,당당하다,떳떳하다,충분하다,푸짐하다,풍부하다,듬뿍,실컷",
+      "title_variants": [
+        "넉넉하다",
+        "늠름하다",
+        "당당하다",
+        "듬뿍",
+        "떳떳하다",
+        "만족",
+        "실컷",
+        "여유",
+        "자신",
+        "충분하다",
+        "충족",
+        "푸짐하다",
+        "풍부하다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630193/MOV000236772_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630193/MOV000236772_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=10402",
+      "sign_description": "오른손을 펴서 손끝을 왼쪽 가슴에 댔다가 오른쪽 가슴에 댄다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151220/231432/IMG000225426_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "듬뿍"
+      ],
+      "matched_term_counts": {
+        "듬뿍": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10402_만족_여유_자신_충족_넉넉하다_늠름하다_당당하다_떳떳하다_충분하다_푸짐하다_풍부하다_듬뿍_실컷_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10402_만족_여유_자신_충족_넉넉하다_늠름하다_당당하다_떳떳하다_충분하다_푸짐하다_풍부하다_듬뿍_실컷_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/10402/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/10402/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.77,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.770835,
+      "frames": 113,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "10419",
+      "title": "먹다,식사",
+      "title_variants": [
+        "먹다",
+        "식사"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191025/630761/MOV000250824_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191025/630761/MOV000250824_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=10419",
+      "sign_description": "오른손을 펴서, 손바닥이 위로 향하게 하여 두 번 입으로 올린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151218/230026/IMG000223590_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "식생활",
+      "matched_terms": [
+        "먹다"
+      ],
+      "matched_term_counts": {
+        "먹다": 5
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10419_먹다_식사_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10419_먹다_식사_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/10419/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/10419/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.67,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.670752,
+      "frames": 110,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "10474",
+      "title": "발생,생성,나다,나오다,돋다,생기다,솟다,트다",
+      "title_variants": [
+        "나다",
+        "나오다",
+        "돋다",
+        "발생",
+        "생기다",
+        "생성",
+        "솟다",
+        "트다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191011/626655/MOV000254304_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191011/626655/MOV000254304_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=10474",
+      "sign_description": "왼손을 손끝이 오른쪽으로 향하게 모로 세워 ‘ㄷ’자 모양이 되게 하고, 그 사이로 손끝이 위로 손바닥이 안으로 향한 오른손을 올린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151223/233264/IMG000227854_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "생기다"
+      ],
+      "matched_term_counts": {
+        "생기다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10474_발생_생성_나다_나오다_돋다_생기다_솟다_트다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10474_발생_생성_나다_나오다_돋다_생기다_솟다_트다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/10474/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/10474/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.238,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.238041,
+      "frames": 254,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "10477",
+      "title": "발표,광고,표시,표현,나타내다,드러내다",
+      "title_variants": [
+        "광고",
+        "나타내다",
+        "드러내다",
+        "발표",
+        "표시",
+        "표현"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191025/630790/MOV000254428_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191025/630790/MOV000254428_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=10477",
+      "sign_description": "손등이 밖으로 향하게 세운 왼 손바닥에 오른 주먹의 1지를 펴서 끝을 대고 왼 손목을 돌려 손바닥이 밖으로 향하게 한다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151224/233404/IMG000228000_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "드러내다"
+      ],
+      "matched_term_counts": {
+        "드러내다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10477_발표_광고_표시_표현_나타내다_드러내다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10477_발표_광고_표시_표현_나타내다_드러내다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/10477/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/10477/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.67,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.67081,
+      "frames": 110,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "10493",
+      "title": "참다,견디다,인내,자제,억제",
+      "title_variants": [
+        "견디다",
+        "억제",
+        "인내",
+        "자제",
+        "참다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005868/MOV000359870_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005868/MOV000359870_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=10493",
+      "sign_description": "오른 주먹의 5지를 펴서 세워 가슴에 대고 천천히 아래로 내린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151212/226240/IMG000218981_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "견디다"
+      ],
+      "matched_term_counts": {
+        "견디다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10493_참다_견디다_인내_자제_억제_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10493_참다_견디다_인내_자제_억제_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/10493/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/10493/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.52,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.520676,
+      "frames": 211,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "10789",
+      "title": "신기하다,교묘하다,묘하다,오묘하다,이상",
+      "title_variants": [
+        "교묘하다",
+        "묘하다",
+        "신기하다",
+        "오묘하다",
+        "이상"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191025/630946/MOV000245688_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191025/630946/MOV000245688_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=10789",
+      "sign_description": "오른쪽 눈 가까이에서 손가락이 눈으로 향하게 편 오른 손가락을 두 번 붙였다 편다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151228/235851/IMG000231184_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "신기하다"
+      ],
+      "matched_term_counts": {
+        "신기하다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10789_신기하다_교묘하다_묘하다_오묘하다_이상_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10789_신기하다_교묘하다_묘하다_오묘하다_이상_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/10789/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/10789/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.67,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.671122,
+      "frames": 110,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "10861",
+      "title": "용감하다,용기",
+      "title_variants": [
+        "용감하다",
+        "용기"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20221014/1040144/MOV000360621_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20221014/1040144/MOV000360621_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=10861",
+      "sign_description": "오른 손바닥을 배에 댔다가 주먹을 쥐고 손가락 등으로 왼 손바닥을 친다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151228/236077/IMG000231460_700X466.jpg,http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151228/236078/IMG000231461_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "용기"
+      ],
+      "matched_term_counts": {
+        "용기": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10861_용감하다_용기_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10861_용감하다_용기_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/10861/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/10861/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.187,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.187378,
+      "frames": 191,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "10952",
+      "title": "알,계란,달걀",
+      "title_variants": [
+        "계란",
+        "달걀",
+        "알"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630112/MOV000256439_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630112/MOV000256439_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=10952",
+      "sign_description": "반쯤 구부린 오른손의 1·5지 옆면을 오른쪽 눈앞에 대고 손끝을 두 번 오므렸다 편다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151227/235306/IMG000230472_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "달걀"
+      ],
+      "matched_term_counts": {
+        "달걀": 6
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10952_알_계란_달걀_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10952_알_계란_달걀_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/10952/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/10952/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.136,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.137419,
+      "frames": 94,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11012",
+      "title": "데려가다,안내,인도,인솔,데리다,이끌다",
+      "title_variants": [
+        "데려가다",
+        "데리다",
+        "안내",
+        "이끌다",
+        "인도",
+        "인솔"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631866/MOV000252032_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631866/MOV000252032_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11012",
+      "sign_description": "손등이 밖으로 향하게 모로 세운 왼손의 손가락을 오른손으로 잡아 밖으로 당긴다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151220/231110/IMG000225042_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "사회생활",
+      "matched_terms": [
+        "이끌다"
+      ],
+      "matched_term_counts": {
+        "이끌다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11012_데려가다_안내_인도_인솔_데리다_이끌다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11012_데려가다_안내_인도_인솔_데리다_이끌다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11012/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11012/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.671,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.671345,
+      "frames": 280,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11164",
+      "title": "대들다",
+      "title_variants": [
+        "대들다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200825/735727/MOV000239963_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200825/735727/MOV000239963_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11164",
+      "sign_description": "5지와 나머지 손가락 사이를 벌려 끝이 옆으로 손등이 밖으로 향하게 하여 오른손이 밖에 놓이게 두 손을 전후로 맞대고 얼굴 앞으로 당긴다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151126/216778/IMG000207993_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "사회생활",
+      "matched_terms": [
+        "대들다"
+      ],
+      "matched_term_counts": {
+        "대들다": 2
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11164_대들다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11164_대들다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11164/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11164/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 2.669,
+      "segment_start_sec": 0,
+      "segment_end_sec": 2.669497,
+      "frames": 160,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11165",
+      "title": "대피,도망,도주,도피,줄행랑,탈출,내빼다,달아나다,도망가다,도망치다,빠져나가다",
+      "title_variants": [
+        "내빼다",
+        "달아나다",
+        "대피",
+        "도망",
+        "도망가다",
+        "도망치다",
+        "도주",
+        "도피",
+        "빠져나가다",
+        "줄행랑",
+        "탈출"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200811/727723/MOV000240075_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200811/727723/MOV000240075_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11165",
+      "sign_description": "오른 주먹의 1·2지를 펴서 등이 위로 끝이 밖으로 향하게 하여, 손등이 위로 손끝이 오른쪽으로 향하게 편 왼 손바닥을 스치며 밖으로 올린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151126/216943/IMG000208156_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "달아나다",
+        "도망"
+      ],
+      "matched_term_counts": {
+        "달아나다": 3,
+        "도망": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11165_대피_도망_도주_도피_줄행랑_탈출_내빼다_달아나다_도망가다_도망치다_빠져나가다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11165_대피_도망_도주_도피_줄행랑_탈출_내빼다_달아나다_도망가다_도망치다_빠져나가다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11165/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11165/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 2.886,
+      "segment_start_sec": 0,
+      "segment_end_sec": 2.886382,
+      "frames": 173,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11206",
+      "title": "감히",
+      "title_variants": [
+        "감히"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200820/732518/MOV000240163_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200820/732518/MOV000240163_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11206",
+      "sign_description": "오른손을 ‘ㄷ’자 모양으로 구부려 5지 등을 왼쪽 볼에 한 번, 오른쪽 볼에 한 번 댄다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20201130/780244/IMG000356780_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "감히"
+      ],
+      "matched_term_counts": {
+        "감히": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11206_감히_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11206_감히_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11206/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11206/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 2.819,
+      "segment_start_sec": 0,
+      "segment_end_sec": 2.819689,
+      "frames": 169,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11315",
+      "title": "아홉,구",
+      "title_variants": [
+        "구",
+        "아홉"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009766/MOV000360063_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009766/MOV000360063_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11315",
+      "sign_description": "오른손을 펴서 손바닥이 안으로 향하게 비스듬히 세운다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151210/225170/IMG000217770_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "아홉"
+      ],
+      "matched_term_counts": {
+        "아홉": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11315_아홉_구_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11315_아홉_구_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11315/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11315/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.02,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.019998,
+      "frames": 181,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11432",
+      "title": "임자,주인,주체",
+      "title_variants": [
+        "임자",
+        "주인",
+        "주체"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200819/731439/MOV000244760_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200819/731439/MOV000244760_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11432",
+      "sign_description": "오른 주먹의 5지를 펴서 세워 약간 위로 올린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20210112/798339/IMG000358198_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "주인"
+      ],
+      "matched_term_counts": {
+        "주인": 10
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11432_임자_주인_주체_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11432_임자_주인_주체_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11432/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11432/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.337,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.337099,
+      "frames": 200,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11463",
+      "title": "유예,연기,물리다,미루다",
+      "title_variants": [
+        "물리다",
+        "미루다",
+        "연기",
+        "유예"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005906/MOV000359908_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005906/MOV000359908_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11463",
+      "sign_description": "1·5지 끝을 맞대고 등이 위로 향하게 쥔 두 주먹을 가슴 앞에서 간격을 유지하며 동시에 오른쪽으로 옮긴다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151115/210586/IMG000200795_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "물리다"
+      ],
+      "matched_term_counts": {
+        "물리다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11463_유예_연기_물리다_미루다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11463_유예_연기_물리다_미루다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11463/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11463/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.021,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.021146,
+      "frames": 241,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11502",
+      "title": "근방,가까이,근처,부근,인근",
+      "title_variants": [
+        "가까이",
+        "근방",
+        "근처",
+        "부근",
+        "인근"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191004/624438/MOV000249190_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191004/624438/MOV000249190_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11502",
+      "sign_description": "1·5지 끝을 붙여 동그라미를 만든 두 주먹을 모로 세워 전후에서 접근시켜 맞댄 다음, 손바닥이 아래로 향하게 반쯤 구부린 오른손을 가슴 앞에서 약간 내리다가 멈춘다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151215/228384/IMG000221511_700X466.jpg,http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151215/228385/IMG000221512_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "가까이"
+      ],
+      "matched_term_counts": {
+        "가까이": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11502_근방_가까이_근처_부근_인근_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11502_근방_가까이_근처_부근_인근_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11502/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11502/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.537,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.537369,
+      "frames": 106,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11571",
+      "title": "다급하다,성급하다,조급하다,급급하다,바쁘다,급조하다,변급하다",
+      "title_variants": [
+        "급급하다",
+        "급조하다",
+        "다급하다",
+        "바쁘다",
+        "변급하다",
+        "성급하다",
+        "조급하다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005833/MOV000359851_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005833/MOV000359851_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11571",
+      "sign_description": "두 손을 펴서 4지 옆면으로 배를 두 번 스쳐 올린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151218/229934/IMG000223465_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "바쁘다"
+      ],
+      "matched_term_counts": {
+        "바쁘다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11571_다급하다_성급하다_조급하다_급급하다_바쁘다_급조하다_변급하다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11571_다급하다_성급하다_조급하다_급급하다_바쁘다_급조하다_변급하다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11571/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11571/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.02,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.020254,
+      "frames": 181,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11602",
+      "title": "머리,뇌,두뇌",
+      "title_variants": [
+        "뇌",
+        "두뇌",
+        "머리"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631998/MOV000250810_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631998/MOV000250810_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11602",
+      "sign_description": "오른 주먹의 1지를 펴서 끝으로 머리 위를 가리킨다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151218/230016/IMG000223573_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "머리"
+      ],
+      "matched_term_counts": {
+        "머리": 4
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11602_머리_뇌_두뇌_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11602_머리_뇌_두뇌_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11602/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11602/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.171,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.171435,
+      "frames": 250,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11684",
+      "title": "포옹,품,껴안다,끌어안다,안다,품다",
+      "title_variants": [
+        "껴안다",
+        "끌어안다",
+        "안다",
+        "포옹",
+        "품",
+        "품다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200825/735422/MOV000234576_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200825/735422/MOV000234576_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11684",
+      "sign_description": "두 팔을 벌렸다가 가슴에 모아댄다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151115/210164/IMG000200176_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "품다"
+      ],
+      "matched_term_counts": {
+        "품다": 2
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11684_포옹_품_껴안다_끌어안다_안다_품다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11684_포옹_품_껴안다_끌어안다_안다_품다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11684/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11684/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 2.903,
+      "segment_start_sec": 0,
+      "segment_end_sec": 2.903584,
+      "frames": 174,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11883",
+      "title": "어리다",
+      "title_variants": [
+        "어리다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200821/733462/MOV000254971_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200821/733462/MOV000254971_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11883",
+      "sign_description": "1·2지를 펴서 끝 바닥을 코 앞에서 아래로 내린 다음, 손바닥이 옆으로 손끝이 위로 향하게 펴서 약간 구부린 두 손을 얼굴 양옆에 세워 마주 보게 하여 가볍게 좌우로 두 번 흔든다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20210104/794553/IMG000358106_700X466.jpg,http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151225/234020/IMG000228701_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "인간",
+      "matched_terms": [
+        "어리다"
+      ],
+      "matched_term_counts": {
+        "어리다": 2
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11883_어리다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11883_어리다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11883/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11883/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.42,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.420966,
+      "frames": 205,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "11996",
+      "title": "시골,촌",
+      "title_variants": [
+        "시골",
+        "촌"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191029/632178/MOV000256391_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191029/632178/MOV000256391_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=11996",
+      "sign_description": "손바닥이 아래로 향한 왼 손등에 ‘+’자 모양이 되게 오른 손바닥을 대고 손가락을 상하로 흔든다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151227/235271/IMG000230413_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "시골"
+      ],
+      "matched_term_counts": {
+        "시골": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11996_시골_촌_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11996_시골_촌_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/11996/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/11996/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.67,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.671329,
+      "frames": 110,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "12415",
+      "title": "간혹,가끔,때때로,이따금,종종,간간이,드문드문,종종히,혹",
+      "title_variants": [
+        "가끔",
+        "간간이",
+        "간혹",
+        "드문드문",
+        "때때로",
+        "이따금",
+        "종종",
+        "종종히",
+        "혹"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191029/632408/MOV000250331_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191029/632408/MOV000250331_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=12415",
+      "sign_description": "손끝이 밖으로 향하게 편 오른손의 2ㆍ5지를 두 번 붙였다 떼며 오른쪽으로 이동시킨다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151217/229565/IMG000222976_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "종종"
+      ],
+      "matched_term_counts": {
+        "종종": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12415_간혹_가끔_때때로_이따금_종종_간간이_드문드문_종종히_혹_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12415_간혹_가끔_때때로_이따금_종종_간간이_드문드문_종종히_혹_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/12415/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/12415/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.004,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.004415,
+      "frames": 120,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "12442",
+      "title": "곧,금명간,신속,이르다,냉큼,빨리,속히,썩,어서,얼른,이내,일찍,일찍이,-자",
+      "title_variants": [
+        "-자",
+        "곧",
+        "금명간",
+        "냉큼",
+        "빨리",
+        "속히",
+        "신속",
+        "썩",
+        "어서",
+        "얼른",
+        "이내",
+        "이르다",
+        "일찍",
+        "일찍이"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191014/627300/MOV000248334_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191014/627300/MOV000248334_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=12442",
+      "sign_description": "오른 주먹의 1·5지를 펴서 끝이 위로 향하게 하여 위로 빠르게 올리며 끝을 맞댄다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151214/227513/IMG000220416_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "이내"
+      ],
+      "matched_term_counts": {
+        "이내": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12442_곧_금명간_신속_이르다_냉큼_빨리_속히_썩_어서_얼른_이내_일찍_일찍이_-자_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12442_곧_금명간_신속_이르다_냉큼_빨리_속히_썩_어서_얼른_이내_일찍_일찍이_-자_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/12442/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/12442/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.171,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.171275,
+      "frames": 125,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "12461",
+      "title": "자라 왔다,자라다",
+      "title_variants": [
+        "자라 왔다",
+        "자라다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200825/735758/MOV000235209_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200825/735758/MOV000235209_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=12461",
+      "sign_description": "오른손을 손바닥이 아래로 향하게 하여 배 앞에서부터 서서히 위로 올린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151116/210821/IMG000201002_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "자라다"
+      ],
+      "matched_term_counts": {
+        "자라다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12461_자라_왔다_자라다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12461_자라_왔다_자라다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/12461/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/12461/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.036,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.036828,
+      "frames": 182,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "12468",
+      "title": "점검,감사,감시,감찰,검토,검사,수사,사찰,조사,살펴보다,살피다",
+      "title_variants": [
+        "감사",
+        "감시",
+        "감찰",
+        "검사",
+        "검토",
+        "사찰",
+        "살펴보다",
+        "살피다",
+        "수사",
+        "점검",
+        "조사"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630089/MOV000235299_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630089/MOV000235299_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=12468",
+      "sign_description": "오른 주먹의 1·2지를 약간 구부려 끝이 두 눈으로 향하게 하여 왼쪽으로 두 바퀴 돌린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151116/210984/IMG000201133_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "살피다"
+      ],
+      "matched_term_counts": {
+        "살피다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12468_점검_감사_감시_감찰_검토_검사_수사_사찰_조사_살펴보다_살피다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12468_점검_감사_감시_감찰_검토_검사_수사_사찰_조사_살펴보다_살피다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/12468/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/12468/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.837,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.837635,
+      "frames": 115,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "12573",
+      "title": "하나,일,한번",
+      "title_variants": [
+        "일",
+        "하나",
+        "한번"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009715/MOV000360025_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009715/MOV000360025_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=12573",
+      "sign_description": "오른 주먹의 1지를 펴서 바닥이 밖으로 향하게 세운다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151210/225407/IMG000218038_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "한번"
+      ],
+      "matched_term_counts": {
+        "한번": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12573_하나_일_한번_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12573_하나_일_한번_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/12573/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/12573/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 2.686,
+      "segment_start_sec": 0,
+      "segment_end_sec": 2.68659,
+      "frames": 161,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "12637",
+      "title": "배회,방황,돌아다니다,헤매다",
+      "title_variants": [
+        "돌아다니다",
+        "방황",
+        "배회",
+        "헤매다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200825/735441/MOV000244942_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200825/735441/MOV000244942_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=12637",
+      "sign_description": "손바닥이 위로 향하게 편 왼 손바닥에 오른 주먹의 1·2지를 펴서 끝을 대고 세워 돌리며 오른쪽으로 이동시킨다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151206/223096/IMG000215380_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "돌아다니다"
+      ],
+      "matched_term_counts": {
+        "돌아다니다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12637_배회_방황_돌아다니다_헤매다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12637_배회_방황_돌아다니다_헤매다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/12637/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/12637/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.337,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.337304,
+      "frames": 200,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "12857",
+      "title": "내부,안,이내,내용,속",
+      "title_variants": [
+        "내부",
+        "내용",
+        "속",
+        "안",
+        "이내"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191025/630990/MOV000251864_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191025/630990/MOV000251864_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=12857",
+      "sign_description": "손등이 밖으로 손끝이 오른쪽으로 향하게 편 왼 손바닥 안에서 오른 주먹의 1지를 펴서 끝이 아래로 향하게 하여 수평으로 원을 그리고 그 가운데를 콕 찍는다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151219/230962/IMG000224840_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "개념",
+      "matched_terms": [
+        "이내"
+      ],
+      "matched_term_counts": {
+        "이내": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12857_내부_안_이내_내용_속_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12857_내부_안_이내_내용_속_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/12857/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/12857/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 4.371,
+      "segment_start_sec": 0,
+      "segment_end_sec": 4.37189,
+      "frames": 262,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "18857",
+      "title": "신기하다",
+      "title_variants": [
+        "신기하다"
+      ],
+      "alternative_title": "",
+      "description": "새롭고 기이하다.",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/284841/MOV000282743_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/284841/MOV000282743_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=SPE&origin_no=18857",
+      "sign_description": "오른쪽 눈 가까이에서 손가락이 눈으로 향하게 편 오른 손가락을 두 번 붙였다 편다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/266692/IMG000282744_700X466.jpg",
+      "collection_db": "전문용어수어",
+      "category_type": "기독교",
+      "matched_terms": [
+        "신기하다"
+      ],
+      "matched_term_counts": {
+        "신기하다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/18857_신기하다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/18857_신기하다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/18857/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/18857/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.217,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.217524,
+      "frames": 193,
+      "fps": 60.0
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "23161",
+      "title": "연방",
+      "title_variants": [
+        "연방"
+      ],
+      "alternative_title": "",
+      "description": "자치권을 가진 다수의 나라가 공통의 정치 이념 아래에서 연합하여 구성하는 국가. 개별 구성국은 자체의 국내법에 따르되, 연방 국가는 국제법상의 외교권을 갖는 단일의 주권 국가이다. 미국, 독일, 스위스 등이 여기에 속한다. ≒연방국 · 연합 국가.",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/288832/MOV000298692_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/288832/MOV000298692_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=SPE&origin_no=23161",
+      "sign_description": "두 주먹의 1지를 펴서 구부려 연결하여 오른쪽으로 돌린 다음, 두 손의 손가락을 약간 구부려 마주 보게 세워 전후로 약간 흔든다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/280344/IMG000298693_700X466.jpg,http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/280345/IMG000298694_700X466.jpg",
+      "collection_db": "전문용어수어",
+      "category_type": "정치",
+      "matched_terms": [
+        "연방"
+      ],
+      "matched_term_counts": {
+        "연방": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/23161_연방_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/23161_연방_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/23161/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/23161/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 5.005,
+      "segment_start_sec": 0,
+      "segment_end_sec": 5.005161,
+      "frames": 150,
+      "fps": 29.97002997002997
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "24019",
+      "title": "참다,견디다,인내,자제,억제",
+      "title_variants": [
+        "견디다",
+        "억제",
+        "인내",
+        "자제",
+        "참다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191101/633259/MOV000260423_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191101/633259/MOV000260423_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=24019",
+      "sign_description": "왼 주먹의 5지를 펴서 가슴 중앙에 세우고 그 끝을 오른 손바닥으로 눌러 내린다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151212/226241/IMG000218982_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "견디다"
+      ],
+      "matched_term_counts": {
+        "견디다": 1
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/24019_참다_견디다_인내_자제_억제_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/24019_참다_견디다_인내_자제_억제_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/24019/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/24019/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.687,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.687036,
+      "frames": 221,
+      "fps": 59.94005994005994
+    },
+    {
+      "api_source": "integrated",
+      "source": "culture_integrated",
+      "local_id": "24036",
+      "title": "아니다,않다",
+      "title_variants": [
+        "아니다",
+        "않다"
+      ],
+      "alternative_title": "",
+      "description": "",
+      "video_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191101/633271/MOV000260442_700X466.mp4",
+      "thumbnail_url": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191101/633271/MOV000260442_215X161.jpg",
+      "detail_url": "http://sldict.korean.go.kr/front/sign/signContentsView.do?top_category=CTE&origin_no=24036",
+      "sign_description": "손바닥이 밖으로 향하게 세운 오른손을 좌우로 흔든다.",
+      "sign_images": "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20151206/223149/IMG000215306_700X466.jpg",
+      "collection_db": "일상생활수어",
+      "category_type": "기타",
+      "matched_terms": [
+        "않다"
+      ],
+      "matched_term_counts": {
+        "않다": 3
+      },
+      "remote_keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/24036_아니다_않다_keypoints_smooth.jsonl.gz",
+      "remote_summary_path": "/hdd1/jh/camp26/keypoints/culture_integrated/24036_아니다_않다_keypoints_smooth.jsonl.gz.summary.json",
+      "local_keypoints_path": "openapi/integrated/24036/keypoints_smooth.jsonl.gz",
+      "local_summary_path": "openapi/integrated/24036/keypoints_smooth.jsonl.gz.summary.json",
+      "duration_sec": 3.67,
+      "segment_start_sec": 0,
+      "segment_end_sec": 3.670369,
+      "frames": 110,
+      "fps": 29.97002997002997
+    }
+  ]
+}

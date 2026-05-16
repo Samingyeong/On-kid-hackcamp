@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "11996",
+  "title": "시골,촌",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/11996_시골_촌.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11996_시골_촌_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/11996_시골_촌.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/11996_시골_촌_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 110,
+    "pose_frames": 110,
+    "face_frames": 110,
+    "hand_frames": 52,
+    "hands_total": 101
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 58,
+      "1": 3,
+      "2": 49
+    },
+    "hand_identity_label_mismatches": 0,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/11996_시골_촌_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/11996_시골_촌_smooth.jsonl",
+    "frames": 110,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 1,
+    "after_hand_count_frames": {
+      "0": 58,
+      "1": 2,
+      "2": 50
+    },
+    "face_frames_after": 110,
+    "hand_frames_after": 52,
+    "hands_total_after": 102
+  }
+}

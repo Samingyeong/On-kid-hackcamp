@@ -1,5 +1,10 @@
 node_modules/
-data/
+data/*
+!data/books.db
+!data/sign_motion/
+!data/sign_motion/**
+data/*.db-shm
+data/*.db-wal
 __pycache__/
 *.log
 .env

@@ -5,10 +5,12 @@ const fs = require('fs')
 const DATA_DIR = path.join(__dirname, 'data')
 const DB_PATH  = path.join(DATA_DIR, 'books.db')
 const IMG_DIR  = path.join(DATA_DIR, 'images')
+const SIGN_MOTION_DIR = path.join(DATA_DIR, 'sign_motion')
 
 // 디렉토리 생성
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true })
 if (!fs.existsSync(IMG_DIR))  fs.mkdirSync(IMG_DIR,  { recursive: true })
+if (!fs.existsSync(SIGN_MOTION_DIR)) fs.mkdirSync(SIGN_MOTION_DIR, { recursive: true })
 
 const db = new Database(DB_PATH)
 
@@ -152,4 +154,4 @@ const stmts = {
   lastSync: db.prepare(`SELECT * FROM sync_log ORDER BY id DESC LIMIT 1`),
 }
 
-module.exports = { db, stmts, IMG_DIR }
+module.exports = { db, stmts, IMG_DIR, SIGN_MOTION_DIR }

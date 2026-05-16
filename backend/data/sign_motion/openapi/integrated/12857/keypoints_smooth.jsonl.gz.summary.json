@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "12857",
+  "title": "내부,안,이내,내용,속",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/12857_내부_안_이내_내용_속.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12857_내부_안_이내_내용_속_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/12857_내부_안_이내_내용_속.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12857_내부_안_이내_내용_속_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 59.94005994005994,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 262,
+    "pose_frames": 262,
+    "face_frames": 262,
+    "hand_frames": 146,
+    "hands_total": 227
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 116,
+      "1": 65,
+      "2": 81
+    },
+    "hand_identity_label_mismatches": 213,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12857_내부_안_이내_내용_속_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12857_내부_안_이내_내용_속_smooth.jsonl",
+    "frames": 262,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 4,
+    "after_hand_count_frames": {
+      "0": 113,
+      "1": 67,
+      "2": 82
+    },
+    "face_frames_after": 262,
+    "hand_frames_after": 149,
+    "hands_total_after": 231
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "source": "culture_integrated",
+  "local_id": "10477",
+  "title": "발표,광고,표시,표현,나타내다,드러내다",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/10477_발표_광고_표시_표현_나타내다_드러내다.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10477_발표_광고_표시_표현_나타내다_드러내다_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/10477_발표_광고_표시_표현_나타내다_드러내다.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/10477_발표_광고_표시_표현_나타내다_드러내다_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 110,
+    "pose_frames": 110,
+    "face_frames": 110,
+    "hand_frames": 51,
+    "hands_total": 95
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 59,
+      "2": 44,
+      "1": 7
+    },
+    "hand_identity_label_mismatches": 2,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/10477_발표_광고_표시_표현_나타내다_드러내다_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/10477_발표_광고_표시_표현_나타내다_드러내다_smooth.jsonl",
+    "frames": 110,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 7,
+    "after_hand_count_frames": {
+      "0": 59,
+      "2": 51
+    },
+    "face_frames_after": 110,
+    "hand_frames_after": 51,
+    "hands_total_after": 102
+  }
+}

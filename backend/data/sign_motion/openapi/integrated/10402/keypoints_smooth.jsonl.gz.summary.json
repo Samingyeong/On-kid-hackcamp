@@ -1,0 +1,48 @@
+{
+  "source": "culture_integrated",
+  "local_id": "10402",
+  "title": "만족,여유,자신,충족,넉넉하다,늠름하다,당당하다,떳떳하다,충분하다,푸짐하다,풍부하다,듬뿍,실컷",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/10402_만족_여유_자신_충족_넉넉하다_늠름하다_당당하다_떳떳하다_충분하다_푸짐하다_풍부하다_듬뿍_실컷.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/10402_만족_여유_자신_충족_넉넉하다_늠름하다_당당하다_떳떳하다_충분하다_푸짐하다_풍부하다_듬뿍_실컷_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/10402_만족_여유_자신_충족_넉넉하다_늠름하다_당당하다_떳떳하다_충분하다_푸짐하다_풍부하다_듬뿍_실컷.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/10402_만족_여유_자신_충족_넉넉하다_늠름하다_당당하다_떳떳하다_충분하다_푸짐하다_풍부하다_듬뿍_실컷_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 113,
+    "pose_frames": 113,
+    "face_frames": 113,
+    "hand_frames": 57,
+    "hands_total": 57
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 56,
+      "1": 57
+    },
+    "hand_identity_label_mismatches": 3,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/10402_만족_여유_자신_충족_넉넉하다_늠름하다_당당하다_떳떳하다_충분하다_푸짐하다_풍부하다_듬뿍_실컷_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/10402_만족_여유_자신_충족_넉넉하다_늠름하다_당당하다_떳떳하다_충분하다_푸짐하다_풍부하다_듬뿍_실컷_smooth.jsonl",
+    "frames": 113,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 4,
+    "after_hand_count_frames": {
+      "0": 54,
+      "1": 57,
+      "2": 2
+    },
+    "face_frames_after": 113,
+    "hand_frames_after": 59,
+    "hands_total_after": 61
+  }
+}

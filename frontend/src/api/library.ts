@@ -1,7 +1,7 @@
 import type { Book } from '../types'
 import { supabase } from '../lib/supabase'
 
-const BASE = 'http://localhost:4000'
+const BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000'
 
 // 현재 로그인된 유저 ID를 가져오는 헬퍼
 async function getUserId(): Promise<string> {
@@ -229,6 +229,120 @@ export async function analyzeBatch(sentences: string[]): Promise<Map<string, Mor
     map.set(item.sentence, item)
   }
   return map
+}
+
+// ─── 수어 따라하기 평가 ───────────────────────────────────────
+export interface SignMotionSegment {
+  id: number
+  source_id: number
+  source_title: string
+  lemma: string
+  surface: string
+  pos: string
+  start_sec: number
+  end_sec: number
+  duration_sec: number
+  clip_path: string
+  keypoints_path: string
+  avatar_path: string
+  clip_url: string
+  keypoints_url: string
+  avatar_url: string
+  lexicon_id?: number
+  sign_description?: string
+  sign_images?: string
+  sign_images_urls?: string[]
+  confidence: number
+  review_status: string
+  notes: string
+}
+
+function withBackendBase(url: string) {
+  if (!url || (!url.startsWith('/sign-motion/') && !url.startsWith('/sign-motion-keypoints/'))) return url
+  return `${BASE}${url}`
+}
+
+function normalizeSignSegment(segment: SignMotionSegment | null): SignMotionSegment | null {
+  if (!segment) return null
+  return {
+    ...segment,
+    clip_url: withBackendBase(segment.clip_url),
+    keypoints_url: withBackendBase(segment.keypoints_url),
+    avatar_url: withBackendBase(segment.avatar_url),
+  }
+}
+
+export async function fetchSignMotions(lemma: string, pos = ''): Promise<SignMotionSegment[]> {
+  const params = new URLSearchParams({ lemma })
+  if (pos) params.set('pos', pos)
+  const res = await fetch(`${BASE}/api/sign-motions?${params}`)
+  if (!res.ok) return []
+  const data = await res.json() as { items?: SignMotionSegment[] }
+  return (data.items || [])
+    .map(item => normalizeSignSegment(item))
+    .filter((item): item is SignMotionSegment => Boolean(item))
+}
+
+export interface SignPracticeFrame {
+  time_ms: number
+  width: number
+  height: number
+  pose: Array<{ x: number; y: number; z: number; visibility?: number }>
+  hands: Array<{
+    handedness?: string
+    handedness_score?: number
+    landmarks: Array<{ x: number; y: number; z: number }>
+  }>
+}
+
+export interface SignPracticeEvaluation {
+  correct: boolean
+  status: 'correct' | 'retry'
+  score: number
+  scores: {
+    overall: number
+    handShape: number
+    handPosition: number
+    direction: number
+  }
+  feedback: string[]
+  method: string
+  frames: { user: number; reference: number }
+}
+
+export interface SignPracticeWord {
+  word: string
+  base_form: string
+  segment_count: number
+  segment: SignMotionSegment
+}
+
+export async function fetchSignPracticeWords(): Promise<SignPracticeWord[]> {
+  const res = await fetch(`${BASE}/api/sign-practice/words`)
+  if (!res.ok) return []
+  const data = await res.json() as { items?: Array<Omit<SignPracticeWord, 'segment'> & { segment: SignMotionSegment | null }> }
+  return (data.items || [])
+    .map(item => ({
+      ...item,
+      segment: normalizeSignSegment(item.segment),
+    }))
+    .filter((item): item is SignPracticeWord => Boolean(item.segment?.keypoints_url))
+}
+
+export async function evaluateSignPractice(
+  segmentId: number,
+  userSequence: SignPracticeFrame[],
+): Promise<SignPracticeEvaluation> {
+  const res = await fetch(`${BASE}/api/sign-practice/evaluate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ segmentId, userSequence }),
+  })
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}))
+    throw new Error(data.error || '수어 평가 실패')
+  }
+  return res.json()
 }
 
 // ─── 한국어사전 ───────────────────────────────────────────────
