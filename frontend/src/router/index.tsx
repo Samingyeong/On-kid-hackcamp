@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout'
 import Home from '../pages/Home'
 import BookList from '../pages/BookList'
 import Reader from '../pages/Reader'
+import Login from '../pages/Login'
 import StudySelect from '../pages/StudySelect'
 import StudyWrite from '../pages/StudyWrite'
 import StudyTyping from '../pages/StudyTyping'
@@ -16,6 +17,7 @@ const Placeholder = ({ title }: { title: string }) => (
 )
 
 const router = createBrowserRouter([
+  { path: '/login', element: <Login /> },
   {
     path: '/',
     element: <Layout />,

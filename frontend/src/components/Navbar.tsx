@@ -1,4 +1,5 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 import './Navbar.css'
 
 const NAV_ITEMS = [
@@ -9,6 +10,10 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const { user, signOut } = useAuth()
+
+  const userName = user?.user_metadata?.name || '게스트'
 
   return (
     <nav className="navbar">
@@ -34,10 +39,10 @@ export default function Navbar() {
         {/* 유저 */}
         <div className="navbar-user">
           <div className="user-info">
-            <span className="user-name">사민경</span>
+            <span className="user-name">{userName}</span>
             <span className="user-type">어린이</span>
           </div>
-          <div className="user-avatar">
+          <div className="user-avatar" onClick={() => { if (user) signOut(); else navigate('/login') }}>
             <div className="avatar-circle-bg" />
             <img src="/svg/sentence_monkey2.png" alt="캐릭터" className="avatar-img" />
           </div>
