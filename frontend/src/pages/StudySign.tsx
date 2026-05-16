@@ -18,7 +18,7 @@ import {
   type StudyWord,
 } from '../api/library'
 import './StudySign.css'
-import AiTutor from '../components/AiTutor'
+import FeedbackChat from '../components/FeedbackChat'
 
 type PracticePhase = 'demo' | 'ready' | 'recording' | 'checking' | 'passed' | 'retry'
 type PracticeStudyWord = StudyWord & { segment_count?: number }
@@ -677,14 +677,7 @@ export default function StudySign() {
       <button className="ss-back" onClick={() => navigate(-1)}>
         ‹
       </button>
-      <AiTutor
-        currentPage="수화하기"
-        learningContent={currentWord}
-        repeatedFailures={attempts >= 3}
-        emotionState={phase === 'retry' ? '어려워함' : phase === 'passed' ? '자신감 있음' : '집중 중'}
-        recentSuccess={phase === 'passed' ? currentWord : ''}
-        trigger={avatarRevision}
-      />
+      <FeedbackChat />
     </div>
   )
 }
