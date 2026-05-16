@@ -11,7 +11,6 @@ export default function StudyVoice() {
   const [words, setWords] = useState<string[]>([])
   const [currentIdx, setCurrentIdx] = useState(0)
   const [isListening, setIsListening] = useState(false)
-  const [transcript, setTranscript] = useState('')
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null)
   const [supported, setSupported] = useState(true)
 
@@ -32,20 +31,18 @@ export default function StudyVoice() {
   }, [book])
 
   const currentWord = words[currentIdx] || ''
+  const chars = currentWord.split('')
 
   const speak = useCallback((text: string) => {
     const u = new SpeechSynthesisUtterance(text)
     u.lang = 'ko-KR'
-    u.rate = 0.9
-    u.pitch = 1.2
+    u.rate = 0.85
+    u.pitch = 1.1
     speechSynthesis.speak(u)
   }, [])
 
   function handleListen() {
-    if (isListening) {
-      recognitionRef.current?.stop()
-      return
-    }
+    if (isListening) { recognitionRef.current?.stop(); return }
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
     if (!SR) return
 
@@ -58,101 +55,91 @@ export default function StudyVoice() {
     rec.onresult = (e: any) => {
       const results = Array.from(e.results[0]) as any[]
       const texts = results.map((r: any) => r.transcript.trim())
-      const heard = texts[0] || ''
-      setTranscript(heard)
       setIsListening(false)
 
       const isCorrect = texts.some(
         (t: string) => t === currentWord || t.includes(currentWord) || currentWord.includes(t)
       )
-
-      if (isCorrect) {
-        setFeedback('correct')
-        speak('정확해요! 잘했어!')
-      } else {
-        setFeedback('wrong')
-        speak('다시 한번 말해봐요!')
-      }
+      setFeedback(isCorrect ? 'correct' : 'wrong')
+      speak(isCorrect ? '정확해요! 잘했어!' : '다시 한번 말해봐요!')
     }
 
     rec.onerror = () => setIsListening(false)
     rec.onend = () => setIsListening(false)
 
     recognitionRef.current = rec
-    setTranscript('')
     setFeedback(null)
     setIsListening(true)
     rec.start()
   }
 
-  function handleNext() {
-    if (currentIdx < words.length - 1) {
-      setCurrentIdx(i => i + 1)
-      setFeedback(null)
-      setTranscript('')
-    }
+  function handlePrev() {
+    if (currentIdx > 0) { setCurrentIdx(i => i - 1); setFeedback(null) }
   }
-
-  function handleRepeat() {
-    speak(currentWord)
+  function handleNext() {
+    if (currentIdx < words.length - 1) { setCurrentIdx(i => i + 1); setFeedback(null) }
   }
 
   if (!supported) {
     return (
-      <div className="study-voice">
-        <div className="sv-main">
-          <p>이 브라우저는 음성 인식을 지원하지 않아요. Chrome을 사용해주세요.</p>
-          <button className="sv-back" onClick={() => navigate(-1)}>← 돌아가기</button>
-        </div>
-      </div>
+      <div className="study-voice"><div className="sv-empty">
+        <p>Chrome 브라우저를 사용해주세요.</p>
+        <button onClick={() => navigate(-1)}>← 돌아가기</button>
+      </div></div>
     )
   }
-
   if (words.length === 0) {
     return (
-      <div className="study-voice">
-        <div className="sv-main">
-          <p>모르는 단어가 없어요! 동화를 읽으면서 "몰라요"를 눌러보세요.</p>
-          <button className="sv-back" onClick={() => navigate(-1)}>← 돌아가기</button>
-        </div>
-      </div>
+      <div className="study-voice"><div className="sv-empty">
+        <p>모르는 단어가 없어요! 동화를 읽으면서 "몰라요"를 눌러보세요.</p>
+        <button onClick={() => navigate(-1)}>← 돌아가기</button>
+      </div></div>
     )
   }
 
   return (
     <div className="study-voice">
-      <div className="sv-top">
-        <div className="sv-word-display">
-          <span className="sv-word-label">따라 말해보세요</span>
-          <span className="sv-word">{currentWord}</span>
-        </div>
-        <button className="sv-repeat-btn" onClick={handleRepeat}>다시 듣기</button>
+      {/* 왼쪽: 원숭이 + 말풍선 */}
+      <div className="sv-left">
+        <div className="sv-speech-bubble">한번 따라 말해볼까?</div>
+        <img
+          src={isListening ? '/svg/speakmonkey2.png' : '/svg/speakmonkey.png'}
+          alt="원숭이"
+          className="sv-monkey"
+        />
       </div>
 
-      <div className="sv-middle">
-        {transcript && (
-          <div className="sv-transcript">
-            <span className="sv-transcript-label">내가 말한 것</span>
-            <span className="sv-transcript-text">{transcript}</span>
+      {/* 오른쪽: 단어 카드 */}
+      <div className="sv-right">
+        <div className="sv-card">
+          {/* 글자 박스 */}
+          <div className="sv-chars-row">
+            <button className="sv-arrow" onClick={handlePrev} disabled={currentIdx === 0}>‹</button>
+            <div className="sv-chars">
+              {chars.map((ch, i) => (
+                <div key={i} className={`sv-char ${feedback === 'correct' ? 'correct' : ''}`}>{ch}</div>
+              ))}
+            </div>
+            <button className="sv-arrow" onClick={handleNext} disabled={currentIdx >= words.length - 1}>›</button>
           </div>
-        )}
 
-        {feedback && (
-          <div className={`sv-feedback ${feedback}`}>
-            {feedback === 'correct' ? '🎉 정확해요!' : '😊 다시 해봐요!'}
+          {/* 버튼 */}
+          <div className="sv-actions">
+            <button className="sv-listen-btn" onClick={() => speak(currentWord)}>🔊</button>
+            <button className={`sv-mic-btn ${isListening ? 'listening' : ''}`} onClick={handleListen}>
+              🎤 {isListening ? '듣는 중...' : '눌러서 말하기'}
+            </button>
           </div>
-        )}
-      </div>
 
-      <div className="sv-bottom">
-        <button className={`sv-mic-btn ${isListening ? 'listening' : ''}`} onClick={handleListen}>
-          {isListening ? '듣는 중...' : '🎤 말하기'}
-        </button>
-        <div className="sv-nav">
-          <button className="sv-next-btn" onClick={handleNext} disabled={currentIdx >= words.length - 1}>
-            다음 단어 →
-          </button>
-          <span className="sv-progress">{currentIdx + 1} / {words.length}</span>
+          {/* 피드백 */}
+          {feedback && (
+            <div className={`sv-feedback ${feedback}`}>
+              {feedback === 'correct' ? '🎉 정확해요!' : '😊 다시 해봐요!'}
+            </div>
+          )}
+
+          {/* 진행도 */}
+          <div className="sv-progress">{currentIdx + 1}/{words.length}</div>
         </div>
       </div>
     </div>
