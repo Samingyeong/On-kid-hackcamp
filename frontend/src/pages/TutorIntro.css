@@ -91,15 +91,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   min-height: 0;
+  padding-bottom: 16px;
 }
 
-/* 말풍선 이미지 (오른쪽 위) */
+/* 말풍선 이미지 (원숭이 오른쪽 위 가까이) */
 .tutor-speech-bubble {
   position: absolute;
-  top: 10px;
-  right: 8%;
+  top: 40%;
+  left: 55%;
+  transform: translateY(-130%);
   z-index: 20;
   animation: bubbleIn 0.3s ease-out;
 }
@@ -108,45 +110,47 @@
   display: inline-block;
 }
 .tutor-speech-img {
-  width: 300px;
+  width: 260px;
   height: auto;
 }
 .tutor-speech-text {
   position: absolute;
-  top: 38%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #333;
   white-space: pre-line;
   text-align: left;
   line-height: 1.5;
-  width: 220px;
+  width: 200px;
 }
 @keyframes bubbleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: translateY(-130%) scale(0.95); }
+  to { opacity: 1; transform: translateY(-130%) scale(1); }
 }
 
 /* 캐릭터 (흰 원 안에) */
 .tutor-character {
   position: relative;
   z-index: 5;
+  margin-top: -30px;
 }
 .tutor-character-circle {
   width: 300px; height: 300px;
   border-radius: 50%;
   background: #fff;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 .tutor-character-img {
-  width: 280px; height: 280px;
+  width: 320px; height: 320px;
   object-fit: contain;
+  object-position: center bottom;
   animation: floatChar 3s ease-in-out infinite;
 }
 @keyframes floatChar {
@@ -174,11 +178,11 @@
 .tutor-bottom {
   position: relative;
   z-index: 10;
-  padding: 16px 32px 24px;
+  padding: 2px 32px 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
   flex-shrink: 0;
 }
 
@@ -193,7 +197,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 24px;
+  padding: 30px 24px;
   min-width: 200px;
   height: 72px;
   border-radius: 40px;
@@ -265,13 +269,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 22px;
-  min-width: 160px;
-  height: 60px;
-  border-radius: 36px;
-  border: 4px solid #2DAFAD;
+  padding: 6px 18px;
+  min-width: 130px;
+  height: 48px;
+  border-radius: 30px;
+  border: 3px solid #2DAFAD;
   background: #6ED0CF;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
   color: #fff;
   cursor: pointer;
@@ -285,9 +289,9 @@
   background: rgba(255, 255, 255, 0.7);
   border-color: #ddd;
   color: #555;
-  font-size: 22px;
-  height: 60px;
-  min-width: 160px;
+  font-size: 18px;
+  height: 48px;
+  min-width: 130px;
 }
 
 /* 책 추천 카드 */
@@ -350,7 +354,7 @@
   .tutor-word-btn { min-width: 160px; height: 70px; font-size: 28px; border-width: 4px; }
   .tutor-quiz-buttons { gap: 12px; }
   .tutor-quiz-btn { min-width: 100px; height: 60px; font-size: 22px; }
-  .tutor-choice-btn { min-width: 140px; height: 60px; font-size: 22px; }
+  .tutor-choice-btn { min-width: 120px; height: 48px; font-size: 18px; }
   .tutor-deco-1, .tutor-deco-2, .tutor-deco-3 { display: none; }
   .tutor-topbar { padding: 10px 16px; }
   .tutor-bottom { padding: 12px 16px 20px; }
