@@ -18,11 +18,11 @@
 .sq-topbar {
   position: relative;
   z-index: 3;
-  height: 120px;
+  height: 80px;
   display: grid;
-  grid-template-columns: 200px 1fr 300px;
+  grid-template-columns: 160px 1fr 240px;
   align-items: center;
-  padding: 20px 36px 0 44px;
+  padding: 12px 28px 0 32px;
   flex-shrink: 0;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .sq-logo {
-  width: 285px;
+  width: 200px;
   height: auto;
   justify-self: center;
   display: block;
@@ -59,48 +59,48 @@
 
 .sq-profile {
   justify-self: end;
-  width: 286px;
-  height: 80px;
+  width: 220px;
+  height: 60px;
   border-radius: 999px;
   background: #ffd59f;
   border: 1px solid rgba(255, 255, 255, 0.72);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 7px;
-  padding: 8px 10px 8px 28px;
+  gap: 6px;
+  padding: 6px 8px 6px 20px;
 }
 
 .sq-profile-name {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 900;
   letter-spacing: 0;
   color: #222;
 }
 
 .sq-profile-type {
-  margin-top: 8px;
-  font-size: 15px;
+  margin-top: 4px;
+  font-size: 12px;
   font-weight: 900;
   color: #574433;
 }
 
 .sq-profile-avatar {
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
 .sq-stage {
   position: relative;
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 640px;
-  gap: 64px;
-  padding: 30px 27px 22px 110px;
+  grid-template-columns: minmax(0, 1fr) 480px;
+  gap: 32px;
+  padding: 20px 20px 16px 60px;
   background: #f4eee8;
-  border-radius: 74px 74px 0 0;
+  border-radius: 50px 50px 0 0;
   overflow: hidden;
   min-height: 0;
 }
@@ -137,12 +137,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 40px 0 40px;
+  padding: 20px 0 20px;
 }
 
 .sq-question-area h1 {
-  margin: 0 0 48px;
-  font-size: clamp(40px, 4vw, 72px);
+  margin: 0 0 24px;
+  font-size: clamp(28px, 3vw, 48px);
   line-height: 1.1;
   font-weight: 900;
   letter-spacing: 0;
@@ -151,39 +151,39 @@
 }
 
 .sq-question-card {
-  width: min(100%, 1035px);
-  min-height: 240px;
-  border: 6px solid #1298d0;
-  border-radius: 29px;
+  width: min(100%, 900px);
+  min-height: 180px;
+  border: 5px solid #1298d0;
+  border-radius: 24px;
   background: #26aee6;
-  box-shadow: inset 0 -5px 0 rgba(7, 112, 164, 0.16);
+  box-shadow: inset 0 -4px 0 rgba(7, 112, 164, 0.16);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px 56px;
+  padding: 24px 40px;
   text-align: center;
   white-space: pre-line;
   word-break: keep-all;
   overflow-wrap: anywhere;
-  font-size: clamp(32px, 3vw, 56px);
-  line-height: 1.5;
+  font-size: clamp(24px, 2.5vw, 44px);
+  line-height: 1.4;
   font-weight: 800;
   letter-spacing: 0;
 }
 
 .sq-dot-row {
-  width: min(100%, 870px);
+  width: min(100%, 700px);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
+  gap: 14px;
+  margin-top: 18px;
 }
 
 .sq-dot {
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #d0d0d0;
   flex: 0 0 auto;
@@ -199,23 +199,23 @@
   align-self: stretch;
   width: 100%;
   border: 1px solid #ecc6c6;
-  border-radius: 34px;
+  border-radius: 24px;
   background: rgba(255, 255, 255, 0.86);
-  padding: 29px 46px;
+  padding: 18px 28px;
   display: grid;
-  gap: 30px;
+  gap: 16px;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
 }
 
 .sq-menu-button {
   width: 100%;
   min-width: 0;
-  min-height: 80px;
+  min-height: 56px;
   border: 0;
-  border-radius: 13px;
+  border-radius: 12px;
   color: #fff;
   font-family: inherit;
-  font-size: clamp(28px, 2.2vw, 42px);
+  font-size: clamp(20px, 1.8vw, 32px);
   line-height: 1;
   font-weight: 900;
   letter-spacing: 0;
