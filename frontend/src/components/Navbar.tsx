@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import './Navbar.css'
@@ -11,9 +12,21 @@ const NAV_ITEMS = [
 export default function Navbar() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const { user, signOut } = useAuth()
+  const { user, childName, signOut } = useAuth()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
 
-  const userName = user?.user_metadata?.name || '게스트'
+  const userName = childName || user?.user_metadata?.name || '게스트'
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
 
   return (
     <nav className="navbar">
@@ -37,15 +50,21 @@ export default function Navbar() {
         <div className="navbar-spacer" />
 
         {/* 유저 */}
-        <div className="navbar-user">
-          <div className="user-info">
+        <div className="navbar-user" ref={menuRef}>
+          <div className="user-info" onClick={() => setMenuOpen(!menuOpen)}>
             <span className="user-name">{userName}</span>
             <span className="user-type">어린이</span>
           </div>
-          <div className="user-avatar" onClick={() => { if (user) signOut(); else navigate('/login') }}>
+          <div className="user-avatar" onClick={() => setMenuOpen(!menuOpen)}>
             <div className="avatar-circle-bg" />
             <img src="/svg/sentence_monkey2.png" alt="캐릭터" className="avatar-img" />
           </div>
+          {menuOpen && (
+            <div className="navbar-dropdown">
+              <button className="navbar-dropdown-item" onClick={() => { setMenuOpen(false); navigate('/settings') }}>설정</button>
+              <button className="navbar-dropdown-item" onClick={async () => { setMenuOpen(false); await signOut(); navigate('/login') }}>로그아웃</button>
+            </div>
+          )}
         </div>
       </div>
     </nav>
