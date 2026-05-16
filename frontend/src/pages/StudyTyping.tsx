@@ -266,7 +266,7 @@ export default function StudyTyping() {
       handleChord(dots)
       screenDotsRef.current.clear()
       setBrailleDots([false,false,false,false,false,false])
-    }, 400)
+    }, 800)
   }, [handleChord])
 
   // 자동 포커스

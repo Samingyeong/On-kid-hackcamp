@@ -27,7 +27,7 @@ export interface ChordingCallbacks {
   onDotsChange: (dots: Dots) => void
 }
 
-const DEBOUNCE_MS = 50
+const DEBOUNCE_MS = 150
 
 export function useBrailleChording(callbacks: ChordingCallbacks) {
   const pressedDotsRef = useRef<boolean[]>([false, false, false, false, false, false])
