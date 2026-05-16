@@ -1,12 +1,14 @@
 /**
  * VoicePractice.tsx
  * 음성 따라말하기 연습 컴포넌트
- * Web Speech API SpeechRecognition 사용
+ * - 정확하면 "정확해요!" TTS
+ * - 틀리면 AI가 발음 교정 설명 + TTS
  */
 
 import { useState, useRef, useCallback, useEffect } from 'react'
+import { getPronunciationHelp } from '../utils/midmClient'
 
-// ── SpeechRecognition 타입 선언 (브라우저 벤더 접두사 대응) ──
+// ── SpeechRecognition 타입 선언 ──
 interface SpeechRecognitionEvent extends Event {
   results: SpeechRecognitionResultList
 }
@@ -31,12 +33,7 @@ declare global {
   }
 }
 
-const PRACTICE_WORDS = [
-  '주인',
-  '부리부리하다',
-  '누렁이',
-  '성큼성큼',
-]
+const PRACTICE_WORDS = ['주인', '부리부리하다', '누렁이', '성큼성큼']
 
 interface VoicePracticeProps {
   speakIfOn: (text: string, rate?: number, pitch?: number) => void
@@ -51,10 +48,13 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
   const [started, setStarted] = useState(false)
   const [supported, setSupported] = useState(true)
 
+  // AI 발음 설명 상태
+  const [aiExplain, setAiExplain] = useState('')
+  const [aiLoading, setAiLoading] = useState(false)
+
   const wordIndexRef = useRef(0)
   const recognitionRef = useRef<SpeechRecognitionInstance | null>(null)
 
-  // SpeechRecognition 지원 여부 확인
   useEffect(() => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition
     if (!SR) setSupported(false)
@@ -79,7 +79,6 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
       setTranscript(heard)
       setIsListening(false)
 
-      // 정확도 판단: 완전 일치 or 목표 단어 포함
       const current = PRACTICE_WORDS[wordIndexRef.current]!
       const isCorrect = texts.some(
         (t) => t === current || t.includes(current) || current.includes(t)
@@ -87,10 +86,25 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
 
       if (isCorrect) {
         setFeedback('correct')
+        setAiExplain('')
         speakIfOn('정확해요! 아주 잘했어요!', 0.9, 1.3)
       } else {
         setFeedback('wrong')
+        // 즉시 기본 피드백 먼저
         speakIfOn('다시 한번 말해주세요!', 0.88, 1.1)
+        // AI 발음 교정 설명 요청 (캐시/디바운스 적용)
+        setAiLoading(true)
+        setAiExplain('')
+        getPronunciationHelp(current, heard)
+          .then((explanation) => {
+            setAiExplain(explanation)
+            setAiLoading(false)
+            // 기본 피드백 후 1.5초 뒤 AI 설명 읽기
+            setTimeout(() => speakIfOn(explanation, 0.88, 1.1), 1500)
+          })
+          .catch(() => {
+            setAiLoading(false)
+          })
       }
     }
 
@@ -104,17 +118,16 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
     }
 
     rec.onend = () => setIsListening(false)
-
     return rec
   }, [speakIfOn])
 
-  // 단어 시작
   const startWord = useCallback((idx: number) => {
     const word = PRACTICE_WORDS[idx]!
     wordIndexRef.current = idx
     setTargetWord(word)
     setFeedback(null)
     setTranscript('')
+    setAiExplain('')
     setTimeout(() => speakIfOn(`${word} 라고 말해보세요!`, 0.88, 1.2), 300)
   }, [speakIfOn])
 
@@ -128,7 +141,6 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
     startWord(idx)
   }, [startWord])
 
-  // 마이크 시작
   const handleListen = useCallback(() => {
     if (isListening) {
       recognitionRef.current?.stop()
@@ -139,14 +151,13 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
     recognitionRef.current = rec
     setTranscript('')
     setFeedback(null)
+    setAiExplain('')
     setIsListening(true)
     rec.start()
   }, [isListening, createRecognition])
 
-  // 목표 단어 다시 듣기
   const handleRepeat = useCallback(() => {
-    const word = PRACTICE_WORDS[wordIndexRef.current]!
-    speakIfOn(`${word}`, 0.85, 1.1)
+    speakIfOn(PRACTICE_WORDS[wordIndexRef.current]!, 0.85, 1.1)
   }, [speakIfOn])
 
   if (!supported) {
@@ -163,18 +174,8 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
 
   if (!started) {
     return (
-      <button
-        onClick={handleStart}
-        aria-label="음성 연습 모드 시작"
-        className="
-          w-full max-w-2xl py-4 rounded-2xl
-          border-4 border-yellow-400 bg-black
-          text-yellow-400 font-black text-2xl
-          hover:bg-yellow-400 hover:text-black
-          transition-all duration-150
-          focus:outline-none focus:ring-4 focus:ring-yellow-300
-        "
-      >
+      <button onClick={handleStart} aria-label="음성 연습 모드 시작"
+        className="w-full max-w-2xl py-4 rounded-2xl border-4 border-yellow-400 bg-black text-yellow-400 font-black text-2xl hover:bg-yellow-400 hover:text-black transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-yellow-300">
         🎤 음성 연습 시작
       </button>
     )
@@ -190,25 +191,14 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
         <p className="text-yellow-400 font-black" style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)' }}>
           {targetWord}
         </p>
-        {/* 다시 듣기 버튼 */}
-        <button
-          onClick={handleRepeat}
-          aria-label="목표 단어 다시 듣기"
-          className="
-            mt-3 px-4 py-2 rounded-xl
-            border-2 border-yellow-600 bg-black
-            text-yellow-600 text-base font-bold
-            hover:bg-yellow-600 hover:text-black
-            transition-all duration-150
-          "
-        >
+        <button onClick={handleRepeat} aria-label="목표 단어 다시 듣기"
+          className="mt-3 px-4 py-2 rounded-xl border-2 border-yellow-600 bg-black text-yellow-600 text-base font-bold hover:bg-yellow-600 hover:text-black transition-all duration-150">
           🔈 다시 듣기
         </button>
       </div>
 
       {/* 마이크 버튼 */}
-      <button
-        onClick={handleListen}
+      <button onClick={handleListen}
         aria-label={isListening ? '녹음 중지' : '말하기 시작'}
         className={`
           w-full py-6 rounded-2xl border-4 font-black
@@ -216,8 +206,7 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
           focus:outline-none focus:ring-4 focus:ring-yellow-300
           ${isListening
             ? 'border-red-400 bg-red-950 text-red-400 animate-pulse'
-            : 'border-yellow-400 bg-black text-yellow-400 hover:bg-yellow-400 hover:text-black'
-          }
+            : 'border-yellow-400 bg-black text-yellow-400 hover:bg-yellow-400 hover:text-black'}
         `}
         style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)' }}
       >
@@ -234,7 +223,7 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
         </div>
       )}
 
-      {/* 피드백 */}
+      {/* 정오 피드백 */}
       {feedback && (
         <div
           className={`
@@ -246,36 +235,34 @@ export default function VoicePractice({ speakIfOn }: VoicePracticeProps) {
           style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)' }}
           aria-live="assertive"
         >
-          {feedback === 'correct' ? '🎉 잘했어요!' : '😊 아쉬워요!'}
+          {feedback === 'correct' ? '🎉 정확해요!' : '😊 아쉬워요!'}
+        </div>
+      )}
+
+      {/* AI 발음 교정 설명 (틀렸을 때만) */}
+      {feedback === 'wrong' && (
+        <div className="rounded-2xl border-4 border-yellow-400 bg-black p-4"
+          aria-live="polite" aria-label="AI 발음 설명">
+          <p className="text-yellow-600 text-sm font-bold mb-2">🤖 선생님의 발음 설명</p>
+          {aiLoading ? (
+            <p className="text-yellow-400 text-lg animate-pulse">설명을 준비하고 있어요...</p>
+          ) : aiExplain ? (
+            <p className="text-yellow-400 font-bold leading-relaxed"
+              style={{ fontSize: 'clamp(1rem, 3vw, 1.3rem)' }}>
+              {aiExplain}
+            </p>
+          ) : null}
         </div>
       )}
 
       {/* 다음 단어 / 그만하기 */}
       <div className="flex gap-3">
-        <button
-          onClick={handleNext}
-          className="
-            flex-1 py-3 rounded-xl
-            border-4 border-yellow-400 bg-black
-            text-yellow-400 font-black text-xl
-            hover:bg-yellow-400 hover:text-black
-            transition-all duration-150
-            focus:outline-none focus:ring-4 focus:ring-yellow-300
-          "
-        >
+        <button onClick={handleNext}
+          className="flex-1 py-3 rounded-xl border-4 border-yellow-400 bg-black text-yellow-400 font-black text-xl hover:bg-yellow-400 hover:text-black transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-yellow-300">
           다음 단어 →
         </button>
-        <button
-          onClick={() => setStarted(false)}
-          className="
-            flex-1 py-3 rounded-xl
-            border-4 border-yellow-700 bg-black
-            text-yellow-700 font-black text-xl
-            hover:bg-yellow-700 hover:text-black
-            transition-all duration-150
-            focus:outline-none focus:ring-4 focus:ring-yellow-600
-          "
-        >
+        <button onClick={() => setStarted(false)}
+          className="flex-1 py-3 rounded-xl border-4 border-yellow-700 bg-black text-yellow-700 font-black text-xl hover:bg-yellow-700 hover:text-black transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-yellow-600">
           그만하기
         </button>
       </div>

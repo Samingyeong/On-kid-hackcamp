@@ -6,6 +6,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import BrailleDisplay from './components/BrailleDisplay'
 import VoicePractice from './components/VoicePractice'
+import AIFeedback from './components/AIFeedback'
 import { useBrailleChording } from './hooks/useBrailleChording'
 import type { SpecialKey } from './hooks/useBrailleChording'
 import {
@@ -17,6 +18,8 @@ import {
   EMPTY_STATE,
 } from './utils/brailleConverter'
 import type { Dots, HangulState, JamoType } from './utils/brailleConverter'
+import { getAIFeedback, getWordHint } from './utils/midmClient'
+import type { FeedbackResult } from './utils/midmClient'
 
 // ────────────────────────────────────────────────
 // TTS
@@ -103,6 +106,15 @@ export default function App() {
   const [muted, setMuted] = useState(false)
   const [activeTab, setActiveTab] = useState<'braille' | 'voice'>('braille')
 
+  // AI 피드백 상태
+  const [aiStatus, setAiStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
+  const [aiResult, setAiResult] = useState<FeedbackResult | null>(null)
+  const [aiError, setAiError] = useState('')
+
+  // 단어 힌트 상태
+  const [hintStatus, setHintStatus] = useState<'idle' | 'loading' | 'done'>('idle')
+  const [hintText, setHintText] = useState('')
+
   // 연습 모드 상태
   const [practiceMode, setPracticeMode] = useState(false)
   const [targetWord, setTargetWord] = useState('')
@@ -134,12 +146,28 @@ export default function App() {
     setPracticeMode(true)
     setFeedback(null)
     setInput(INITIAL_INPUT)
+    setHintStatus('idle')
+    setHintText('')
     setTimeout(() => speakIfOn(`${word} 를 입력해보세요!`, 0.88, 1.2), 300)
   }, [])
 
+  // 단어 힌트 요청
+  const handleHint = useCallback(async () => {
+    if (!targetWord || hintStatus === 'loading') return
+    setHintStatus('loading')
+    setHintText('')
+    try {
+      const hint = await getWordHint(targetWord)
+      setHintText(hint)
+      setHintStatus('done')
+      setTimeout(() => speakIfOn(hint, 0.88, 1.1), 0)
+    } catch {
+      setHintStatus('idle')
+    }
+  }, [targetWord, hintStatus, speakIfOn])
+
   // 다음 단어
-  const nextWord = useCallback(() => {
-    const idx = (wordIndexRef.current + 1) % PRACTICE_WORDS.length
+  const nextWord = useCallback(() => {    const idx = (wordIndexRef.current + 1) % PRACTICE_WORDS.length
     const word = PRACTICE_WORDS[idx]!
     wordIndexRef.current = idx
     setTargetWord(word)
@@ -234,10 +262,25 @@ export default function App() {
             }
           }, 0)
         } else {
-          // 일반 모드: 전체 읽기
-          setTimeout(() => {
+          // 일반 모드: 전체 읽기 + AI 피드백
+          setTimeout(async () => {
             if (fullText) {
               speakIfOn(fullText, 0.88, 1.1)
+              // AI 피드백 요청
+              setAiStatus('loading')
+              setAiResult(null)
+              setAiError('')
+              try {
+                const result = await getAIFeedback(fullText)
+                setAiResult(result)
+                setAiStatus('done')
+                // 피드백 TTS로 읽기 (문장 읽기 끝난 후 약간 딜레이)
+                setTimeout(() => speakIfOn(result.message, 0.88, 1.1), 1500)
+              } catch (err) {
+                const msg = err instanceof Error ? err.message : '알 수 없는 오류'
+                setAiError(msg)
+                setAiStatus('error')
+              }
             } else {
               speakIfOn('아직 입력된 문장이 없어요.')
             }
@@ -250,6 +293,8 @@ export default function App() {
 
     if (key === 'delete') {
       setTimeout(() => speakIfOn('지워졌어요'), 0)
+      setAiStatus('idle')
+      setAiResult(null)
       setInput((prev) => {
         const c = prev.composing
         if (c.jong2) {
@@ -403,7 +448,28 @@ export default function App() {
                   <p className="text-yellow-400 font-black" style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)' }}>
                     {targetWord}
                   </p>
+                  {/* 힌트 버튼 */}
+                  <button
+                    onClick={handleHint}
+                    disabled={hintStatus === 'loading'}
+                    aria-label="단어 힌트 보기"
+                    className="mt-3 px-4 py-2 rounded-xl border-2 border-yellow-600 bg-black text-yellow-600 text-base font-bold hover:bg-yellow-600 hover:text-black transition-all duration-150 disabled:opacity-50"
+                  >
+                    {hintStatus === 'loading' ? '💭 힌트 준비 중...' : '💡 힌트 보기'}
+                  </button>
                 </div>
+
+                {/* 힌트 표시 */}
+                {hintStatus === 'done' && hintText && (
+                  <div className="rounded-2xl border-4 border-yellow-600 bg-black p-4"
+                    aria-live="polite">
+                    <p className="text-yellow-600 text-sm font-bold mb-1">💡 힌트</p>
+                    <p className="text-yellow-400 font-bold leading-relaxed"
+                      style={{ fontSize: 'clamp(1rem, 3vw, 1.3rem)' }}>
+                      {hintText}
+                    </p>
+                  </div>
+                )}
                 {feedback && (
                   <div
                     className={`
@@ -438,6 +504,11 @@ export default function App() {
             <p className="text-yellow-700 text-center text-lg">
               입력 후 <span className="text-yellow-400 font-bold">Numpad Enter</span> 를 누르면 정답을 확인해요
             </p>
+          )}
+
+          {/* AI 피드백 (일반 모드에서만 표시) */}
+          {!practiceMode && (
+            <AIFeedback status={aiStatus} result={aiResult} errorMsg={aiError} />
           )}
         </>
       )}
