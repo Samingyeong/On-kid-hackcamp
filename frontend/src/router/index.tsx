@@ -3,6 +3,10 @@ import Layout from '../layouts/Layout'
 import Home from '../pages/Home'
 import BookList from '../pages/BookList'
 import Reader from '../pages/Reader'
+import StudySelect from '../pages/StudySelect'
+import StudyWrite from '../pages/StudyWrite'
+import StudyTyping from '../pages/StudyTyping'
+import StudySentence from '../pages/StudySentence'
 
 const Placeholder = ({ title }: { title: string }) => (
   <div style={{ padding: 40, textAlign: 'center' }}>
@@ -21,6 +25,10 @@ const router = createBrowserRouter([
       { path: 'reader', element: <Reader /> },
       { path: 'notes', element: <Placeholder title="내 오답노트" /> },
       { path: 'parent', element: <Placeholder title="학부모케어" /> },
+      { path: 'study/select', element: <StudySelect /> },
+      { path: 'study/practice', element: <StudyWrite /> },
+      { path: 'study/typing', element: <StudyTyping /> },
+      { path: 'study/sentence', element: <StudySentence /> },
       { path: 'study/*', element: <Placeholder title="학습" /> },
     ],
   },
