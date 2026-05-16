@@ -100,8 +100,9 @@ export default function StudyVoice() {
   return (
     <div className="study-voice">
       <div className="sv-content-area">
-        {/* 왼쪽: 원숭이 */}
+        {/* 왼쪽: 원숭이 + 말풍선 */}
         <div className="sv-left">
+          <div className="sv-speech-bubble">한번 따라 말해볼까?</div>
           <img
             src={isListening ? '/svg/speakmonkey2.png' : '/svg/speakmonkey.png'}
             alt="원숭이"
@@ -111,18 +112,6 @@ export default function StudyVoice() {
 
         {/* 오른쪽: 메인 */}
         <div className="sv-right">
-          {/* 스텝 표시 */}
-          <div className="sv-steps">
-            {words.slice(0, Math.min(words.length, 5)).map((_, i) => (
-              <span key={i}>
-                {i > 0 && <span className="sv-step-line" />}
-                <span className={`sv-step ${i === currentIdx ? 'active' : i < currentIdx ? 'done' : ''}`}>
-                  {i + 1}
-                </span>
-              </span>
-            ))}
-          </div>
-
           {/* 큰 단어 */}
           <div className="sv-word-big">{currentWord}</div>
 
