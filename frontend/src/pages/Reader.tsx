@@ -345,7 +345,11 @@ export default function Reader() {
               {!subtitleLoading && cues.length === 0 && (
                 <p className="reader-loading">이 언어의 자막이 없어요.</p>
               )}
-              {cues.map((cue, idx) => (
+              {cues.map((cue, idx) => {
+                // 활성 자막 기준 4줄만 표시 (이전 3개 + 현재)
+                const center = activeCue >= 0 ? activeCue : 3
+                if (idx < center - 3 || idx > center) return null
+                return (
                 <div
                   key={idx}
                   className={`reader-cue ${idx === activeCue ? 'active' : ''} ${idx === 1 || idx === 2 ? 'cue-author' : ''}`}
@@ -362,7 +366,8 @@ export default function Reader() {
                     }
                   </span>
                 </div>
-              ))}
+                )
+              })}
             </div>
             </div>
           </div>

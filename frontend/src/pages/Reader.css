@@ -117,26 +117,6 @@
   overflow: hidden;
   position: relative;
 }
-.reader-page-right-inner::before,
-.reader-page-right-inner::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 40px;
-  z-index: 5;
-  pointer-events: none;
-}
-.reader-page-right-inner::before {
-  top: 0;
-  background: linear-gradient(to bottom, #FAF4EE 20%, transparent);
-  border-radius: 16px 16px 0 0;
-}
-.reader-page-right-inner::after {
-  bottom: 0;
-  background: linear-gradient(to top, #FAF4EE 20%, transparent);
-  border-radius: 0 0 16px 16px;
-}
 
 /* 스프링 장식 */
 .reader-springs {
@@ -196,9 +176,9 @@
 }
 .reader-subtitle-list {
   flex: 1;
-  overflow-y: auto;
+  overflow: hidden;
   scrollbar-width: none;
-  padding: 48px 24px;
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -214,17 +194,19 @@
 .reader-cue {
   display: flex;
   gap: 12px;
-  padding: 16px 20px;
+  padding: 0 20px;
   border-bottom: 3px dashed #C5C5C5;
   transition: background 0.2s;
   align-items: center;
   border-radius: 0;
-  flex-shrink: 0;
+  flex: 1;
+  min-height: 0;
 }
 .reader-cue:last-child { border-bottom: none; margin-bottom: 0; }
 .reader-cue.active {
   background: #FFF1D6;
-  border-radius: 12px;
+  border-radius: 10px;
+  border-bottom: none;
 }
 .reader-cue-time {
   font-size: 13px;
@@ -237,13 +219,14 @@
 }
 .reader-cue-time:hover { text-decoration: underline; }
 .reader-cue-text {
-  font-size: 22px;
-  line-height: 1.6;
+  font-size: 20px;
+  line-height: 1.5;
   color: #6C6C6C;
   font-weight: 500;
 }
 .reader-cue.active .reader-cue-text {
   color: #1F1F1F;
+  font-size: 22px;
   font-weight: 700;
 }
 .reader-word {
