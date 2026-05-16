@@ -4,7 +4,30 @@
   background: #FFB256;
   overflow: hidden;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+}
+
+.sw-home-bar {
+  padding: 12px 20px 0;
+  flex-shrink: 0;
+}
+.sw-home-button {
+  width: 56px;
+  height: 56px;
+  border: 3px solid #ffd216;
+  border-radius: 50%;
+  background: #fff7df;
+  color: #ffc400;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.16s ease;
+}
+.sw-home-button:hover { transform: scale(1.04); }
+.sw-home-button svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
 }
 
 /* 메인 콘텐츠 영역 (크림색 배경) */

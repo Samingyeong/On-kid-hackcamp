@@ -268,8 +268,12 @@ export default function StudyTyping() {
 
   return (
     <div className="study-typing" onClick={() => inputRef.current?.focus()}>
-      {/* 상단 주황 여백 */}
-      <div className="st-top" />
+      {/* 상단 주황 여백 + 홈 버튼 */}
+      <div className="st-top">
+        <button className="st-home-button" onClick={() => navigate('/')}>
+          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </button>
+      </div>
 
       {/* 메인 흰 카드 */}
       <div className="st-middle">

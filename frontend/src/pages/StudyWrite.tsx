@@ -144,6 +144,11 @@ export default function StudyWrite() {
 
   return (
     <div className="study-write">
+      <div className="sw-home-bar">
+        <button className="sw-home-button" onClick={() => navigate('/')}>
+          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </button>
+      </div>
       <div className="sw-content-area">
         {/* 구름 장식 */}
         <div className="sw-cloud sw-cloud-left">

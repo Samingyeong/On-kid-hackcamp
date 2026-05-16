@@ -12,8 +12,28 @@
   background: #FFB256;
   padding: 12px 20px 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   flex-shrink: 0;
+}
+
+.st-home-button {
+  width: 56px;
+  height: 56px;
+  border: 3px solid #ffd216;
+  border-radius: 50%;
+  background: #fff7df;
+  color: #ffc400;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.16s ease;
+}
+.st-home-button:hover { transform: scale(1.04); }
+.st-home-button svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
 }
 .st-word-flow {
   display: none;
