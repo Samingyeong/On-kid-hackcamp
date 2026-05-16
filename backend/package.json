@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "sync": "node sync.js"
+    "sync": "node sync.js",
+    "analyze": "node analyze_difficulty.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
