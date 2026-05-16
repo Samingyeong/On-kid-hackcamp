@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { fetchBooks } from '../api/library'
+import { fetchBooks, fetchBookForReader } from '../api/library'
 import { CATEGORIES } from '../constants/categories'
 import type { Book } from '../types'
 import CalendarModal from '../components/CalendarModal'
@@ -11,6 +11,7 @@ const SERVICE_START = new Date(2020, 0, 1)
 
 // 모듈 레벨 캐시 - 페이지 이동 후 돌아와도 재요청 안 함
 let cachedRecommend: Book | null = null
+let cachedRanking: Book[] | null = null
 
 function getWeekDays(center: Date) {
   const days: Date[] = []
@@ -31,6 +32,8 @@ export function Component() {
   const [suggestions, setSuggestions] = useState<string[]>([])
   const [recommendBook, setRecommendBook] = useState<Book | null>(cachedRecommend)
   const [flipped, setFlipped] = useState(false)
+  const [rankingBooks, setRankingBooks] = useState<Book[]>(cachedRanking ?? [])
+  const [rankingLoading, setRankingLoading] = useState(!cachedRanking)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const categoryRef = useRef<HTMLDivElement>(null)
 
@@ -44,6 +47,17 @@ export function Component() {
         cachedRecommend = res.items[0]
         setRecommendBook(res.items[0])
       }
+    })
+  }, [])
+
+  // 오늘의 순위 로드
+  useEffect(() => {
+    if (cachedRanking) return
+    setRankingLoading(true)
+    fetchBooks('', 'multilang', 'korean', 1, 10).then(res => {
+      cachedRanking = res.items
+      setRankingBooks(res.items)
+      setRankingLoading(false)
     })
   }, [])
 
@@ -79,6 +93,13 @@ export function Component() {
 
   function scrollCategories(offset: number) {
     categoryRef.current?.scrollBy({ left: offset, behavior: 'smooth' })
+  }
+
+  async function handleRankingClick(book: Book) {
+    const readerBook = await fetchBookForReader(book.title)
+    if (readerBook) {
+      navigate(`/reader?title=${encodeURIComponent(readerBook.title)}`)
+    }
   }
 
   return (
@@ -176,6 +197,30 @@ export function Component() {
               </div>
             </div>
           )}
+        </div>
+
+        {/* 가운데: 오늘의 순위 */}
+        <div className="panel-center">
+          <h3 className="panel-title">오늘의 순위</h3>
+          <div className="ranking-list">
+            {rankingLoading ? (
+              Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="ranking-skeleton">
+                  <div className="skel-rank" />
+                  <div className="skel-thumb" />
+                  <div className="skel-title" />
+                </div>
+              ))
+            ) : (
+              rankingBooks.map((book, i) => (
+                <button key={i} className="ranking-item" onClick={() => handleRankingClick(book)}>
+                  <span className="ranking-num">{i + 1}</span>
+                  <img src={book.thumbnail} alt={book.title} className="ranking-thumb" />
+                  <span className="ranking-title">{book.title}</span>
+                </button>
+              ))
+            )}
+          </div>
         </div>
       </div>
 
