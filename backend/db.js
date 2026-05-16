@@ -14,9 +14,15 @@ if (!fs.existsSync(SIGN_MOTION_DIR)) fs.mkdirSync(SIGN_MOTION_DIR, { recursive: 
 
 const db = new Database(DB_PATH)
 
-// WAL 모드 (읽기 성능 향상)
+// WAL 모드 + 안전한 동기화 (node --watch 재시작 시 데이터 손실 방지)
 db.pragma('journal_mode = WAL')
-db.pragma('synchronous = NORMAL')
+db.pragma('synchronous = FULL')
+db.pragma('wal_autocheckpoint = 10')
+
+// 서버 종료 시 WAL 체크포인트 강제 실행
+process.on('exit', () => { try { db.pragma('wal_checkpoint(TRUNCATE)') } catch {} })
+process.on('SIGINT', () => { try { db.pragma('wal_checkpoint(TRUNCATE)') } catch {} process.exit(0) })
+process.on('SIGTERM', () => { try { db.pragma('wal_checkpoint(TRUNCATE)') } catch {} process.exit(0) })
 
 // ─── 테이블 생성 ──────────────────────────────────────────────
 db.exec(`
