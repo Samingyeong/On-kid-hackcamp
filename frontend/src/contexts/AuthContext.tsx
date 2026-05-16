@@ -8,6 +8,7 @@ interface AuthContextType {
   user: User | null
   session: Session | null
   childName: string
+  childCharacter: string
   loading: boolean
   signUp: (email: string, password: string, name: string, childData?: { childName: string; childBirth: string; childGender: string; disability: string }) => Promise<{ error: string | null }>
   signIn: (email: string, password: string) => Promise<{ error: string | null }>
@@ -20,16 +21,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [childName, setChildName] = useState('')
+  const [childCharacter, setChildCharacter] = useState('')
   const [loading, setLoading] = useState(true)
 
   async function fetchChildName(userId: string) {
     const { data } = await supabase
       .from('children')
-      .select('name')
+      .select('name, disability')
       .eq('parent_id', userId)
       .limit(1)
       .single()
     setChildName(data?.name || '')
+    setChildCharacter(data?.disability || '')
   }
 
   useEffect(() => {
@@ -129,10 +132,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut()
     clearHomeCache()
     clearDictCache()
+    setChildCharacter('')
   }
 
   return (
-    <AuthContext.Provider value={{ user, session, childName, loading, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, session, childName, childCharacter, loading, signUp, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   )
