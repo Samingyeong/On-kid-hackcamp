@@ -143,6 +143,7 @@
   display: flex;
   align-items: center;
   gap: 0;
+  margin-top: 16px;
 }
 
 .sw-stage-dot {
@@ -206,11 +207,11 @@
 .sw-nav-btn {
   background: none;
   border: none;
-  font-size: 64px;
+  font-size: 120px;
   font-weight: 900;
   color: #5A4A44;
   cursor: pointer;
-  padding: 8px 16px;
+  padding: 8px 28px;
   line-height: 1;
   transition: transform 0.1s;
 }
