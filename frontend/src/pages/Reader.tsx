@@ -335,6 +335,7 @@ export default function Reader() {
 
           {/* 오른쪽: 자막 */}
           <div className="reader-page reader-page-right">
+            <div className="reader-page-right-inner">
             <div className="reader-page-header">📝 이야기</div>
             <div className="reader-subtitle-list">
               {subtitleLoading && <p className="reader-loading">자막을 불러오는 중...</p>}
@@ -365,6 +366,7 @@ export default function Reader() {
                   </span>
                 </div>
               ))}
+            </div>
             </div>
           </div>
         </div>
