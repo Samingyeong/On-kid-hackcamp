@@ -4,7 +4,7 @@
   box-sizing: border-box;
   background: #ffb256;
   overflow: hidden;
-  padding: 52px 48px 36px;
+  padding: 20px 32px 20px;
 }
 
 .ss-shell {
@@ -13,13 +13,13 @@
   height: 100%;
   min-height: 0;
   box-sizing: border-box;
-  border-radius: 72px 72px 0 0;
+  border-radius: 50px 50px 0 0;
   background: #faf4ee;
   display: grid;
-  grid-template-columns: minmax(360px, 0.95fr) minmax(520px, 1.35fr);
+  grid-template-columns: minmax(280px, 0.9fr) minmax(400px, 1.3fr);
   align-items: center;
-  gap: 56px;
-  padding: 64px 72px 36px;
+  gap: 32px;
+  padding: 32px 48px 24px;
   box-shadow: 0 -1px 0 rgba(255,255,255,0.45);
 }
 
@@ -58,12 +58,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
 }
 
 .ss-avatar-stage {
   position: relative;
-  width: min(100%, 664px);
+  width: min(100%, 480px);
   aspect-ratio: 1 / 1;
   background: #1f3c88;
   overflow: hidden;
@@ -135,24 +135,24 @@
 
 .ss-avatar-actions {
   display: flex;
-  gap: 28px;
+  gap: 18px;
   align-items: center;
   justify-content: center;
 }
 
 .ss-round-btn {
-  width: 72px;
-  height: 72px;
+  width: 52px;
+  height: 52px;
   border: 0;
   border-radius: 50%;
   color: #fff;
-  font-size: 38px;
+  font-size: 28px;
   font-weight: 900;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 0 7px rgba(255,255,255,0.2), 0 8px 18px rgba(0,0,0,0.16);
+  box-shadow: inset 0 0 0 5px rgba(255,255,255,0.2), 0 6px 14px rgba(0,0,0,0.16);
   transition: transform 0.16s ease;
 }
 
