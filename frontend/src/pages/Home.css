@@ -1,0 +1,144 @@
+.home {
+  padding: 24px;
+  position: relative;
+}
+
+/* 날짜바 */
+.date-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.date-weekdays {
+  display: flex;
+  gap: 8px;
+}
+
+.weekday-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 12px;
+  border: none;
+  background: #f5f5f5;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.weekday-item:hover {
+  background: #e8e8f8;
+}
+
+.weekday-item.active {
+  background: #6370B4;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.weekday-item.active .weekday-label,
+.weekday-item.active .weekday-date {
+  color: #fff;
+}
+
+.weekday-label {
+  font-size: 11px;
+  color: #999;
+}
+
+.weekday-date {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.calendar-icon-btn,
+.search-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.calendar-icon-btn:hover,
+.search-icon-btn:hover {
+  background: #f0f0f0;
+}
+
+.calendar-icon-btn img,
+.search-icon-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+/* 검색바 */
+.search-bar {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #6370B4;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #4f5c9e;
+}
+
+.search-submit-btn {
+  padding: 12px 20px;
+  background: #6370B4;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-submit-btn:hover {
+  background: #4f5c9e;
+}
+
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  margin-top: 4px;
+  list-style: none;
+  padding: 8px 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+.search-suggestions li {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.search-suggestions li:hover {
+  background: #f5f5f5;
+}
