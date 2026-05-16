@@ -148,13 +148,16 @@ export default function StudyTyping() {
         const asJung = dotsToJamo(newDots, 'jungsung')
         if (asJung) { jamo = asJung; usedContext = 'jungsung' }
         else { jamo = dotsToJamo(newDots, 'jongsung'); usedContext = 'jongsung' }
+        if (!jamo) { jamo = dotsToJamo(newDots, 'chosung'); usedContext = 'chosung' }
       } else if (context === 'chosung') {
         const asJung = dotsToJamo(newDots, 'jungsung')
         if (asJung) { jamo = asJung; usedContext = 'jungsung' }
         else { jamo = dotsToJamo(newDots, 'chosung'); usedContext = 'chosung' }
       } else {
-        jamo = dotsToJamo(newDots, context)
-        usedContext = context
+        // jungsung context
+        jamo = dotsToJamo(newDots, 'jungsung')
+        if (jamo) { usedContext = 'jungsung' }
+        else { jamo = dotsToJamo(newDots, 'chosung'); usedContext = 'chosung' }
       }
 
       if (!jamo) {
