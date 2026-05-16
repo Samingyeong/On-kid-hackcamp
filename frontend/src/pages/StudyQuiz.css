@@ -6,6 +6,8 @@
   background: #ffb052;
   color: #202020;
   font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .study-quiz,
@@ -16,11 +18,12 @@
 .sq-topbar {
   position: relative;
   z-index: 3;
-  height: 158px;
+  height: 120px;
   display: grid;
-  grid-template-columns: 260px 1fr 360px;
+  grid-template-columns: 200px 1fr 300px;
   align-items: center;
-  padding: 26px 46px 0 55px;
+  padding: 20px 36px 0 44px;
+  flex-shrink: 0;
 }
 
 .sq-home-button {
@@ -90,11 +93,8 @@
 }
 
 .sq-stage {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 158px;
-  bottom: 0;
+  position: relative;
+  flex: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 640px;
   gap: 64px;
@@ -102,6 +102,7 @@
   background: #f4eee8;
   border-radius: 74px 74px 0 0;
   overflow: hidden;
+  min-height: 0;
 }
 
 .sq-stage::before,
@@ -136,13 +137,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 78px 0 82px;
+  padding: 40px 0 40px;
 }
 
 .sq-question-area h1 {
-  margin: 0 0 92px;
-  font-size: clamp(58px, 5vw, 92px);
-  line-height: 1.04;
+  margin: 0 0 48px;
+  font-size: clamp(40px, 4vw, 72px);
+  line-height: 1.1;
   font-weight: 900;
   letter-spacing: 0;
   color: #202020;
@@ -151,7 +152,7 @@
 
 .sq-question-card {
   width: min(100%, 1035px);
-  min-height: 330px;
+  min-height: 240px;
   border: 6px solid #1298d0;
   border-radius: 29px;
   background: #26aee6;
@@ -160,13 +161,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 42px 76px;
+  padding: 32px 56px;
   text-align: center;
   white-space: pre-line;
   word-break: keep-all;
   overflow-wrap: anywhere;
-  font-size: clamp(42px, 3.75vw, 72px);
-  line-height: 1.58;
+  font-size: clamp(32px, 3vw, 56px);
+  line-height: 1.5;
   font-weight: 800;
   letter-spacing: 0;
 }
@@ -209,12 +210,12 @@
 .sq-menu-button {
   width: 100%;
   min-width: 0;
-  min-height: 110px;
+  min-height: 80px;
   border: 0;
   border-radius: 13px;
   color: #fff;
   font-family: inherit;
-  font-size: clamp(38px, 2.7vw, 52px);
+  font-size: clamp(28px, 2.2vw, 42px);
   line-height: 1;
   font-weight: 900;
   letter-spacing: 0;
