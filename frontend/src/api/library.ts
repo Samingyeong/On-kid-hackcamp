@@ -287,3 +287,16 @@ export async function analyzeBookDifficulty(title: string, words: string[]): Pro
   })
   return res.json()
 }
+
+// ─── 튜토리얼 퀴즈 데이터 ────────────────────────────────────
+export interface TutorQuizData {
+  hasData: boolean
+  wordTest: { word: string; hint: string; book: string }[]
+  sentenceQuiz: { word: string; definition: string; sentence: string; book: string }[]
+}
+
+export async function fetchTutorQuizData(): Promise<TutorQuizData> {
+  const uid = await getUserId()
+  const res = await fetch(`${BASE}/api/tutor/quiz-data`, { headers: { 'x-user-id': uid } })
+  return res.json()
+}

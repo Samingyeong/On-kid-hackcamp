@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { fetchTutorialStep, type ChildProfile } from '../api/midm'
-import { fetchBookForReader, fetchRecommendedBooks, fetchStudyWords, type RecommendedBook } from '../api/library'
+import { fetchBookForReader, fetchRecommendedBooks, fetchStudyWords, fetchTutorQuizData, type RecommendedBook } from '../api/library'
 import './TutorIntro.css'
 
 // 기본 단어 테스트 (첫 방문용)
@@ -14,9 +14,9 @@ const DEFAULT_WORDS = [
   { word: '모험', hint: '새로운 곳을 탐험하는 거야' },
 ]
 
-// 고급용 빈칸 퀴즈
-const SENTENCE_QUIZ = [
-  { sentence: '___가 하늘에서 내려요', answer: '눈', options: ['눈', '불', '돌'] },
+// 고급용 빈칸 퀴즈 (기본값 — 학습 데이터 없을 때)
+const DEFAULT_SENTENCE_QUIZ = [
+  { sentence: '하늘에서 ___이 내려요', answer: '눈', options: ['눈', '불', '돌'] },
   { sentence: '친구와 ___을 했어요', answer: '약속', options: ['약속', '숙제', '청소'] },
   { sentence: '엄마가 맛있는 ___을 만들었어요', answer: '음식', options: ['음식', '장난감', '그림'] },
 ]
@@ -34,6 +34,7 @@ export default function TutorIntro() {
   const [showChoices, setShowChoices] = useState(false)
   const [recommendedBooks, setRecommendedBooks] = useState<RecommendedBook[]>([])
   const [testWords, setTestWords] = useState(DEFAULT_WORDS)
+  const [sentenceQuiz, setSentenceQuiz] = useState(DEFAULT_SENTENCE_QUIZ)
   const [quizIdx, setQuizIdx] = useState(0)
   const [quizResults, setQuizResults] = useState<boolean[]>([])
   const [hasStudyData, setHasStudyData] = useState(false)
@@ -50,17 +51,32 @@ export default function TutorIntro() {
     callAI('INTRO')
   }, [])
 
-  // 학습 데이터 로드 — 오답 단어가 있으면 그걸로 테스트
+  // 학습 데이터 로드 — 오답 단어 + 문장 기반 퀴즈
   async function loadStudyData() {
     try {
-      const words = await fetchStudyWords(0) // known=0 (모르는 단어)
-      if (words.length >= 3) {
+      const data = await fetchTutorQuizData()
+      if (data.hasData) {
         setHasStudyData(true)
-        const shuffled = words.sort(() => Math.random() - 0.5).slice(0, 5)
-        setTestWords(shuffled.map(w => ({
-          word: w.base_form,
-          hint: w.definition || '다시 한번 생각해봐!',
-        })))
+        // 오답 단어로 단어 테스트 구성
+        if (data.wordTest.length >= 3) {
+          setTestWords(data.wordTest)
+        }
+        // 오답 단어가 포함된 문장으로 빈칸 퀴즈 구성
+        if (data.sentenceQuiz.length >= 1) {
+          const quiz = data.sentenceQuiz.map(sq => {
+            // 문장에서 단어를 ___로 치환
+            const sentence = sq.sentence.replace(sq.word, '___')
+            // 오답 선택지 생성 (다른 오답 단어에서)
+            const otherWords = data.wordTest
+              .map(w => w.word)
+              .filter(w => w !== sq.word)
+              .sort(() => Math.random() - 0.5)
+              .slice(0, 2)
+            const options = [sq.word, ...otherWords].sort(() => Math.random() - 0.5)
+            return { sentence, answer: sq.word, options }
+          })
+          setSentenceQuiz(quiz)
+        }
       }
     } catch {}
   }
@@ -144,13 +160,13 @@ export default function TutorIntro() {
     setPhase('SENTENCE_QUIZ')
     setQuizIdx(0)
     setQuizResults([])
-    const q = SENTENCE_QUIZ[0]
+    const q = sentenceQuiz[0]
     setBubbleText(q.sentence)
     setShowChoices(true)
   }
 
   function handleQuizAnswer(answer: string) {
-    const q = SENTENCE_QUIZ[quizIdx]
+    const q = sentenceQuiz[quizIdx]
     const correct = answer === q.answer
     const newResults = [...quizResults, correct]
     setQuizResults(newResults)
@@ -159,10 +175,10 @@ export default function TutorIntro() {
     setBubbleText(correct ? '정답! 잘했어! 🎉' : `"${q.answer}"가 맞아! 괜찮아 😊`)
 
     const nextIdx = quizIdx + 1
-    if (nextIdx < SENTENCE_QUIZ.length) {
+    if (nextIdx < sentenceQuiz.length) {
       setQuizIdx(nextIdx)
       setTimeout(() => {
-        setBubbleText(SENTENCE_QUIZ[nextIdx].sentence)
+        setBubbleText(sentenceQuiz[nextIdx].sentence)
         setShowChoices(true)
       }, 1200)
     } else {
@@ -176,8 +192,8 @@ export default function TutorIntro() {
           total_count: testWords.length,
           quiz_results: newResults,
           quiz_correct: quizCorrect,
-          quiz_total: SENTENCE_QUIZ.length,
-          accuracy: Math.round(((knownCount + quizCorrect) / (testWords.length + SENTENCE_QUIZ.length)) * 100),
+          quiz_total: sentenceQuiz.length,
+          accuracy: Math.round(((knownCount + quizCorrect) / (testWords.length + sentenceQuiz.length)) * 100),
         })
       }, 1200)
     }
@@ -234,7 +250,7 @@ export default function TutorIntro() {
       )
     }
     if (phase === 'SENTENCE_QUIZ') {
-      const q = SENTENCE_QUIZ[quizIdx]
+      const q = sentenceQuiz[quizIdx]
       return (
         <div className="tutor-side-choices tutor-quiz-choices">
           {q.options.map((opt, i) => (

@@ -650,6 +650,54 @@ app.get('/api/books/difficulty-stats', (req, res) => {
   res.json({ total: total.cnt, byLevel: stats })
 })
 
+// ─── 튜토리얼 퀴즈 데이터 API ────────────────────────────────
+// GET /api/tutor/quiz-data — 오답 단어 + 해당 문장 기반 퀴즈 데이터
+app.get('/api/tutor/quiz-data', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+
+  // 1. 모르는 단어 (known=0) 가져오기
+  const unknownWords = db.prepare(`
+    SELECT base_form, word, definition, from_book
+    FROM word_study
+    WHERE user_id = ? AND known = 0
+    ORDER BY RANDOM()
+    LIMIT 10
+  `).all(userId)
+
+  // 2. 해당 단어가 포함된 문장 가져오기
+  const sentenceQuiz = []
+  for (const w of unknownWords.slice(0, 5)) {
+    if (!w.from_book) continue
+    const sentences = db.prepare(`
+      SELECT sentence FROM book_sentences
+      WHERE user_id = ? AND title = ? AND sentence LIKE ?
+      LIMIT 1
+    `).all(userId, w.from_book, `%${w.base_form}%`)
+
+    if (sentences.length > 0) {
+      sentenceQuiz.push({
+        word: w.base_form,
+        definition: w.definition || '',
+        sentence: sentences[0].sentence,
+        book: w.from_book,
+      })
+    }
+  }
+
+  // 3. 단어 테스트용 (오답 단어 5개)
+  const wordTest = unknownWords.slice(0, 5).map(w => ({
+    word: w.base_form,
+    hint: w.definition || '다시 한번 생각해봐!',
+    book: w.from_book || '',
+  }))
+
+  res.json({
+    hasData: unknownWords.length >= 3,
+    wordTest,
+    sentenceQuiz,
+  })
+})
+
 // ─── KT 믿음 (Mi:dm) AI 엔드포인트 ──────────────────────────
 // POST /api/midm/feedback — 학습 수준 진단 + 맞춤 추천
 app.post('/api/midm/feedback', async (req, res) => {
