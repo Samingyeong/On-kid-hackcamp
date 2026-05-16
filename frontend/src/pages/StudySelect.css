@@ -224,7 +224,7 @@
 
 .study-book-thumb {
   width: 100%;
-  aspect-ratio: 3/4;
+  aspect-ratio: 4/3;
   object-fit: cover;
   border-radius: 10px;
 }

@@ -27,6 +27,19 @@
   white-space: nowrap;
 }
 .reader-back:hover { color: #e09a3e; }
+.reader-vocab-btn {
+  background: #FFB256;
+  border: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.reader-vocab-btn:hover { background: #e09a3e; }
 .reader-title {
   font-size: 18px;
   font-weight: 700;

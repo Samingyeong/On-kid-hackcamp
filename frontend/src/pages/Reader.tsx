@@ -317,6 +317,7 @@ export default function Reader() {
       <div className="reader-topbar">
         <button className="reader-back" onClick={() => navigate(-1)}>← 목록</button>
         <span className="reader-title">{title}</span>
+        <button className="reader-vocab-btn" onClick={() => navigate(`/study/select?type=word`)}>📖 단어장</button>
         <div className="reader-lang-bar">
           {LANGS.map(l => (
             <button
