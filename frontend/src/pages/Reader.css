@@ -271,14 +271,9 @@
   100% { transform: translateY(-50%) perspective(800px) rotateY(0deg); opacity: 1; }
 }
 
-/* 공책 줄 배경 */
+/* 내부 스크롤 영역 */
 .word-panel-inner {
   padding: 32px 28px;
-  background-image: repeating-linear-gradient(
-    transparent, transparent 79px, rgba(255, 219, 151, 0.5) 79px, rgba(255, 219, 151, 0.5) 82px
-  );
-  background-position: 0 32px;
-  min-height: 100%;
   max-height: 80vh;
   overflow-y: auto;
   border-radius: 20px;

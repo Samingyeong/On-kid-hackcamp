@@ -315,10 +315,10 @@ export default function Reader() {
       {/* 모드 탭 */}
       <div className="reader-mode-tabs">
         <button className={`mode-tab ${mode === 'book' ? 'active' : ''}`} onClick={() => setMode('book')}>
-          📖 책으로 읽기
+          책으로 읽기
         </button>
         <button className={`mode-tab ${mode === 'watch' ? 'active' : ''}`} onClick={() => setMode('watch')}>
-          🎬 영상만 보기
+          영상만 보기
         </button>
       </div>
 
@@ -442,11 +442,11 @@ export default function Reader() {
                     <button className="know-btn know-yes" onClick={e => {
                       saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 1, from_book: title })
                       const btn = e.currentTarget; btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
-                    }}>✅ 알아요</button>
+                    }}>알아요</button>
                     <button className="know-btn know-no" onClick={e => {
                       saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 0, from_book: title })
                       const btn = e.currentTarget; btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
-                    }}>❓ 몰라요</button>
+                    }}>몰라요</button>
                   </div>
 
                   <hr className="dict-divider" />
