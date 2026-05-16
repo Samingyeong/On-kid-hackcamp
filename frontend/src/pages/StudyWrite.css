@@ -91,26 +91,26 @@
 .sw-speech-bubble::after {
   content: '';
   position: absolute;
-  bottom: -14px;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
   height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 14px solid #fff;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 12px solid #fff;
 }
 .sw-speech-bubble::before {
   content: '';
   position: absolute;
-  bottom: -18px;
+  bottom: -16px;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
   height: 0;
-  border-left: 13px solid transparent;
-  border-right: 13px solid transparent;
-  border-top: 17px solid #B8B8B8;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-top: 15px solid #B8B8B8;
 }
 
 .sw-monkey-img {
@@ -196,11 +196,11 @@
 .sw-nav-btn {
   background: none;
   border: none;
-  font-size: 48px;
+  font-size: 64px;
   font-weight: 900;
   color: #5A4A44;
   cursor: pointer;
-  padding: 8px;
+  padding: 8px 16px;
   line-height: 1;
   transition: transform 0.1s;
 }
@@ -214,9 +214,9 @@
 
 .sw-cell {
   position: relative;
-  width: clamp(80px, 10vw, 140px);
-  height: clamp(80px, 10vw, 140px);
-  border: 1.2px solid rgba(91, 109, 158, 0.3);
+  width: clamp(70px, 9vw, 120px);
+  height: clamp(70px, 9vw, 120px);
+  border: 1.5px dashed rgba(91, 109, 158, 0.3);
   background: #fff;
   display: flex;
   align-items: center;
@@ -254,9 +254,9 @@
 /* 가이드 글자 */
 .sw-guide-char {
   position: absolute;
-  font-size: clamp(60px, 10vw, 120px);
+  font-size: clamp(50px, 8vw, 90px);
   font-weight: 700;
-  color: rgba(90, 74, 68, 0.2);
+  color: rgba(90, 74, 68, 0.15);
   z-index: 1;
   pointer-events: none;
   user-select: none;
