@@ -1,0 +1,226 @@
+.study-select {
+  position: relative;
+  height: calc(100vh - 64px);
+  background: #FAF4EE;
+  border-radius: 80px 80px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 40px;
+  overflow: hidden;
+}
+
+/* 구름 장식 — 왼쪽 하단 */
+.study-select::before {
+  display: none;
+}
+/* 구름 장식 — 오른쪽 상단 */
+.study-select::after {
+  display: none;
+}
+
+/* 구름 — 실제 원 겹침 */
+.cloud {
+  position: absolute;
+  pointer-events: none;
+}
+.cloud-circle {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* 왼쪽 하단 구름 */
+.cloud-left {
+  left: -120px;
+  bottom: -120px;
+  width: 520px;
+  height: 440px;
+}
+.cloud-left .c1 { width: 240px; height: 260px; left: 0; top: 0; }
+.cloud-left .c2 { width: 240px; height: 240px; left: 160px; top: 80px; }
+.cloud-left .c3 { width: 240px; height: 240px; left: 300px; top: 200px; }
+.cloud-left .c4 { width: 240px; height: 240px; left: 90px; top: 170px; }
+
+/* 오른쪽 상단 구름 */
+.cloud-right {
+  right: -80px;
+  top: -120px;
+  width: 550px;
+  height: 460px;
+  transform: rotate(175deg);
+}
+.cloud-right .c1 { width: 240px; height: 260px; right: 0; top: 30px; }
+.cloud-right .c2 { width: 240px; height: 240px; right: 180px; top: 0; }
+.cloud-right .c3 { width: 240px; height: 240px; right: 100px; top: 150px; }
+.cloud-right .c4 { width: 240px; height: 240px; right: 280px; top: 100px; }
+
+/* 오른쪽 하단 구름 */
+.cloud-right-bottom {
+  right: -40px;
+  bottom: -80px;
+  width: 500px;
+  height: 280px;
+  transform: rotate(-11deg);
+}
+.cloud-right-bottom .c1 { width: 200px; height: 220px; left: 0; top: 0; }
+.cloud-right-bottom .c2 { width: 200px; height: 200px; left: 140px; top: 40px; }
+.cloud-right-bottom .c3 { width: 200px; height: 200px; left: 260px; top: 60px; }
+.cloud-right-bottom .c4 { width: 200px; height: 200px; left: 100px; top: 80px; }
+
+.study-select-title {
+  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
+  font-size: clamp(20px, 2.5vw, 32px);
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  z-index: 1;
+}
+
+.study-select-cards {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  z-index: 1;
+}
+
+.study-mode-card {
+  width: 220px;
+  border-radius: 24px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 1 / 1.1;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.study-mode-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+
+.study-mode-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.study-mode-monkey {
+  position: absolute;
+  bottom: 26%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  height: auto;
+  object-fit: contain;
+  z-index: 2;
+  transition: transform 0.3s ease;
+  transform-origin: bottom center;
+}
+.study-mode-card:hover .study-mode-monkey {
+  transform: translateX(-50%) scale(1.15);
+}
+
+/* 따라쓰기 원숭이만 크기 축소 */
+.study-mode-card.write .study-mode-monkey {
+  width: 70%;
+}
+
+/* 수화하기 원숭이 크기 축소 */
+.study-mode-card.sign .study-mode-monkey {
+  width: 60%;
+}
+
+/* 책 선택 그리드 */
+.study-book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  z-index: 1;
+  max-height: 60vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding: 8px;
+}
+.study-book-grid::-webkit-scrollbar { display: none; }
+
+.study-book-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #fff;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: relative;
+}
+.study-book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.14);
+}
+.study-book-card.selected {
+  border: 3px solid #FFB256;
+  box-shadow: 0 4px 16px rgba(255,178,86,0.3);
+}
+
+.study-book-thumb {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.study-book-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.study-book-today {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #FF8B8B;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.study-empty {
+  font-size: 18px;
+  color: #888;
+  text-align: center;
+  z-index: 1;
+}
+
+.study-back-btn {
+  margin-top: 16px;
+  padding: 10px 24px;
+  background: rgba(255,255,255,0.8);
+  border: 2px solid #F8C40E;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #F8C40E;
+  cursor: pointer;
+  z-index: 1;
+  transition: background 0.15s;
+}
+.study-back-btn:hover { background: #FFF2D9; }

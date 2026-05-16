@@ -1,0 +1,433 @@
+.login-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #FFB256;
+  overflow: hidden;
+}
+
+.login-header {
+  position: relative;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.login-logo {
+  height: 60px;
+  object-fit: contain;
+}
+
+.login-deco {
+  display: none;
+}
+.login-deco-left { display: none; }
+.login-deco-right { display: none; }
+
+.login-body {
+  flex: 1;
+  background: #fff;
+  border-radius: 0;
+  padding: 48px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.login-body:has(.signup-complete) {
+  overflow: hidden;
+  padding: 24px 0;
+}
+
+/* 로그인 카드 */
+.login-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 0 32px;
+  text-align: center;
+}
+
+.login-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #FFB256;
+  margin-bottom: 40px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-field {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.login-label {
+  width: 80px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1F1F1F;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.login-input {
+  flex: 1;
+  padding: 16px 20px;
+  background: rgba(255, 253, 237, 0.6);
+  border: 1px solid rgba(163, 55, 55, 0.3);
+  border-radius: 30px;
+  font-size: 15px;
+  outline: none;
+}
+.login-input::placeholder { color: #CDCDCD; }
+.login-input:focus { border-color: #FFB256; }
+
+.login-btn {
+  padding: 16px;
+  background: #FFB256;
+  border: 1px solid #E68227;
+  box-shadow: 0px 4px 0px #E68227;
+  color: #fff;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 12px;
+}
+.login-btn:hover { background: #e89f3e; }
+.login-btn:disabled { opacity: 0.6; }
+
+.login-error {
+  color: #F16F6F;
+  font-size: 13px;
+  text-align: center;
+}
+
+.login-toggle {
+  background: none;
+  border: none;
+  color: #FFB256;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 24px;
+  font-weight: 600;
+}
+
+/* 회원가입 스텝 */
+.signup-steps {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.signup-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: #D4D4D4;
+  border-radius: 40px;
+  transition: background 0.2s;
+}
+.signup-step.active { background: #FFD452; }
+.signup-step.done { background: #75D069; }
+
+.signup-step-icon {
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.signup-step-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.signup-step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.signup-step-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+}
+.signup-step-desc {
+  font-size: 12px;
+  color: #000;
+}
+
+/* 회원가입 폼 */
+.signup-form {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.signup-field {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.signup-label {
+  width: 120px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1F1F1F;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.signup-input {
+  flex: 1;
+  padding: 18px 24px;
+  background: rgba(255, 253, 237, 0.6);
+  border: 1px solid rgba(163, 55, 55, 0.3);
+  border-radius: 30px;
+  font-size: 16px;
+  outline: none;
+}
+.signup-input::placeholder { color: #CDCDCD; }
+.signup-input:focus { border-color: #FFB256; }
+
+.signup-gender {
+  display: flex;
+  gap: 12px;
+}
+.gender-btn {
+  padding: 14px 32px;
+  border: 1px solid rgba(163, 55, 55, 0.3);
+  border-radius: 30px;
+  background: rgba(255, 253, 237, 0.6);
+  font-size: 16px;
+  cursor: pointer;
+}
+.gender-btn.active {
+  background: #FFD452;
+  border-color: #FFB256;
+  font-weight: 700;
+}
+
+.signup-next-btn {
+  padding: 16px 48px;
+  background: #FFB256;
+  border: 1px solid #E68227;
+  box-shadow: 0px 4px 0px #E68227;
+  color: #fff;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: center;
+  margin-top: 16px;
+}
+.signup-next-btn:hover { background: #e89f3e; }
+.signup-next-btn:disabled { opacity: 0.6; }
+
+.signup-prev-btn {
+  padding: 16px 48px;
+  background: #D4D4D4;
+  border: none;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #555;
+}
+
+.signup-btn-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.signup-complete {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 0;
+}
+
+.signup-complete-characters {
+  width: 400px;
+  max-width: 85%;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.signup-complete-message {
+  width: 320px;
+  max-width: 70%;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 24px;
+}
+
+/* 아이 유형 선택 카드 */
+.signup-child-types {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 12px;
+  padding: 24px 12px;
+  border: 2px dashed #d0d0d0;
+  border-radius: 20px;
+}
+
+.child-type-card:hover { transform: translateY(-4px); }
+.child-type-card.selected {
+  outline: 4px solid #FFB256;
+  transform: scale(1.08);
+  border-radius: 20px;
+}
+
+.child-type-card {
+  width: 160px;
+  border-radius: 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  background: transparent;
+  overflow: hidden;
+}
+
+.child-type-img {
+  width: 160px;
+  height: 220px;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+.child-type-label {
+  display: none;
+}
+
+.signup-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  padding-right: 48px;
+}
+
+/* 전화번호 + 이메일 레이아웃 */
+.signup-phone-row,
+.signup-email-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.signup-phone-carrier { width: 140px; flex: none; }
+.signup-phone-prefix { width: 110px; flex: none; }
+.signup-phone-num { width: 120px; flex: none; }
+.signup-email-id { flex: 1; }
+.signup-email-domain { width: 160px; flex: none; }
+
+.signup-dash {
+  font-size: 20px;
+  color: #1F1F1F;
+}
+.signup-at {
+  font-size: 20px;
+  color: #1F1F1F;
+}
+
+.signup-birth { flex: 1; min-width: 0; }
+
+/* 로그인 화면 전용 */
+.login-hero-logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.login-slogan {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 36px;
+}
+
+.login-input-full {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-remember {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 13px;
+  color: #888;
+}
+.login-remember input { margin-right: 6px; }
+
+.login-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #888;
+}
+.login-divider { color: #ddd; }
+
+.signup-step:nth-child(2) .signup-step-icon img,
+.signup-step:nth-child(3) .signup-step-icon img {
+  width: 36px;
+  height: 36px;
+}
+
+/* 로그인 아이디 + 도메인 행 */
+.login-id-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.login-id-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.login-domain-select {
+  width: 150px;
+  flex-shrink: 0;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}

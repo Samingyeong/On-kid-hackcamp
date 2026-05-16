@@ -1,0 +1,118 @@
+.cal-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.cal-modal {
+  margin-top: 80px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 20px 20px 16px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: cal-pop 0.18s ease;
+}
+@keyframes cal-pop {
+  from { opacity: 0; transform: translateY(-10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 헤더 */
+.cal-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cal-modal-title {
+  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #333;
+}
+.cal-nav-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #FFB256;
+  cursor: pointer;
+  font-weight: 900;
+  padding: 0 8px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+.cal-nav-btn:disabled { color: #ddd; cursor: default; }
+.cal-nav-btn:not(:disabled):hover { color: #e09a3e; }
+
+/* 그리드 */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.cal-day-header {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #888;
+  padding: 4px 0;
+}
+.cal-day-header.sun { color: #FF6B6B; }
+.cal-day-header.sat { color: #5B9BD5; }
+
+.cal-cell {
+  aspect-ratio: 1;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.cal-cell:not(.disabled):hover {
+  background: #FFF2D9;
+}
+.cal-cell.sun { color: #FF6B6B; }
+.cal-cell.sat { color: #5B9BD5; }
+.cal-cell.today {
+  border: 2px solid #FFB256;
+  color: #FFB256;
+  font-weight: 700;
+}
+.cal-cell.selected {
+  background: #FFB256;
+  color: #fff !important;
+  font-weight: 700;
+}
+.cal-cell.disabled {
+  color: #ccc;
+  cursor: default;
+}
+
+/* 오늘 버튼 */
+.cal-today-btn {
+  align-self: center;
+  padding: 6px 24px;
+  background: #FFF2D9;
+  border: 2px solid #FFB256;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFB256;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cal-today-btn:hover { background: #FFE5A0; }

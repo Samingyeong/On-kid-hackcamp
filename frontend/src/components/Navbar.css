@@ -1,0 +1,141 @@
+.navbar {
+  width: 100%;
+  background: #FFB256;
+  height: 64px;
+  display: flex;
+  align-items: stretch;
+  z-index: 100;
+  padding-top: 8px;
+}
+
+.navbar-inner {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+
+/* ── 탭 공통 스타일 ── */
+.navbar-logo,
+.navbar-link {
+  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  position: relative;
+  transition: color 0.15s;
+  border-radius: 20px 20px 0 0;
+}
+.navbar-logo:hover,
+.navbar-link:hover { color: #333; }
+
+/* 활성 탭 */
+.navbar-logo.active,
+.navbar-link.active {
+  color: #333;
+  background: #FAF4EE;
+  border-radius: 20px 20px 0 0;
+}
+
+/* 메뉴 */
+.navbar-menu {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* 오른쪽 여백 채우기 */
+.navbar-spacer { flex: 1; }
+
+/* 유저 */
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,242,217,0.6);
+  border-radius: 40px;
+  padding: 4px 4px 4px 16px;
+  height: 52px;
+  align-self: center;
+  flex-shrink: 0;
+  overflow: visible;
+  position: relative;
+  cursor: pointer;
+}
+.user-info {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.user-name {
+  font-family: 'Pinkfong Baby SharkOTF', 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+  color: #333;
+  font-weight: 700;
+  line-height: 1;
+}
+.user-type {
+  font-size: 10px;
+  color: #888;
+}
+.user-avatar {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  position: relative;
+}
+.avatar-circle-bg {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(255,200,100,0.4);
+  position: absolute;
+  top: 0; left: 0;
+}
+.avatar-img {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  position: absolute;
+  bottom: 2.5px;
+  right: -2px;
+}
+
+/* 프로필 드롭다운 */
+.navbar-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 120px;
+  z-index: 200;
+}
+
+.navbar-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+  cursor: pointer;
+}
+.navbar-dropdown-item:hover {
+  background: #f5f5f5;
+}
