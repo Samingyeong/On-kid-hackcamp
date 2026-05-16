@@ -298,6 +298,11 @@ export default function StudyTyping() {
             <span className="st-word">{currentWord}</span>
           </div>
           <span className="st-word-next">{words[currentIdx + 1] || ''}</span>
+          {isVision && (
+            <button className="st-speak-btn" onClick={() => speakIfOn(currentWord, 0.85, 1.1)} aria-label="단어 듣기">
+              🔊
+            </button>
+          )}
         </div>
 
         {/* 입력 영역 */}
@@ -351,18 +356,8 @@ export default function StudyTyping() {
             <div className="st-braille-pad">
               <div className="st-braille-header">
                 <div className="st-braille-label">점자 입력</div>
-                <button className="st-braille-mute" onClick={() => setMuted(m => !m)} aria-label={muted ? '음소거 해제' : '음소거'}>
-                  {muted ? '🔇' : '🔊'}
-                </button>
               </div>
               <div className="st-braille-hint">숫자패드 7·8·4·5·1·2 동시 입력 | 0=띄어쓰기 | .=지우기 | Enter=전체읽기</div>
-              <div className="st-braille-dots-preview">
-                {[0,3,1,4,2,5].map((dotIdx, gridPos) => (
-                  <div key={dotIdx} className={`st-dot-cell ${brailleDots[dotIdx] ? 'active' : ''}`}>
-                    {['1','4','2','5','3','6'][gridPos]}
-                  </div>
-                ))}
-              </div>
               <div className="st-braille-grid">
                 <div className="st-braille-row">
                   {[{k:'7',b:0,label:'점1'},{k:'8',b:3,label:'점4'}].map(({k,b,label}) => (
