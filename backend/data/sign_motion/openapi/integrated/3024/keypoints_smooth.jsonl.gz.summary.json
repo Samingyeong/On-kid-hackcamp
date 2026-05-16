@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "3024",
+  "title": "백,하양,하얗다,허옇다,희다,백색,흰색,치아,이,이빨",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/3024_백_하양_하얗다_허옇다_희다_백색_흰색_치아_이_이빨.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/3024_백_하양_하얗다_허옇다_희다_백색_흰색_치아_이_이빨_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/3024_백_하양_하얗다_허옇다_희다_백색_흰색_치아_이_이빨.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/3024_백_하양_하얗다_허옇다_희다_백색_흰색_치아_이_이빨_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 59.94005994005994,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 172,
+    "pose_frames": 172,
+    "face_frames": 172,
+    "hand_frames": 119,
+    "hands_total": 201
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 53,
+      "1": 37,
+      "2": 82
+    },
+    "hand_identity_label_mismatches": 8,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/3024_백_하양_하얗다_허옇다_희다_백색_흰색_치아_이_이빨_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/3024_백_하양_하얗다_허옇다_희다_백색_흰색_치아_이_이빨_smooth.jsonl",
+    "frames": 172,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 3,
+    "after_hand_count_frames": {
+      "0": 53,
+      "1": 34,
+      "2": 85
+    },
+    "face_frames_after": 172,
+    "hand_frames_after": 119,
+    "hands_total_after": 204
+  }
+}

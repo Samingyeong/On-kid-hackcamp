@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "8240",
+  "title": "사랑,-애",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/8240_사랑_-애.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/8240_사랑_-애_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/8240_사랑_-애.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/8240_사랑_-애_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 59.94005994005994,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 252,
+    "pose_frames": 252,
+    "face_frames": 252,
+    "hand_frames": 147,
+    "hands_total": 282
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 105,
+      "1": 12,
+      "2": 135
+    },
+    "hand_identity_label_mismatches": 11,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/8240_사랑_-애_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/8240_사랑_-애_smooth.jsonl",
+    "frames": 252,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 4,
+    "after_hand_count_frames": {
+      "0": 105,
+      "1": 8,
+      "2": 139
+    },
+    "face_frames_after": 252,
+    "hand_frames_after": 147,
+    "hands_total_after": 286
+  }
+}

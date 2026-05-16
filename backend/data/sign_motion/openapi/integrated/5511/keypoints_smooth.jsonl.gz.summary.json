@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "5511",
+  "title": "낳다,나다,태어나다,분만,생식,출산,출생,탄생,해산",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/5511_낳다_나다_태어나다_분만_생식_출산_출생_탄생_해산.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/5511_낳다_나다_태어나다_분만_생식_출산_출생_탄생_해산_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/5511_낳다_나다_태어나다_분만_생식_출산_출생_탄생_해산.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/5511_낳다_나다_태어나다_분만_생식_출산_출생_탄생_해산_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 130,
+    "pose_frames": 130,
+    "face_frames": 130,
+    "hand_frames": 69,
+    "hands_total": 135
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 61,
+      "1": 3,
+      "2": 66
+    },
+    "hand_identity_label_mismatches": 7,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/5511_낳다_나다_태어나다_분만_생식_출산_출생_탄생_해산_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/5511_낳다_나다_태어나다_분만_생식_출산_출생_탄생_해산_smooth.jsonl",
+    "frames": 130,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 1,
+    "after_hand_count_frames": {
+      "0": 61,
+      "1": 2,
+      "2": 67
+    },
+    "face_frames_after": 130,
+    "hand_frames_after": 69,
+    "hands_total_after": 136
+  }
+}

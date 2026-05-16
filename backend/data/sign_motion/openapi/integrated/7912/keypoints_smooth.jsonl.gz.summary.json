@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "7912",
+  "title": "자라다,발육,성숙,성장,장성",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/7912_자라다_발육_성숙_성장_장성.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7912_자라다_발육_성숙_성장_장성_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/7912_자라다_발육_성숙_성장_장성.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/7912_자라다_발육_성숙_성장_장성_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 120,
+    "pose_frames": 120,
+    "face_frames": 120,
+    "hand_frames": 73,
+    "hands_total": 137
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 47,
+      "1": 9,
+      "2": 64
+    },
+    "hand_identity_label_mismatches": 1,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/7912_자라다_발육_성숙_성장_장성_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/7912_자라다_발육_성숙_성장_장성_smooth.jsonl",
+    "frames": 120,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 14,
+    "after_hand_count_frames": {
+      "0": 43,
+      "1": 3,
+      "2": 74
+    },
+    "face_frames_after": 120,
+    "hand_frames_after": 77,
+    "hands_total_after": 151
+  }
+}

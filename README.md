@@ -49,9 +49,11 @@
 - 동화에서 추출된 문장을 카드 형태로 학습
 - 순차 네비게이션 + 진행 표시
 
-### 6. 수어 연동 (개발 중)
-- NIA 한국 수어 키포인트 데이터셋(2D/3D 관절 좌표) 활용
-- 동화 자막의 핵심 단어를 수어 동작으로 시각화 예정
+### 6. 수어 따라하기 평가
+- "암탉과 누렁이" 동화 단어 기준 수어 예시를 VRM 아바타로 재생
+- 웹캠 입력에서 MediaPipe pose/hand 키포인트를 실시간 추출
+- 정답 prototype sequence와 사용자 keypoint sequence를 DTW 기반으로 비교
+- 손모양, 손위치, 움직임 방향 항목별 점수를 내부 산출하고, MVP 화면에서는 정답/재시도 흐름만 노출
 
 ---
 
@@ -98,7 +100,9 @@
 On-kid-hackcamp/
 ├── frontend/           # React 프론트엔드
 │   ├── public/
-│   │   ├── models/     # 3D 손 모델 (GLB)
+│   │   ├── mediapipe/  # 웹캠 keypoint 추출용 WASM
+│   │   ├── models/     # 3D 손 모델 + MediaPipe task 모델
+│   │   ├── sign-vrm/   # 수어 예시 VRM 아바타 런타임
 │   │   └── svg/        # 아이콘 및 이미지 에셋
 │   └── src/
 │       ├── api/        # 백엔드 API 통신 모듈
@@ -114,6 +118,11 @@ On-kid-hackcamp/
 │   ├── sync.js         # 외부 API 동기화
 │   ├── images.js       # 이미지 로컬 캐시
 │   ├── videos.js       # 영상/VTT 프록시
+│   ├── sign_motion.js  # 수어 reference segment 조회
+│   ├── sign_practice_eval.js # DTW 기반 수어 따라하기 평가
+│   ├── data/
+│   │   ├── books.db    # 데모용 SQLite DB
+│   │   └── sign_motion/# 데모용 수어 keypoint 데이터
 │   ├── korean_nlp.py   # 형태소 분석 (KoNLPy)
 │   └── korean_nlp_daemon.py  # NLP 상주 프로세스
 └── README.md
@@ -123,12 +132,45 @@ On-kid-hackcamp/
 
 ## 실행 방법
 
+### 공통 요구사항
+- Node.js 22 LTS 권장
+- Python 3.10~3.12 권장
+- Java JDK 17 이상 권장 (KoNLPy Okt 실행에 필요)
+- Windows에서는 Python 설치 시 `python` 실행 별칭 또는 `py` launcher가 동작해야 합니다.
+
+### 한 번에 설치 및 확인
+```bash
+npm run setup
+```
+
+위 명령은 백엔드/프론트엔드 JS 의존성, Python `requirements.txt`, 데모용 DB·키포인트·VRM·MediaPipe asset 상태를 함께 확인합니다.
+
 ### 백엔드
 ```bash
 cd backend
 npm install
-pip install konlpy    # Python 의존성
+npm run install:python
+npm run check:setup
 npm run dev           # http://localhost:4000
+```
+
+Windows에서 Python 실행명이 `py`인 경우 PowerShell에서 아래처럼 지정할 수 있습니다.
+
+```powershell
+cd backend
+npm install
+$env:PYTHON_BIN="py"
+npm run install:python
+npm run check:setup
+npm run dev
+```
+
+macOS/Linux에서 Python 실행명이 `python3`가 아닌 경우에도 `PYTHON_BIN`으로 지정하면 됩니다.
+
+루트에서 실행할 수도 있습니다.
+
+```bash
+npm run dev:backend
 ```
 
 ### 프론트엔드
@@ -138,12 +180,28 @@ npm install
 npm run dev           # http://localhost:5173
 ```
 
+루트에서 실행할 수도 있습니다.
+
+```bash
+npm run dev:frontend
+```
+
+수어 따라하기 데모는 백엔드와 프론트엔드를 모두 켠 뒤 아래 경로에서 확인할 수 있습니다.
+
+```text
+http://localhost:5173/study/sign?book=암탉과%20누렁이
+```
+
 ### 환경변수 설정 (backend/.env)
 ```env
 CULTURE_API_KEY=문화공공데이터광장_서비스키
 KRDICT_API_KEY=한국어기초사전_API키
 GOOGLE_VISION_API_KEY=구글비전_API키
+GROQ_API_KEY=Groq_API키
+PYTHON_BIN=python
 ```
+
+템플릿은 `backend/.env.example`, `frontend/.env.example`를 참고하면 됩니다. 수어 따라하기 MVP는 커밋된 `backend/data/books.db`, `backend/data/sign_motion`, `frontend/public/sign-vrm`, `frontend/public/mediapipe`, `frontend/public/models/*landmarker*.task`만으로 로컬 데모가 실행되도록 구성되어 있습니다.
 
 ---
 
@@ -157,7 +215,7 @@ GOOGLE_VISION_API_KEY=구글비전_API키
 - ✅ 타자치기 (한글 키보드 + 3D 손 모델)
 - ✅ 문장 학습 카드
 - ✅ 홈화면 추천 동화 + 순위
-- 🔄 수어 키포인트 → 3D 아바타 애니메이션 (개발 중)
+- ✅ 수어 따라하기 평가 (VRM 예시 + 웹캠 keypoint + DTW 비교)
 - 🔄 학부모 대시보드 (기획 중)
 
 ---

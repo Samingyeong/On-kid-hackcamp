@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "6324",
+  "title": "물러나다",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/6324_물러나다.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6324_물러나다_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/6324_물러나다.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/6324_물러나다_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 102,
+    "pose_frames": 102,
+    "face_frames": 102,
+    "hand_frames": 51,
+    "hands_total": 85
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 51,
+      "1": 17,
+      "2": 34
+    },
+    "hand_identity_label_mismatches": 7,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/6324_물러나다_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/6324_물러나다_smooth.jsonl",
+    "frames": 102,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 12,
+    "after_hand_count_frames": {
+      "0": 51,
+      "1": 5,
+      "2": 46
+    },
+    "face_frames_after": 102,
+    "hand_frames_after": 51,
+    "hands_total_after": 97
+  }
+}

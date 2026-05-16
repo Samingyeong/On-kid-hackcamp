@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "11012",
+  "title": "데려가다,안내,인도,인솔,데리다,이끌다",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/11012_데려가다_안내_인도_인솔_데리다_이끌다.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11012_데려가다_안내_인도_인솔_데리다_이끌다_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/11012_데려가다_안내_인도_인솔_데리다_이끌다.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/11012_데려가다_안내_인도_인솔_데리다_이끌다_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 59.94005994005994,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 280,
+    "pose_frames": 280,
+    "face_frames": 280,
+    "hand_frames": 141,
+    "hands_total": 277
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 139,
+      "1": 5,
+      "2": 136
+    },
+    "hand_identity_label_mismatches": 2,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/11012_데려가다_안내_인도_인솔_데리다_이끌다_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/11012_데려가다_안내_인도_인솔_데리다_이끌다_smooth.jsonl",
+    "frames": 280,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 3,
+    "after_hand_count_frames": {
+      "0": 139,
+      "1": 2,
+      "2": 139
+    },
+    "face_frames_after": 280,
+    "hand_frames_after": 141,
+    "hands_total_after": 280
+  }
+}

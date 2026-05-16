@@ -1,0 +1,48 @@
+{
+  "source": "culture_integrated",
+  "local_id": "5956",
+  "title": "크다,꽤,매우,몹시,무척,아주,대,대단히",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/5956_크다_꽤_매우_몹시_무척_아주_대_대단히.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/5956_크다_꽤_매우_몹시_무척_아주_대_대단히_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/5956_크다_꽤_매우_몹시_무척_아주_대_대단히.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/5956_크다_꽤_매우_몹시_무척_아주_대_대단히_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 107,
+    "pose_frames": 107,
+    "face_frames": 107,
+    "hand_frames": 52,
+    "hands_total": 52
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 55,
+      "1": 52
+    },
+    "hand_identity_label_mismatches": 3,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/5956_크다_꽤_매우_몹시_무척_아주_대_대단히_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/5956_크다_꽤_매우_몹시_무척_아주_대_대단히_smooth.jsonl",
+    "frames": 107,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 1,
+    "after_hand_count_frames": {
+      "0": 55,
+      "1": 51,
+      "2": 1
+    },
+    "face_frames_after": 107,
+    "hand_frames_after": 52,
+    "hands_total_after": 53
+  }
+}

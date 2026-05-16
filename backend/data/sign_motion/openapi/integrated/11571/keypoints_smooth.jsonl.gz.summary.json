@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "11571",
+  "title": "다급하다,성급하다,조급하다,급급하다,바쁘다,급조하다,변급하다",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/11571_다급하다_성급하다_조급하다_급급하다_바쁘다_급조하다_변급하다.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/11571_다급하다_성급하다_조급하다_급급하다_바쁘다_급조하다_변급하다_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/11571_다급하다_성급하다_조급하다_급급하다_바쁘다_급조하다_변급하다.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/11571_다급하다_성급하다_조급하다_급급하다_바쁘다_급조하다_변급하다_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 59.94005994005994,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 181,
+    "pose_frames": 181,
+    "face_frames": 181,
+    "hand_frames": 113,
+    "hands_total": 217
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 68,
+      "1": 9,
+      "2": 104
+    },
+    "hand_identity_label_mismatches": 29,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/11571_다급하다_성급하다_조급하다_급급하다_바쁘다_급조하다_변급하다_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/11571_다급하다_성급하다_조급하다_급급하다_바쁘다_급조하다_변급하다_smooth.jsonl",
+    "frames": 181,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 3,
+    "after_hand_count_frames": {
+      "0": 66,
+      "1": 10,
+      "2": 105
+    },
+    "face_frames_after": 181,
+    "hand_frames_after": 115,
+    "hands_total_after": 220
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "6548",
+  "title": "돌다,미치다",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/6548_돌다_미치다.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/6548_돌다_미치다_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/6548_돌다_미치다.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/6548_돌다_미치다_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 59.94005994005994,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 189,
+    "pose_frames": 189,
+    "face_frames": 189,
+    "hand_frames": 179,
+    "hands_total": 311
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 10,
+      "1": 47,
+      "2": 132
+    },
+    "hand_identity_label_mismatches": 2,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/6548_돌다_미치다_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/6548_돌다_미치다_smooth.jsonl",
+    "frames": 189,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 15,
+    "after_hand_count_frames": {
+      "0": 3,
+      "1": 46,
+      "2": 140
+    },
+    "face_frames_after": 189,
+    "hand_frames_after": 186,
+    "hands_total_after": 326
+  }
+}

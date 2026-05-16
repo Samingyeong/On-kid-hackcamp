@@ -1,0 +1,48 @@
+{
+  "source": "culture_integrated",
+  "local_id": "12442",
+  "title": "곧,금명간,신속,이르다,냉큼,빨리,속히,썩,어서,얼른,이내,일찍,일찍이,-자",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/12442_곧_금명간_신속_이르다_냉큼_빨리_속히_썩_어서_얼른_이내_일찍_일찍이_-자.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12442_곧_금명간_신속_이르다_냉큼_빨리_속히_썩_어서_얼른_이내_일찍_일찍이_-자_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/12442_곧_금명간_신속_이르다_냉큼_빨리_속히_썩_어서_얼른_이내_일찍_일찍이_-자.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12442_곧_금명간_신속_이르다_냉큼_빨리_속히_썩_어서_얼른_이내_일찍_일찍이_-자_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 125,
+    "pose_frames": 125,
+    "face_frames": 125,
+    "hand_frames": 55,
+    "hands_total": 55
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 70,
+      "1": 55
+    },
+    "hand_identity_label_mismatches": 0,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12442_곧_금명간_신속_이르다_냉큼_빨리_속히_썩_어서_얼른_이내_일찍_일찍이_-자_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12442_곧_금명간_신속_이르다_냉큼_빨리_속히_썩_어서_얼른_이내_일찍_일찍이_-자_smooth.jsonl",
+    "frames": 125,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 4,
+    "after_hand_count_frames": {
+      "0": 67,
+      "1": 57,
+      "2": 1
+    },
+    "face_frames_after": 125,
+    "hand_frames_after": 58,
+    "hands_total_after": 59
+  }
+}

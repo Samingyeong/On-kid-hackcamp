@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>수어 VRM 리타깃 MVP</title>
+    <script>
+      if (new URLSearchParams(window.location.search).get('embed') === '1') {
+        document.documentElement.setAttribute('data-embed', '1')
+      }
+    </script>
+    <style>
+      html[data-embed="1"],
+      html[data-embed="1"] body,
+      html[data-embed="1"] #app {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+      html[data-embed="1"] .shell {
+        min-height: 0;
+        display: block;
+      }
+      html[data-embed="1"] .stage-wrap {
+        width: calc(100% + 2px);
+        height: 100%;
+        margin-left: -1px;
+        background: #1f3c88;
+      }
+      html[data-embed="1"] #stage {
+        background: #1f3c88;
+      }
+      html[data-embed="1"] .panel,
+      html[data-embed="1"] .drop-hint {
+        display: none !important;
+      }
+    </style>
+    <script type="module" crossorigin src="/sign-vrm/assets/index-BZZs4OKh.js"></script>
+    <link rel="stylesheet" crossorigin href="/sign-vrm/assets/index-DXYO5Llo.css">
+  </head>
+  <body>
+    <div id="app">
+      <main class="shell">
+        <section class="stage-wrap">
+          <canvas id="stage"></canvas>
+          <div id="dropHint" class="drop-hint">
+            <strong>VRM 모델이 필요합니다</strong>
+            <span>VRoid에서 내보낸 .vrm을 여기로 드롭하거나 public/models/avatar.vrm에 넣으세요.</span>
+          </div>
+        </section>
+        <aside class="panel">
+          <div class="panel-header">
+            <h1>수어 VRM 리타깃</h1>
+            <p id="status">초기화 중</p>
+          </div>
+          <div class="controls">
+            <button id="playPause" type="button">Pause</button>
+            <button id="restart" type="button">Restart</button>
+            <label>
+              <span>Speed</span>
+              <input id="speed" type="range" min="0.25" max="1.5" step="0.05" value="1" />
+            </label>
+            <label>
+              <span>Motion Scale</span>
+              <input id="motionScale" type="range" min="0.7" max="1.4" step="0.05" value="1" />
+            </label>
+            <label>
+              <span>Smoothing</span>
+              <input id="smoothing" type="range" min="0.45" max="1" step="0.05" value="0.82" />
+            </label>
+            <label class="file">
+              <span>Load VRM</span>
+              <input id="vrmFile" type="file" accept=".vrm,.glb,.gltf" />
+            </label>
+          </div>
+          <dl class="stats">
+            <div><dt>Frames</dt><dd id="frameStat">-</dd></div>
+            <div><dt>Hands</dt><dd id="handStat">-</dd></div>
+            <div><dt>Face</dt><dd id="faceStat">-</dd></div>
+            <div><dt>Avatar</dt><dd id="avatarStat">debug skeleton</dd></div>
+          </dl>
+        </aside>
+      </main>
+    </div>
+  </body>
+</html>

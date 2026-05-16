@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "7528",
+  "title": "멍하다,멍하니",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/7528_멍하다_멍하니.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/7528_멍하다_멍하니_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/7528_멍하다_멍하니.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/7528_멍하다_멍하니_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 59.94005994005994,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 241,
+    "pose_frames": 241,
+    "face_frames": 241,
+    "hand_frames": 161,
+    "hands_total": 162
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 80,
+      "1": 160,
+      "2": 1
+    },
+    "hand_identity_label_mismatches": 142,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/7528_멍하다_멍하니_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/7528_멍하다_멍하니_smooth.jsonl",
+    "frames": 241,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 8,
+    "after_hand_count_frames": {
+      "0": 79,
+      "1": 154,
+      "2": 8
+    },
+    "face_frames_after": 241,
+    "hand_frames_after": 162,
+    "hands_total_after": 170
+  }
+}

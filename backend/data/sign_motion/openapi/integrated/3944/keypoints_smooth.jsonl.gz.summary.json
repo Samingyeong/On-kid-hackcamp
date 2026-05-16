@@ -1,0 +1,47 @@
+{
+  "source": "culture_integrated",
+  "local_id": "3944",
+  "title": "눈길,시선,바라보다,응시하다,쳐다보다",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/3944_눈길_시선_바라보다_응시하다_쳐다보다.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/3944_눈길_시선_바라보다_응시하다_쳐다보다_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/3944_눈길_시선_바라보다_응시하다_쳐다보다.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/3944_눈길_시선_바라보다_응시하다_쳐다보다_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 59.94005994005994,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 177,
+    "pose_frames": 177,
+    "face_frames": 177,
+    "hand_frames": 177,
+    "hands_total": 347
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "1": 7,
+      "2": 170
+    },
+    "hand_identity_label_mismatches": 13,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/3944_눈길_시선_바라보다_응시하다_쳐다보다_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/3944_눈길_시선_바라보다_응시하다_쳐다보다_smooth.jsonl",
+    "frames": 177,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 4,
+    "after_hand_count_frames": {
+      "1": 3,
+      "2": 174
+    },
+    "face_frames_after": 177,
+    "hand_frames_after": 177,
+    "hands_total_after": 351
+  }
+}

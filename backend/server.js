@@ -2,15 +2,19 @@ require('dotenv').config()
 const express = require('express')
 const cors    = require('cors')
 const https   = require('https')
+const fs      = require('fs')
 const path    = require('path')
+const zlib    = require('zlib')
 const cron    = require('node-cron')
 const { spawn } = require('child_process')
-const { db, IMG_DIR }        = require('./db')
+const { db, IMG_DIR, SIGN_MOTION_DIR } = require('./db')
 const { syncBooks }          = require('./sync')
 const { downloadAllImages }  = require('./images')
 const { downloadBookVideos, getLocalVideoPath, VIDEO_DIR } = require('./videos')
 const { extractKeywords, getBaseForm } = require('./groq_nlp')
 const { getLearningFeedback, generateQuiz, explainWord, generateWeeklyReport, tutorialStep } = require('./midm')
+const { listSignMotions } = require('./sign_motion')
+const { evaluateSignPractice } = require('./sign_practice_eval')
 
 const app  = express()
 const PORT = 4000
@@ -30,10 +34,34 @@ try {
 const saveDictCache = db.prepare(`INSERT OR REPLACE INTO dict_cache (word, result) VALUES (?, ?)`)
 
 app.use(cors())
-app.use(express.json())
+app.use(express.json({ limit: '12mb' }))
 
 // ─── 정적 이미지 서빙 ─────────────────────────────────────────
 app.use('/images', express.static(IMG_DIR, { maxAge: '7d', etag: true }))
+app.use('/sign-motion', express.static(SIGN_MOTION_DIR, { maxAge: '7d', etag: true }))
+
+app.get('/sign-motion-keypoints/*', (req, res) => {
+  const relPath = req.params[0] || ''
+  const fullPath = path.resolve(SIGN_MOTION_DIR, relPath)
+  if (!fullPath.startsWith(`${SIGN_MOTION_DIR}${path.sep}`)) {
+    return res.status(400).send('Invalid keypoint path')
+  }
+  if (!fs.existsSync(fullPath)) return res.status(404).send('Not found')
+
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+  res.setHeader('Cache-Control', 'public, max-age=604800')
+  if (fullPath.endsWith('.gz')) {
+    fs.createReadStream(fullPath)
+      .pipe(zlib.createGunzip())
+      .on('error', error => {
+        if (!res.headersSent) res.status(500).send(error.message)
+        else res.destroy(error)
+      })
+      .pipe(res)
+    return
+  }
+  res.sendFile(fullPath)
+})
 
 // ─── 로컬 영상/VTT 서빙 ──────────────────────────────────────
 app.use('/videos', express.static(VIDEO_DIR, {
@@ -219,6 +247,71 @@ app.post('/api/morpheme/batch', async (req, res) => {
   }
 })
 
+// ─── 수어 따라하기 평가 API ───────────────────────────────────
+app.get('/api/sign-motions', (req, res) => {
+  const { lemma = '', pos = '', reviewStatus = '', limit = '100' } = req.query
+  try {
+    const items = listSignMotions({
+      lemma: String(lemma),
+      pos: String(pos),
+      reviewStatus: String(reviewStatus),
+      limit: parseInt(limit, 10),
+    })
+    res.json({ items })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+app.get('/api/sign-practice/words', (req, res) => {
+  const { limit = '120', scope = 'hen_nureongi' } = req.query
+  const parsedLimit = Number.parseInt(String(limit), 10)
+  const maxItems = Number.isFinite(parsedLimit) ? Math.max(1, Math.min(parsedLimit, 200)) : 120
+  const exactOnly = String(scope) !== 'all'
+
+  try {
+    const rows = db.prepare(`
+      SELECT
+        lemma,
+        COUNT(*) AS segment_count,
+        MIN(id) AS first_segment_id
+      FROM sign_motion_segments
+      WHERE
+        keypoints_path != ''
+        ${exactOnly ? "AND notes LIKE 'hen_nureongi exact%'" : ''}
+      GROUP BY lemma
+      ORDER BY lemma COLLATE NOCASE ASC
+      LIMIT ?
+    `).all(maxItems)
+
+    const items = rows.map(row => {
+      const motions = listSignMotions({ lemma: row.lemma, reviewStatus: 'retargeted', limit: 8 })
+      const exactMotions = exactOnly
+        ? motions.filter(item => String(item.notes || '').startsWith('hen_nureongi exact'))
+        : motions
+      return {
+        word: row.lemma,
+        base_form: row.lemma,
+        segment_count: row.segment_count,
+        segment: exactMotions.find(item => item.keypoints_url) || null,
+      }
+    }).filter(item => item.segment)
+
+    res.json({ items })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+app.post('/api/sign-practice/evaluate', (req, res) => {
+  try {
+    const result = evaluateSignPractice(req.body || {})
+    res.json(result)
+  } catch (e) {
+    res.status(e.statusCode || 500).json({ error: e.message })
+  }
+})
+
 // ─── 단어 학습 API ────────────────────────────────────────────
 // POST /api/words  { word, base_form, pos, definition, known, from_book }
 app.post('/api/words', (req, res) => {
@@ -293,12 +386,13 @@ app.get('/dict', async (req, res) => {
 
 // ─── Python NLP 상주 프로세스 ─────────────────────────────────
 const NLP_SCRIPT = path.join(__dirname, 'korean_nlp_daemon.py')
+const PYTHON_BIN = process.env.PYTHON_BIN || (process.platform === 'win32' ? 'python' : 'python3')
 let nlpProcess = null
 let nlpReady = false
 const nlpQueue = [] // { resolve, reject }
 
 function startPython() {
-  nlpProcess = spawn('python', [NLP_SCRIPT], {
+  nlpProcess = spawn(PYTHON_BIN, [NLP_SCRIPT], {
     cwd: __dirname,
     env: { ...process.env, PYTHONIOENCODING: 'utf-8', PYTHONUTF8: '1' },
     stdio: ['pipe', 'pipe', 'pipe'],
@@ -345,7 +439,7 @@ function runNlp(mode, text) {
   return new Promise((resolve, reject) => {
     if (!nlpProcess || !nlpReady) {
       // 폴백: 일회성 spawn
-      const py = spawn('python', [path.join(__dirname, 'korean_nlp.py'), mode, text], {
+      const py = spawn(PYTHON_BIN, [path.join(__dirname, 'korean_nlp.py'), mode, text], {
         cwd: __dirname,
         timeout: 10000,
         env: { ...process.env, PYTHONIOENCODING: 'utf-8', PYTHONUTF8: '1' },

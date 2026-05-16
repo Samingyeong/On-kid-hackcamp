@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "12415",
+  "title": "간혹,가끔,때때로,이따금,종종,간간이,드문드문,종종히,혹",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/12415_간혹_가끔_때때로_이따금_종종_간간이_드문드문_종종히_혹.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12415_간혹_가끔_때때로_이따금_종종_간간이_드문드문_종종히_혹_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/12415_간혹_가끔_때때로_이따금_종종_간간이_드문드문_종종히_혹.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12415_간혹_가끔_때때로_이따금_종종_간간이_드문드문_종종히_혹_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 120,
+    "pose_frames": 120,
+    "face_frames": 120,
+    "hand_frames": 63,
+    "hands_total": 64
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 57,
+      "1": 62,
+      "2": 1
+    },
+    "hand_identity_label_mismatches": 42,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12415_간혹_가끔_때때로_이따금_종종_간간이_드문드문_종종히_혹_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12415_간혹_가끔_때때로_이따금_종종_간간이_드문드문_종종히_혹_smooth.jsonl",
+    "frames": 120,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 0,
+    "after_hand_count_frames": {
+      "0": 57,
+      "1": 62,
+      "2": 1
+    },
+    "face_frames_after": 120,
+    "hand_frames_after": 63,
+    "hands_total_after": 64
+  }
+}

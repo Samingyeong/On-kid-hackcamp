@@ -1,0 +1,49 @@
+{
+  "source": "culture_integrated",
+  "local_id": "12468",
+  "title": "점검,감사,감시,감찰,검토,검사,수사,사찰,조사,살펴보다,살피다",
+  "video_path": "/hdd1/jh/camp26/videos/culture_integrated/12468_점검_감사_감시_감찰_검토_검사_수사_사찰_조사_살펴보다_살피다.mp4",
+  "keypoints_path": "/hdd1/jh/camp26/keypoints/culture_integrated/12468_점검_감사_감시_감찰_검토_검사_수사_사찰_조사_살펴보다_살피다_keypoints_smooth.jsonl.gz",
+  "extract": {
+    "video": "/hdd1/jh/camp26/videos/culture_integrated/12468_점검_감사_감시_감찰_검토_검사_수사_사찰_조사_살펴보다_살피다.mp4",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12468_점검_감사_감시_감찰_검토_검사_수사_사찰_조사_살펴보다_살피다_raw.jsonl",
+    "source_width": 700,
+    "source_height": 466,
+    "fps": 29.97002997002997,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.0,
+    "start_frame": 0,
+    "crop": null,
+    "frames": 115,
+    "pose_frames": 115,
+    "face_frames": 115,
+    "hand_frames": 65,
+    "hands_total": 66
+  },
+  "postprocess": {
+    "before_hand_count_frames": {
+      "0": 50,
+      "1": 64,
+      "2": 1
+    },
+    "hand_identity_label_mismatches": 57,
+    "input": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12468_점검_감사_감시_감찰_검토_검사_수사_사찰_조사_살펴보다_살피다_raw.jsonl",
+    "output": "/hdd1/jh/camp26/tmp/keypoints/culture_integrated/12468_점검_감사_감시_감찰_검토_검사_수사_사찰_조사_살펴보다_살피다_smooth.jsonl",
+    "frames": 115,
+    "hand_max_gap": 8,
+    "face_max_gap": 12,
+    "pose_alpha": 0.62,
+    "hand_alpha": 0.72,
+    "face_alpha": 0.55,
+    "face_interpolated_frames": 0,
+    "hand_interpolated_slot_frames": 4,
+    "after_hand_count_frames": {
+      "0": 50,
+      "1": 60,
+      "2": 5
+    },
+    "face_frames_after": 115,
+    "hand_frames_after": 65,
+    "hands_total_after": 70
+  }
+}
