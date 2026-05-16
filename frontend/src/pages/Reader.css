@@ -101,11 +101,11 @@
   background: #F16F6F;
   padding: 12px;
   border-radius: 20px;
-  margin: 24px 12px;
+  margin: 24px 24px 24px 12px;
   position: relative;
   overflow: visible;
   flex-shrink: 0;
-  width: 42%;
+  width: 48%;
 }
 
 .reader-page-right-inner {
@@ -117,11 +117,31 @@
   overflow: hidden;
   position: relative;
 }
+.reader-page-right-inner::before,
+.reader-page-right-inner::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 5;
+  pointer-events: none;
+}
+.reader-page-right-inner::before {
+  top: 0;
+  background: linear-gradient(to bottom, #FAF4EE 30%, transparent);
+  border-radius: 16px 16px 0 0;
+}
+.reader-page-right-inner::after {
+  bottom: 0;
+  background: linear-gradient(to top, #FAF4EE 30%, transparent);
+  border-radius: 0 0 16px 16px;
+}
 
 /* 스프링 장식 */
 .reader-springs {
   position: absolute;
-  right: -16px;
+  right: -12px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -130,7 +150,7 @@
   z-index: 10;
 }
 .reader-spring {
-  width: 32px;
+  width: 28px;
   height: auto;
 }
 
@@ -178,7 +198,7 @@
   flex: 1;
   overflow-y: auto;
   scrollbar-width: none;
-  padding: 0 24px;
+  padding: 60px 24px;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -193,8 +213,8 @@
 .reader-cue {
   display: flex;
   gap: 12px;
-  padding: 0 16px;
-  min-height: calc(25% - 1px);
+  padding: 24px 20px;
+  margin-bottom: 16px;
   border-bottom: 3px dashed #C5C5C5;
   transition: background 0.2s;
   align-items: center;
