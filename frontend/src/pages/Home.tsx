@@ -4,7 +4,6 @@ import { CATEGORIES } from '../constants/categories'
 import { fetchBooks, fetchBookForReader } from '../api/library'
 import type { Book } from '../types'
 import CalendarModal from '../components/CalendarModal'
-import FeedbackChat from '../components/FeedbackChat'
 import './Home.css'
 
 const DAYS = ['일','월','화','수','목','금','토']
@@ -335,7 +334,6 @@ export default function Home() {
 
         </div>
       </div>
-      <FeedbackChat />
     </div>
   )
 }

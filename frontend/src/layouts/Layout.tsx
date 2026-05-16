@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import FeedbackChat from '../components/FeedbackChat'
 import './Layout.css'
 
 export default function Layout() {
@@ -12,6 +13,7 @@ export default function Layout() {
       <main className="layout-main">
         <Outlet />
       </main>
+      <FeedbackChat />
     </div>
   )
 }

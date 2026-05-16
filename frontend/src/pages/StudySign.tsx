@@ -18,7 +18,6 @@ import {
   type StudyWord,
 } from '../api/library'
 import './StudySign.css'
-import FeedbackChat from '../components/FeedbackChat'
 
 type PracticePhase = 'demo' | 'ready' | 'recording' | 'checking' | 'passed' | 'retry'
 type PracticeStudyWord = StudyWord & { segment_count?: number }
@@ -677,7 +676,6 @@ export default function StudySign() {
       <button className="ss-back" onClick={() => navigate(-1)}>
         ‹
       </button>
-      <FeedbackChat />
     </div>
   )
 }
