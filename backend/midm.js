@@ -204,13 +204,27 @@ async function callTutor(stateData) {
   const result = await chatCompletion(messages, { maxTokens: 768, temperature: 0.6 })
 
   try {
-    const parsed = JSON.parse(result)
+    // AI가 여러 JSON 객체를 이어서 반환하는 경우 첫 번째만 파싱
+    let jsonStr = result.trim()
+    // 첫 번째 완전한 JSON 객체만 추출
+    let depth = 0, start = -1, end = -1
+    for (let i = 0; i < jsonStr.length; i++) {
+      if (jsonStr[i] === '{') { if (start === -1) start = i; depth++ }
+      else if (jsonStr[i] === '}') { depth--; if (depth === 0) { end = i; break } }
+    }
+    if (start >= 0 && end > start) {
+      jsonStr = jsonStr.slice(start, end + 1)
+    }
+    const parsed = JSON.parse(jsonStr)
     cache.set(cacheKey, parsed)
     return parsed
   } catch {
+    // JSON 파싱 실패 시 message_to_child 추출 시도
+    const msgMatch = result.match(/"message_to_child"\s*:\s*"([^"]*)"/)
+    const msg = msgMatch ? msgMatch[1] : result.slice(0, 100)
     const fallback = {
-      message_to_child: result,
-      system_analysis: 'JSON 파싱 실패 - 원문 반환',
+      message_to_child: msg,
+      system_analysis: '',
       recommended_level: '',
       recommended_content: [],
       next_action: '',

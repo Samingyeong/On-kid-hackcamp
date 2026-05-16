@@ -583,17 +583,17 @@ app.post('/api/books/analyze-difficulty', async (req, res) => {
 })
 
 // GET /api/books/recommend?level=beginner|intermediate|advanced&limit=4
-// 아이 수준에 맞는 책 추천
+// 아이 수준에 맞는 책 추천 (영상 재생 가능한 책만)
 app.get('/api/books/recommend', (req, res) => {
   const { level = 'beginner', limit = '4' } = req.query
   const lim = parseInt(limit)
 
-  // 해당 레벨 책 우선, 부족하면 한 단계 아래도 포함
+  // 해당 레벨 책 우선 (nlcy 영상 있는 것만)
   let rows = db.prepare(`
     SELECT bd.*, b.thumbnail, b.local_img, b.description, b.story_type, b.url
     FROM book_difficulty bd
     JOIN books b ON b.title = bd.title
-    WHERE bd.level = ?
+    WHERE bd.level = ? AND b.thumbnail LIKE 'https://www.nlcy.go.kr/%'
     ORDER BY RANDOM()
     LIMIT ?
   `).all(level, lim)
@@ -605,23 +605,25 @@ app.get('/api/books/recommend', (req, res) => {
       SELECT bd.*, b.thumbnail, b.local_img, b.description, b.story_type, b.url
       FROM book_difficulty bd
       JOIN books b ON b.title = bd.title
-      WHERE bd.level = ? AND bd.title NOT IN (${rows.map(() => '?').join(',')})
+      WHERE bd.level = ? AND b.thumbnail LIKE 'https://www.nlcy.go.kr/%'
+        AND bd.title NOT IN (${rows.map(() => '?').join(',') || "''"})
       ORDER BY RANDOM()
       LIMIT ?
     `).all(fallbackLevel, ...rows.map(r => r.title), lim - rows.length)
     rows = [...rows, ...more]
   }
 
-  // 아직도 부족하면 분석 안 된 책에서 랜덤
+  // 아직도 부족하면 분석 완료된 다른 레벨에서 랜덤
   if (rows.length < lim) {
     const more = db.prepare(`
-      SELECT b.title, b.thumbnail, b.local_img, b.description, b.story_type, b.url,
-             'beginner' as level, 0 as total_words
-      FROM books b
-      WHERE b.title NOT IN (SELECT title FROM book_difficulty)
+      SELECT bd.*, b.thumbnail, b.local_img, b.description, b.story_type, b.url
+      FROM book_difficulty bd
+      JOIN books b ON b.title = bd.title
+      WHERE b.thumbnail LIKE 'https://www.nlcy.go.kr/%'
+        AND bd.title NOT IN (${rows.map(() => '?').join(',') || "''"})
       ORDER BY RANDOM()
       LIMIT ?
-    `).all(lim - rows.length)
+    `).all(...rows.map(r => r.title), lim - rows.length)
     rows = [...rows, ...more]
   }
 
