@@ -54,10 +54,6 @@ export default function StudyTyping() {
   const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
     setTyped(val)
-    // 오타 체크
-    if (val.length > 0 && !currentWord.startsWith(val)) {
-      setErrors(err => err + 1)
-    }
     // 정답
     if (val === currentWord) {
       setTimeout(() => {
@@ -67,6 +63,10 @@ export default function StudyTyping() {
           if (inputRef.current) inputRef.current.value = ''
         }
       }, 500)
+    }
+    // 오타: 단어 길이만큼 입력했는데 틀린 경우에만 카운트
+    if (val.length === currentWord.length && val !== currentWord) {
+      setErrors(err => err + 1)
     }
   }, [currentWord, currentIdx, words.length])
 
@@ -134,8 +134,9 @@ export default function StudyTyping() {
       <div className="st-bottom">
         {/* 통계 */}
         <div className="st-stats">
-          <div className="st-stat">
-            <span className="st-stat-label">⏱ {minutes}:{seconds}</span>
+          <div className="st-stat-timer">
+            <div className="st-timer-icon">⏱</div>
+            <span className="st-timer-pill">{minutes}:{seconds}</span>
           </div>
           <div className="st-stat">
             <span className="st-stat-label">오타</span>
@@ -144,9 +145,16 @@ export default function StudyTyping() {
           <div className="st-stat">
             <span className="st-stat-label">진행도</span>
             <span className="st-stat-value">{currentIdx}/{words.length}</span>
-            <div className="st-progress-bar">
-              <div className="st-progress-fill" style={{ width: `${progress}%` }} />
-            </div>
+          </div>
+          <div className="st-progress-bar">
+            <div className="st-progress-fill" style={{ width: `${progress}%` }} />
+          </div>
+          <div className="st-stat">
+            <span className="st-stat-label">정확도</span>
+            <span className="st-stat-value">{words.length > 0 ? Math.round(((currentIdx - errors) / Math.max(currentIdx, 1)) * 100) : 0}%</span>
+          </div>
+          <div className="st-progress-bar">
+            <div className="st-progress-fill accuracy" style={{ width: `${words.length > 0 ? Math.round(((currentIdx - errors) / Math.max(currentIdx, 1)) * 100) : 0}%` }} />
           </div>
         </div>
 
