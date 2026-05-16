@@ -1,6 +1,10 @@
 /**
  * KT 믿음 (Mi:dm) AI 연동 모듈
- * OpenAI-compatible API (http://127.0.0.1:8000/v1)
+ * 아키텍처: [고정 시스템 프롬프트] + [현재 상태 데이터(JSON)]
+ * 
+ * - 프롬프트 = AI 성격과 규칙 (거의 안 바뀜)
+ * - 입력 JSON = 현재 상황 (step + child_profile + context)
+ * - 판단 = 백엔드, 말하기 = AI
  */
 const http = require('http')
 
@@ -11,9 +15,102 @@ const API_KEY  = process.env.MIDM_API_KEY  || ''
 // 결과 캐시
 const cache = new Map()
 
-/**
- * Mi:dm chat completion 호출
- */
+// ─── 통합 시스템 프롬프트 (고정) ──────────────────────────────
+const SYSTEM_PROMPT = `너는 5세~10세 아동을 위한 AI 멀티모달 동화 학습 튜터다.
+
+서비스 목표:
+- 아이가 즐겁고 부담 없이 학습하도록 돕는다.
+- 아이의 나이, 문해력, 장애 유형에 맞게 대화 수준을 조절한다.
+- 튜토리얼 과정에서 아이의 선호 장르와 학습 수준을 파악한다.
+- 테스트 결과를 기반으로 초급/중급/고급 동화를 추천한다.
+- 아이에게는 따뜻하고 긍정적으로 말한다.
+- 시스템 내부 분석은 JSON 필드에만 작성한다.
+
+중요 규칙:
+- 절대 아이에게 "틀렸다", "못한다", "수준이 낮다"라고 말하지 않는다.
+- 항상 긍정적인 표현을 사용한다.
+- 문장은 짧고 쉬워야 한다.
+- 한 번에 하나의 질문만 한다.
+- 장애 유형에 맞게 표현 방식을 조절한다.
+
+나이별 대화 규칙:
+
+[5~6세]
+- 매우 짧고 쉬운 문장 사용
+- 귀엽고 친근한 말투 사용
+- 한 문장 최대 15자~20자 정도
+
+[7~8세]
+- 친근하지만 너무 유아적이지 않게
+- 짧은 설명 가능
+- 간단한 이유 설명 가능
+
+[9~10세]
+- 존중하는 느낌 유지
+- 너무 아기처럼 말하지 않기
+- 간단한 사고 유도 가능
+
+장애 유형별 규칙:
+
+[청각장애]
+- "잘 들어봐" 같은 표현 금지
+- 자막, 그림, 읽기 중심 표현 사용
+
+[시각장애]
+- "여기 그림을 봐" 같은 표현 금지
+- 소리, 설명, 상황 묘사 중심 표현 사용
+
+[문해력 낮음]
+- 어려운 단어 금지
+- 짧고 반복적인 표현 사용
+- 긴 설명 금지
+
+[일반]
+- 기본 학습 튜터 말투 사용
+
+현재 단계(step)에 따라 행동한다.
+
+가능한 step 종류:
+- INTRO
+- ASK_GENRE
+- WORD_TEST
+- QUIZ_TEST
+- LEVEL_ANALYSIS
+- RECOMMEND_BOOK
+- DAILY_FEEDBACK
+- EXPLAIN_WORD
+- BOOK_QUIZ
+- WEEKLY_REPORT
+
+출력 규칙: 반드시 JSON 형식만 출력한다.
+
+출력 형식:
+{
+  "message_to_child": "",
+  "system_analysis": "",
+  "recommended_level": "",
+  "recommended_content": [],
+  "next_action": ""
+}
+
+message_to_child:
+- 아이에게 직접 보여줄 문장
+
+system_analysis:
+- 시스템 내부 판단
+- 아이에게 노출 금지
+
+recommended_level:
+- 초급 / 중급 / 고급 중 하나 (해당 시 작성)
+
+recommended_content:
+- 추천 장르 또는 동화 목록 (해당 시 작성)
+
+next_action:
+- 다음 단계 이름`
+
+
+// ─── 저수준 API 호출 ──────────────────────────────────────────
 function chatCompletion(messages, { maxTokens = 1024, temperature = 0.7 } = {}) {
   return new Promise((resolve, reject) => {
     const url = new URL(`${BASE_URL}/chat/completions`)
@@ -58,148 +155,160 @@ function chatCompletion(messages, { maxTokens = 1024, temperature = 0.7 } = {}) 
   })
 }
 
-// ─── 1. 학습 수준 진단 + 맞춤 추천 ──────────────────────────
-async function getLearningFeedback(userData) {
-  const { unknownWords = [], accuracy = 0, booksRead = [] } = userData
-  const cacheKey = `feedback:${JSON.stringify(userData)}`
+// ─── 통합 호출 함수 ───────────────────────────────────────────
+// 모든 기능이 이 하나의 함수를 통해 호출됨
+// stateData = { step, child_profile, context }
+async function callTutor(stateData) {
+  const cacheKey = JSON.stringify(stateData)
   if (cache.has(cacheKey)) return cache.get(cacheKey)
 
   const messages = [
-    {
-      role: 'system',
-      content: `당신은 어린이 한국어 학습 전문가입니다. 아이의 학습 데이터를 분석하고 수준을 진단한 뒤, 다음 학습 방향을 추천합니다.
-응답 형식 (JSON):
-{
-  "level": "초급/중급/고급",
-  "analysis": "아이의 현재 수준 분석 (2-3문장)",
-  "strengths": ["잘하는 점"],
-  "improvements": ["개선할 점"],
-  "recommendation": "다음 추천 동화 또는 학습 활동",
-  "encouragement": "아이에게 전할 칭찬 한마디"
-}`
-    },
-    {
-      role: 'user',
-      content: `아이의 학습 데이터:
-- 모르는 단어 목록: ${unknownWords.slice(0, 20).join(', ') || '없음'}
-- 따라쓰기 정답률: ${accuracy}%
-- 읽은 책: ${booksRead.slice(0, 10).join(', ') || '없음'}
-
-이 아이의 한국어 수준을 진단하고 다음 학습을 추천해주세요.`
-    }
+    { role: 'system', content: SYSTEM_PROMPT },
+    { role: 'user', content: JSON.stringify(stateData) },
   ]
 
-  const result = await chatCompletion(messages, { maxTokens: 512, temperature: 0.6 })
+  const result = await chatCompletion(messages, { maxTokens: 768, temperature: 0.6 })
+
   try {
     const parsed = JSON.parse(result)
     cache.set(cacheKey, parsed)
     return parsed
   } catch {
-    const fallback = { level: '분석중', analysis: result, strengths: [], improvements: [], recommendation: '', encouragement: '' }
+    // JSON 파싱 실패 시 텍스트를 message_to_child에 넣어 반환
+    const fallback = {
+      message_to_child: result,
+      system_analysis: 'JSON 파싱 실패 - 원문 반환',
+      recommended_level: '',
+      recommended_content: [],
+      next_action: '',
+    }
     cache.set(cacheKey, fallback)
     return fallback
   }
 }
 
-// ─── 2. 동화 요약 + 퀴즈 생성 ────────────────────────────────
-async function generateQuiz(subtitleText, bookTitle) {
-  const cacheKey = `quiz:${bookTitle}:${subtitleText.slice(0, 50)}`
-  if (cache.has(cacheKey)) return cache.get(cacheKey)
+// ─── 편의 함수들 (백엔드 엔드포인트에서 사용) ─────────────────
 
-  const messages = [
-    {
-      role: 'system',
-      content: `당신은 어린이 동화 교육 전문가입니다. 동화 내용을 아이 눈높이에 맞게 요약하고 퀴즈를 만듭니다.
-응답 형식 (JSON):
-{
-  "summary": ["요약 문장1", "요약 문장2", "요약 문장3"],
-  "quiz": [
-    { "type": "ox", "question": "질문", "answer": true },
-    { "type": "blank", "question": "___에 들어갈 말은?", "answer": "정답", "sentence": "원문 문장" }
-  ]
-}`
-    },
-    {
-      role: 'user',
-      content: `동화 제목: ${bookTitle}\n\n자막 내용:\n${subtitleText.slice(0, 2000)}\n\n5세~8세 아이가 이해할 수 있게 3줄 요약과 퀴즈 2~3개를 만들어주세요.`
-    }
-  ]
-
-  const result = await chatCompletion(messages, { maxTokens: 768, temperature: 0.7 })
-  try {
-    const parsed = JSON.parse(result)
-    cache.set(cacheKey, parsed)
-    return parsed
-  } catch {
-    return { summary: [result], quiz: [] }
-  }
+// 장애 유형 매핑 (DB값 → 프롬프트용)
+const SUPPORT_TYPE_MAP = {
+  slow: '문해력 낮음',
+  study: '일반',
+  hearing: '청각장애',
+  vision: '시각장애',
 }
 
-// ─── 3. 단어 설명 (아이 눈높이) ──────────────────────────────
-async function explainWord(word, definition) {
-  const cacheKey = `explain:${word}`
-  if (cache.has(cacheKey)) return cache.get(cacheKey)
-
-  const messages = [
-    {
-      role: 'system',
-      content: '당신은 5세 아이에게 단어를 설명하는 선생님입니다. 쉽고 재미있게, 예시를 들어 설명합니다. 2문장 이내로 답하세요.'
-    },
-    {
-      role: 'user',
-      content: `"${word}"의 사전 뜻: ${definition}\n\n5세 아이가 이해할 수 있게 쉽게 설명해줘.`
-    }
-  ]
-
-  const result = await chatCompletion(messages, { maxTokens: 128, temperature: 0.8 })
-  cache.set(cacheKey, result)
-  return result
+function mapSupportType(disability) {
+  return SUPPORT_TYPE_MAP[disability] || '일반'
 }
 
-// ─── 4. 학부모 주간 리포트 ────────────────────────────────────
-async function generateWeeklyReport(weekData) {
-  const { booksRead = [], newWords = 0, accuracy = 0, studyDays = 0 } = weekData
-  const cacheKey = `report:${JSON.stringify(weekData)}`
-  if (cache.has(cacheKey)) return cache.get(cacheKey)
-
-  const messages = [
-    {
-      role: 'system',
-      content: `당신은 어린이 한국어 학습 리포트를 작성하는 AI입니다. 학부모에게 따뜻하고 격려하는 톤으로 주간 학습 결과를 알려줍니다.
-응답 형식 (JSON):
-{
-  "summary": "이번 주 학습 요약 (2-3문장)",
-  "stats": { "booksRead": 0, "newWords": 0, "accuracy": 0, "studyDays": 0 },
-  "praise": "칭찬 포인트",
-  "suggestion": "다음 주 개선 제안"
-}`
-    },
-    {
-      role: 'user',
-      content: `이번 주 학습 데이터:
-- 읽은 책: ${booksRead.join(', ') || '없음'} (${booksRead.length}권)
-- 새로 배운 단어: ${newWords}개
-- 따라쓰기 정답률: ${accuracy}%
-- 학습 일수: ${studyDays}일
-
-주간 리포트를 작성해주세요.`
-    }
-  ]
-
-  const result = await chatCompletion(messages, { maxTokens: 512, temperature: 0.7 })
-  try {
-    const parsed = JSON.parse(result)
-    cache.set(cacheKey, parsed)
-    return parsed
-  } catch {
-    return { summary: result, stats: weekData, praise: '', suggestion: '' }
+// 나이 계산 (birth_date → 만 나이)
+function calcAge(birthDate) {
+  if (!birthDate) return 7 // 기본값
+  const birth = new Date(birthDate)
+  const now = new Date()
+  let age = now.getFullYear() - birth.getFullYear()
+  if (now.getMonth() < birth.getMonth() ||
+      (now.getMonth() === birth.getMonth() && now.getDate() < birth.getDate())) {
+    age--
   }
+  return Math.max(5, Math.min(10, age))
+}
+
+
+// ─── 1. 학습 수준 진단 + 맞춤 추천 (DAILY_FEEDBACK) ──────────
+async function getLearningFeedback(childProfile, learningData) {
+  const stateData = {
+    step: 'DAILY_FEEDBACK',
+    child_profile: {
+      name: childProfile.name || '친구',
+      age: calcAge(childProfile.birth_date),
+      support_type: mapSupportType(childProfile.disability),
+    },
+    context: {
+      unknown_words: learningData.unknownWords || [],
+      writing_accuracy: learningData.accuracy || 0,
+      books_read: learningData.booksRead || [],
+      total_words_learned: learningData.totalWordsLearned || 0,
+    },
+  }
+  return callTutor(stateData)
+}
+
+// ─── 2. 동화 요약 + 퀴즈 생성 (BOOK_QUIZ) ────────────────────
+async function generateQuiz(childProfile, bookTitle, subtitleText) {
+  const stateData = {
+    step: 'BOOK_QUIZ',
+    child_profile: {
+      name: childProfile.name || '친구',
+      age: calcAge(childProfile.birth_date),
+      support_type: mapSupportType(childProfile.disability),
+    },
+    context: {
+      book_title: bookTitle,
+      subtitle_text: subtitleText.slice(0, 2000),
+    },
+  }
+  return callTutor(stateData)
+}
+
+// ─── 3. 단어 설명 (EXPLAIN_WORD) ─────────────────────────────
+async function explainWord(childProfile, word, definition) {
+  const stateData = {
+    step: 'EXPLAIN_WORD',
+    child_profile: {
+      name: childProfile.name || '친구',
+      age: calcAge(childProfile.birth_date),
+      support_type: mapSupportType(childProfile.disability),
+    },
+    context: {
+      word,
+      dictionary_definition: definition || '',
+    },
+  }
+  return callTutor(stateData)
+}
+
+// ─── 4. 학부모 주간 리포트 (WEEKLY_REPORT) ────────────────────
+async function generateWeeklyReport(childProfile, weekData) {
+  const stateData = {
+    step: 'WEEKLY_REPORT',
+    child_profile: {
+      name: childProfile.name || '친구',
+      age: calcAge(childProfile.birth_date),
+      support_type: mapSupportType(childProfile.disability),
+    },
+    context: {
+      books_read: weekData.booksRead || [],
+      new_words_count: weekData.newWords || 0,
+      writing_accuracy: weekData.accuracy || 0,
+      study_days: weekData.studyDays || 0,
+    },
+  }
+  return callTutor(stateData)
+}
+
+// ─── 5. 튜토리얼 단계 (INTRO / ASK_GENRE / WORD_TEST 등) ─────
+async function tutorialStep(childProfile, step, context = {}) {
+  const stateData = {
+    step,
+    child_profile: {
+      name: childProfile.name || '친구',
+      age: calcAge(childProfile.birth_date),
+      support_type: mapSupportType(childProfile.disability),
+    },
+    context,
+  }
+  return callTutor(stateData)
 }
 
 module.exports = {
   chatCompletion,
+  callTutor,
   getLearningFeedback,
   generateQuiz,
   explainWord,
   generateWeeklyReport,
+  tutorialStep,
+  mapSupportType,
+  calcAge,
 }

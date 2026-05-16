@@ -10,7 +10,7 @@ const { syncBooks }          = require('./sync')
 const { downloadAllImages }  = require('./images')
 const { downloadBookVideos, getLocalVideoPath, VIDEO_DIR } = require('./videos')
 const { extractKeywords, getBaseForm } = require('./groq_nlp')
-const { getLearningFeedback, generateQuiz, explainWord, generateWeeklyReport } = require('./midm')
+const { getLearningFeedback, generateQuiz, explainWord, generateWeeklyReport, tutorialStep } = require('./midm')
 
 const app  = express()
 const PORT = 4000
@@ -543,14 +543,15 @@ app.post('/api/writing/check', async (req, res) => {
 app.post('/api/midm/feedback', async (req, res) => {
   const userId = req.headers['x-user-id'] || ''
   try {
-    // DB에서 사용자 학습 데이터 수집
+    // child_profile은 프론트에서 전달 (Supabase children 테이블 기반)
+    const { accuracy = 0, childProfile = {} } = req.body
+
+    // DB에서 학습 데이터 수집
     const unknownWords = db.prepare(`SELECT base_form FROM word_study WHERE user_id=? AND known=0`).all(userId).map(r => r.base_form)
     const booksRead = db.prepare(`SELECT DISTINCT title FROM reading_history WHERE user_id=?`).all(userId).map(r => r.title)
+    const totalWordsLearned = db.prepare(`SELECT COUNT(*) as cnt FROM word_study WHERE user_id=? AND known=1`).get(userId).cnt
 
-    // 따라쓰기 정답률은 클라이언트에서 전달 (DB에 없으므로)
-    const { accuracy = 0 } = req.body
-
-    const result = await getLearningFeedback({ unknownWords, accuracy, booksRead })
+    const result = await getLearningFeedback(childProfile, { unknownWords, accuracy, booksRead, totalWordsLearned })
     res.json(result)
   } catch (e) {
     res.status(500).json({ error: e.message })
@@ -559,10 +560,10 @@ app.post('/api/midm/feedback', async (req, res) => {
 
 // POST /api/midm/quiz — 동화 요약 + 퀴즈 생성
 app.post('/api/midm/quiz', async (req, res) => {
-  const { subtitleText, bookTitle } = req.body
+  const { subtitleText, bookTitle, childProfile = {} } = req.body
   if (!subtitleText || !bookTitle) return res.status(400).json({ error: 'subtitleText and bookTitle required' })
   try {
-    const result = await generateQuiz(subtitleText, bookTitle)
+    const result = await generateQuiz(childProfile, bookTitle, subtitleText)
     res.json(result)
   } catch (e) {
     res.status(500).json({ error: e.message })
@@ -571,11 +572,11 @@ app.post('/api/midm/quiz', async (req, res) => {
 
 // POST /api/midm/explain — 단어 설명 (아이 눈높이)
 app.post('/api/midm/explain', async (req, res) => {
-  const { word, definition } = req.body
+  const { word, definition, childProfile = {} } = req.body
   if (!word) return res.status(400).json({ error: 'word required' })
   try {
-    const result = await explainWord(word, definition || '')
-    res.json({ word, explanation: result })
+    const result = await explainWord(childProfile, word, definition || '')
+    res.json(result)
   } catch (e) {
     res.status(500).json({ error: e.message })
   }
@@ -585,6 +586,8 @@ app.post('/api/midm/explain', async (req, res) => {
 app.post('/api/midm/report', async (req, res) => {
   const userId = req.headers['x-user-id'] || ''
   try {
+    const { accuracy = 0, childProfile = {} } = req.body
+
     // 최근 7일 데이터 수집
     const booksRead = db.prepare(`
       SELECT DISTINCT title FROM reading_history
@@ -601,9 +604,19 @@ app.post('/api/midm/report', async (req, res) => {
       WHERE user_id=? AND read_at >= date('now', '-7 days')
     `).get(userId).cnt
 
-    const { accuracy = 0 } = req.body
+    const result = await generateWeeklyReport(childProfile, { booksRead, newWords, accuracy, studyDays })
+    res.json(result)
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
 
-    const result = await generateWeeklyReport({ booksRead, newWords, accuracy, studyDays })
+// POST /api/midm/tutorial — 튜토리얼 단계별 호출 (범용)
+app.post('/api/midm/tutorial', async (req, res) => {
+  const { step, context = {}, childProfile = {} } = req.body
+  if (!step) return res.status(400).json({ error: 'step required' })
+  try {
+    const result = await tutorialStep(childProfile, step, context)
     res.json(result)
   } catch (e) {
     res.status(500).json({ error: e.message })

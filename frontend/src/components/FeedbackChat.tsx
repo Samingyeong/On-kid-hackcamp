@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { fetchLearningFeedback, type LearningFeedback } from '../api/midm'
+import { fetchLearningFeedback, type MidmResponse } from '../api/midm'
 import './FeedbackChat.css'
 
 // 캐릭터 매핑: disability → 이미지 + 이름
@@ -14,9 +14,9 @@ const CHARACTER_MAP: Record<string, { img: string; name: string }> = {
 const DEFAULT_CHARACTER = { img: '/svg/숭이.png', name: '원숭이' }
 
 export default function FeedbackChat() {
-  const { childName, childCharacter } = useAuth()
+  const { childName, childCharacter, childBirthDate } = useAuth()
   const [open, setOpen] = useState(false)
-  const [feedback, setFeedback] = useState<LearningFeedback | null>(null)
+  const [feedback, setFeedback] = useState<MidmResponse | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -26,7 +26,12 @@ export default function FeedbackChat() {
     if (open && !feedback && !loading) {
       setLoading(true)
       setError('')
-      fetchLearningFeedback()
+      const childProfile = {
+        name: childName || '친구',
+        birth_date: childBirthDate || '',
+        disability: childCharacter || '',
+      }
+      fetchLearningFeedback(childProfile)
         .then(data => setFeedback(data))
         .catch(() => setError('피드백을 불러올 수 없어요'))
         .finally(() => setLoading(false))
@@ -55,7 +60,7 @@ export default function FeedbackChat() {
             <div className="chat-bubble bot">
               <img src={char.img} alt="" className="bubble-avatar" />
               <div className="bubble-content">
-                안녕 {childName || '친구'}! 오늘도 열심히 공부하자! 🎉
+                안녕 {childName || '친구'}! 오늘도 같이 공부하자! 🎉
               </div>
             </div>
 
@@ -76,41 +81,21 @@ export default function FeedbackChat() {
             )}
 
             {feedback && (
-              <>
-                <div className="chat-bubble bot">
-                  <img src={char.img} alt="" className="bubble-avatar" />
-                  <div className="bubble-content">
-                    {feedback.analysis}
-                  </div>
+              <div className="chat-bubble bot">
+                <img src={char.img} alt="" className="bubble-avatar" />
+                <div className="bubble-content">
+                  {feedback.message_to_child}
                 </div>
+              </div>
+            )}
 
-                {feedback.strengths.length > 0 && (
-                  <div className="chat-bubble bot">
-                    <img src={char.img} alt="" className="bubble-avatar" />
-                    <div className="bubble-content">
-                      ⭐ 잘하고 있는 점: {feedback.strengths.join(', ')}
-                    </div>
-                  </div>
-                )}
-
-                {feedback.recommendation && (
-                  <div className="chat-bubble bot">
-                    <img src={char.img} alt="" className="bubble-avatar" />
-                    <div className="bubble-content">
-                      📚 추천: {feedback.recommendation}
-                    </div>
-                  </div>
-                )}
-
-                {feedback.encouragement && (
-                  <div className="chat-bubble bot">
-                    <img src={char.img} alt="" className="bubble-avatar" />
-                    <div className="bubble-content bubble-encouragement">
-                      💪 {feedback.encouragement}
-                    </div>
-                  </div>
-                )}
-              </>
+            {feedback?.recommended_content && feedback.recommended_content.length > 0 && (
+              <div className="chat-bubble bot">
+                <img src={char.img} alt="" className="bubble-avatar" />
+                <div className="bubble-content">
+                  📚 {feedback.recommended_content.join(', ')}
+                </div>
+              </div>
             )}
           </div>
         </div>
