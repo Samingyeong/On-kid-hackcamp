@@ -196,34 +196,34 @@ export default function Reader() {
   async function openWord(word: string, sentenceContext?: string) {
     setWordPanel({ word, baseForm: word, items: null, writeMode: 'none' })
     // 책 넘기는 "스륵" 효과음
-    try {
-      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)()
-      if (ctx.state === 'suspended') await ctx.resume()
-      const duration = 0.25
-      const sampleRate = ctx.sampleRate
-      const buf = ctx.createBuffer(1, sampleRate * duration, sampleRate)
-      const data = buf.getChannelData(0)
-      for (let i = 0; i < data.length; i++) {
-        const t = i / sampleRate
-        // 빠른 어택 + 부드러운 감쇠 (스륵 느낌)
-        const envelope = Math.pow(1 - t / duration, 3) * (1 - Math.exp(-t * 500))
-        // 고주파 노이즈 + 약간의 톤 (종이 마찰)
-        const noise = Math.random() * 2 - 1
-        const tone = Math.sin(t * 3000 * Math.PI * 2) * 0.1
-        data[i] = (noise * 0.8 + tone) * envelope
-      }
-      const src = ctx.createBufferSource()
-      src.buffer = buf
-      const bp = ctx.createBiquadFilter()
-      bp.type = 'bandpass'
-      bp.frequency.value = 4000
-      bp.Q.value = 0.5
-      const gain = ctx.createGain()
-      gain.gain.value = 0.2
-      src.connect(bp).connect(gain).connect(ctx.destination)
-      src.start()
-      src.onended = () => ctx.close()
-    } catch {}
+    if (typeof window !== 'undefined' && window.AudioContext) {
+      try {
+        const ctx = new AudioContext()
+        if (ctx.state === 'suspended') await ctx.resume()
+        const duration = 0.25
+        const sampleRate = ctx.sampleRate
+        const buf = ctx.createBuffer(1, sampleRate * duration, sampleRate)
+        const data = buf.getChannelData(0)
+        for (let i = 0; i < data.length; i++) {
+          const t = i / sampleRate
+          const envelope = Math.pow(1 - t / duration, 3) * (1 - Math.exp(-t * 500))
+          const noise = Math.random() * 2 - 1
+          const tone = Math.sin(t * 3000 * Math.PI * 2) * 0.1
+          data[i] = (noise * 0.8 + tone) * envelope
+        }
+        const src = ctx.createBufferSource()
+        src.buffer = buf
+        const bp = ctx.createBiquadFilter()
+        bp.type = 'bandpass'
+        bp.frequency.value = 4000
+        bp.Q.value = 0.5
+        const gain = ctx.createGain()
+        gain.gain.value = 0.2
+        src.connect(bp).connect(gain).connect(ctx.destination)
+        src.start()
+        src.onended = () => ctx.close()
+      } catch {}
+    }
     drawGuide(word)
 
     let searchWord = word
@@ -399,12 +399,16 @@ export default function Reader() {
                         </div>
                         {exact?.pos && <div className="dict-meta">{exact.pos}</div>}
                         <div className="word-know-btns">
-                          <button className="know-btn know-yes" onClick={e => {
-                            saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 1, from_book: title })
+                          <button className="know-btn know-yes" onClick={async e => {
+                            try {
+                              await saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 1, from_book: title })
+                            } catch (err) { console.error('saveWord error:', err) }
                             const btn = e.currentTarget; btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
                           }}>알아요</button>
-                          <button className="know-btn know-no" onClick={e => {
-                            saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 0, from_book: title })
+                          <button className="know-btn know-no" onClick={async e => {
+                            try {
+                              await saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 0, from_book: title })
+                            } catch (err) { console.error('saveWord error:', err) }
                             const btn = e.currentTarget; btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
                           }}>몰라요</button>
                         </div>
