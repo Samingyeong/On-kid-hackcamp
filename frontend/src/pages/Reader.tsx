@@ -195,20 +195,34 @@ export default function Reader() {
   // ─── 단어 클릭 ──────────────────────────────────────────────
   async function openWord(word: string, sentenceContext?: string) {
     setWordPanel({ word, baseForm: word, items: null, writeMode: 'none' })
-    // 공책 넘기는 효과음 (Web Audio 합성)
+    // 책 넘기는 "스륵" 효과음
     try {
-      const ctx = new AudioContext()
-      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.15, ctx.sampleRate)
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)()
+      if (ctx.state === 'suspended') await ctx.resume()
+      const duration = 0.25
+      const sampleRate = ctx.sampleRate
+      const buf = ctx.createBuffer(1, sampleRate * duration, sampleRate)
       const data = buf.getChannelData(0)
       for (let i = 0; i < data.length; i++) {
-        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.03))
+        const t = i / sampleRate
+        // 빠른 어택 + 부드러운 감쇠 (스륵 느낌)
+        const envelope = Math.pow(1 - t / duration, 3) * (1 - Math.exp(-t * 500))
+        // 고주파 노이즈 + 약간의 톤 (종이 마찰)
+        const noise = Math.random() * 2 - 1
+        const tone = Math.sin(t * 3000 * Math.PI * 2) * 0.1
+        data[i] = (noise * 0.8 + tone) * envelope
       }
       const src = ctx.createBufferSource()
       src.buffer = buf
+      const bp = ctx.createBiquadFilter()
+      bp.type = 'bandpass'
+      bp.frequency.value = 4000
+      bp.Q.value = 0.5
       const gain = ctx.createGain()
-      gain.gain.value = 0.15
-      src.connect(gain).connect(ctx.destination)
+      gain.gain.value = 0.2
+      src.connect(bp).connect(gain).connect(ctx.destination)
       src.start()
+      src.onended = () => ctx.close()
     } catch {}
     drawGuide(word)
 
@@ -363,6 +377,55 @@ export default function Reader() {
               <img src="/svg/spring.png" alt="" className="reader-spring" />
             </div>
             <div className="reader-page-right-inner">
+
+            {/* 단어 패널 (자막 위에 겹침, 스프링 뒤) */}
+            {wordPanel && (
+              <div className="reader-word-panel">
+                <div className="word-panel-inner">
+                  <button className="word-panel-close" onClick={() => setWordPanel(null)}>✕</button>
+                  {wordPanel.items === null ? (
+                    <p className="word-panel-loading">검색 중...</p>
+                  ) : (() => {
+                    const items = wordPanel.items
+                    const exact = items.length > 0
+                      ? (items.find(i => i.word === wordPanel.baseForm) || items[0])
+                      : null
+                    const firstDef = exact?.definitions[0] || ''
+                    return (
+                      <>
+                        <div className="dict-word">
+                          {wordPanel.baseForm || wordPanel.word}
+                          {exact?.grade && <span className={`dict-grade grade-${exact.grade}`}>{exact.grade}</span>}
+                        </div>
+                        {exact?.pos && <div className="dict-meta">{exact.pos}</div>}
+                        <div className="word-know-btns">
+                          <button className="know-btn know-yes" onClick={e => {
+                            saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 1, from_book: title })
+                            const btn = e.currentTarget; btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
+                          }}>알아요</button>
+                          <button className="know-btn know-no" onClick={e => {
+                            saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 0, from_book: title })
+                            const btn = e.currentTarget; btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
+                          }}>몰라요</button>
+                        </div>
+                        <hr className="dict-divider" />
+                        {items.length === 0 ? (
+                          <p className="dict-empty">사전에서 찾을 수 없어요.</p>
+                        ) : (
+                          exact?.definitions.map((d, i) => (
+                            <div key={i} className="dict-def">
+                              <span className={`dict-def-num level-${exact?.grade || '중급'}`}>{i + 1}</span>
+                              <span className="dict-def-text">{d}</span>
+                            </div>
+                          ))
+                        )}
+                      </>
+                    )
+                  })()}
+                </div>
+              </div>
+            )}
+
             <div className="reader-subtitle-list" ref={subtitleListRef}>
               {subtitleLoading && <p className="reader-loading">자막을 불러오는 중...</p>}
               {!subtitleLoading && cues.length === 0 && (
@@ -413,60 +476,6 @@ export default function Reader() {
         </div>
       )}
 
-      {/* 단어 사이드 패널 */}
-      {wordPanel && (
-        <div className="reader-word-panel">
-          <div className="word-panel-inner">
-            <button className="word-panel-close" onClick={() => setWordPanel(null)}>✕</button>
-
-            {wordPanel.items === null ? (
-              <p className="word-panel-loading">검색 중...</p>
-            ) : (() => {
-              const items = wordPanel.items
-              const exact = items.length > 0
-                ? (items.find(i => i.word === wordPanel.baseForm) || items[0])
-                : null
-              const firstDef = exact?.definitions[0] || ''
-
-              return (
-                <>
-                  {/* 단어 + 등급 */}
-                  <div className="dict-word">
-                    {wordPanel.baseForm || wordPanel.word}
-                    {exact?.grade && <span className={`dict-grade grade-${exact.grade}`}>{exact.grade}</span>}
-                  </div>
-                  {exact?.pos && <div className="dict-meta">{exact.pos}</div>}
-
-                  {/* 알아요 / 몰라요 버튼 */}
-                  <div className="word-know-btns">
-                    <button className="know-btn know-yes" onClick={e => {
-                      saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 1, from_book: title })
-                      const btn = e.currentTarget; btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
-                    }}>알아요</button>
-                    <button className="know-btn know-no" onClick={e => {
-                      saveWord({ word: wordPanel.word, base_form: wordPanel.baseForm, pos: exact?.pos, definition: firstDef, known: 0, from_book: title })
-                      const btn = e.currentTarget; btn.classList.add('clicked'); setTimeout(() => btn.classList.remove('clicked'), 500)
-                    }}>몰라요</button>
-                  </div>
-
-                  <hr className="dict-divider" />
-
-                  {items.length === 0 ? (
-                    <p className="dict-empty">사전에서 찾을 수 없어요.</p>
-                  ) : (
-                    exact?.definitions.map((d, i) => (
-                      <div key={i} className="dict-def">
-                        <span className={`dict-def-num level-${exact?.grade || '중급'}`}>{i + 1}</span>
-                        <span className="dict-def-text">{d}</span>
-                      </div>
-                    ))
-                  )}
-                </>
-              )
-            })()}
-          </div>
-        </div>
-      )}
     </div>
   )
 }
