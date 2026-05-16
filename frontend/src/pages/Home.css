@@ -142,3 +142,81 @@
 .search-suggestions li:hover {
   background: #f5f5f5;
 }
+
+/* 카테고리 슬라이더 */
+.category-slider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.category-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 8px 0;
+  scrollbar-width: none;
+}
+
+.category-track::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-arrow {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.slider-arrow:hover {
+  background: #f0f0f0;
+}
+
+.category-book {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  min-width: 72px;
+}
+
+.book-icon {
+  width: 56px;
+  height: 72px;
+  border-radius: 4px 8px 8px 4px;
+  position: relative;
+  transition: transform 0.15s;
+}
+
+.category-book:hover .book-icon {
+  transform: scale(1.08);
+}
+
+.book-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  border-radius: 4px 0 0 4px;
+}
+
+.category-label {
+  font-size: 11px;
+  color: #555;
+  white-space: nowrap;
+}

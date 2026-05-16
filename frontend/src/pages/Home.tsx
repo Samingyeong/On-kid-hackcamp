@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { fetchBooks } from '../api/library'
+import { CATEGORIES } from '../constants/categories'
 import CalendarModal from '../components/CalendarModal'
 import './Home.css'
 
@@ -25,6 +26,7 @@ export function Component() {
   const [searchQuery, setSearchQuery] = useState('')
   const [suggestions, setSuggestions] = useState<string[]>([])
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const categoryRef = useRef<HTMLDivElement>(null)
 
   const weekDays = getWeekDays(selectedDate)
 
@@ -56,6 +58,10 @@ export function Component() {
     setSearchOpen(false)
     setSearchQuery('')
     setSuggestions([])
+  }
+
+  function scrollCategories(offset: number) {
+    categoryRef.current?.scrollBy({ left: offset, behavior: 'smooth' })
   }
 
   return (
@@ -106,6 +112,26 @@ export function Component() {
           )}
         </form>
       )}
+
+      {/* 카테고리 슬라이더 */}
+      <div className="category-slider">
+        <button className="slider-arrow left" onClick={() => scrollCategories(-200)}>&lt;</button>
+        <div className="category-track" ref={categoryRef}>
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat.id}
+              className="category-book"
+              onClick={() => navigate(`/books?category=${cat.id}`)}
+            >
+              <div className="book-icon" style={{ background: cat.color }}>
+                <div className="book-spine" style={{ background: cat.spine }} />
+              </div>
+              <span className="category-label">{cat.label}</span>
+            </button>
+          ))}
+        </div>
+        <button className="slider-arrow right" onClick={() => scrollCategories(200)}>&gt;</button>
+      </div>
 
       {/* 달력 모달 */}
       {showCalendar && (
