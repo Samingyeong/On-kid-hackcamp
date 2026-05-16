@@ -538,6 +538,13 @@ app.post('/admin/sync', async (req, res) => {
 // ─── 서버 시작 ────────────────────────────────────────────────
 app.listen(PORT, async () => {
   console.log(`📚 book-backend 실행 중: http://localhost:${PORT}`)
+
+  // 학습 데이터 초기화 (서버 시작 시 깨끗한 상태로)
+  db.exec(`DELETE FROM book_words`)
+  db.exec(`DELETE FROM book_sentences`)
+  db.exec(`DELETE FROM word_study`)
+  console.log('[init] 학습 데이터 초기화 완료')
+
   startPython()
 
   const cnt = db.prepare(`SELECT COUNT(*) as c FROM books`).get().c
