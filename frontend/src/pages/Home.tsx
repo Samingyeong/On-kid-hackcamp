@@ -2,11 +2,15 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { fetchBooks } from '../api/library'
 import { CATEGORIES } from '../constants/categories'
+import type { Book } from '../types'
 import CalendarModal from '../components/CalendarModal'
 import './Home.css'
 
 const WEEKDAY_LABELS = ['일', '월', '화', '수', '목', '금', '토']
 const SERVICE_START = new Date(2020, 0, 1)
+
+// 모듈 레벨 캐시 - 페이지 이동 후 돌아와도 재요청 안 함
+let cachedRecommend: Book | null = null
 
 function getWeekDays(center: Date) {
   const days: Date[] = []
@@ -25,10 +29,23 @@ export function Component() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [suggestions, setSuggestions] = useState<string[]>([])
+  const [recommendBook, setRecommendBook] = useState<Book | null>(cachedRecommend)
+  const [flipped, setFlipped] = useState(false)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const categoryRef = useRef<HTMLDivElement>(null)
 
   const weekDays = getWeekDays(selectedDate)
+
+  // 추천 책 로드
+  useEffect(() => {
+    if (cachedRecommend) return
+    fetchBooks('암탉과 누렁이', 'all', undefined, 1, 1).then(res => {
+      if (res.items.length > 0) {
+        cachedRecommend = res.items[0]
+        setRecommendBook(res.items[0])
+      }
+    })
+  }, [])
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -131,6 +148,35 @@ export function Component() {
           ))}
         </div>
         <button className="slider-arrow right" onClick={() => scrollCategories(200)}>&gt;</button>
+      </div>
+
+      {/* 3단 패널 */}
+      <div className="home-panels">
+        {/* 왼쪽: 추천 책 플립 카드 */}
+        <div className="panel-left">
+          <h3 className="panel-title">지금 이 책을 가장 많이 읽고 있어요!</h3>
+          {recommendBook && (
+            <div className={`flip-card${flipped ? ' flipped' : ''}`} onClick={() => setFlipped(!flipped)}>
+              <div className="flip-card-inner">
+                <div className="flip-card-front">
+                  <img src={recommendBook.thumbnail} alt={recommendBook.title} className="flip-thumb" />
+                </div>
+                <div className="flip-card-back">
+                  <div className="flip-back-blur" style={{ backgroundImage: `url(${recommendBook.thumbnail})` }} />
+                  <div className="flip-back-content">
+                    <h4>{recommendBook.title}</h4>
+                    <p>{recommendBook.description}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flip-controls">
+                <button className="flip-ctrl-btn">⏮</button>
+                <button className="flip-ctrl-btn play" onClick={(e) => { e.stopPropagation(); navigate(`/reader?title=${encodeURIComponent(recommendBook.title)}`) }}>▶</button>
+                <button className="flip-ctrl-btn">⏭</button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* 달력 모달 */}
