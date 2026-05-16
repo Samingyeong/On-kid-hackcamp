@@ -14,6 +14,11 @@
   flex-shrink: 0;
 }
 
+.login-logo {
+  height: 60px;
+  object-fit: contain;
+}
+
 .login-deco {
   display: none;
 }

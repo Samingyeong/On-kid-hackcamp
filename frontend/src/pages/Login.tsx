@@ -69,7 +69,9 @@ export default function Login() {
   if (mode === 'login') {
     return (
       <div className="login-page">
-        <div className="login-header" />
+        <div className="login-header">
+          <img src="/svg/logo.png" alt="on-kid" className="login-logo" />
+        </div>
         <div className="login-body">
           <div className="login-card">
             <h1 className="login-title">on-kid</h1>
@@ -99,7 +101,9 @@ export default function Login() {
   // 회원가입 모드
   return (
     <div className="login-page">
-      <div className="login-header" />
+      <div className="login-header">
+        <img src="/svg/logo.png" alt="on-kid" className="login-logo" />
+      </div>
       <div className="login-body">
         {/* 스텝 표시 */}
         <div className="signup-steps">
