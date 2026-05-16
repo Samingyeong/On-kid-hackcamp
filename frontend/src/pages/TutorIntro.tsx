@@ -315,17 +315,23 @@ export default function TutorIntro() {
       <div className="tutor-scene">
         <div className="tutor-speech-bubble">
           {loading ? (
-            <div className="tutor-typing">
-              <span /><span /><span />
+            <div className="tutor-speech-img-wrap">
+              <img src="/svg/말풍선.png" alt="" className="tutor-speech-img" />
+              <div className="tutor-speech-text">
+                <div className="tutor-typing"><span /><span /><span /></div>
+              </div>
             </div>
           ) : (
-            <p className="tutor-speech-text">{bubbleText}</p>
+            <div className="tutor-speech-img-wrap">
+              <img src="/svg/말풍선.png" alt="" className="tutor-speech-img" />
+              <p className="tutor-speech-text">{bubbleText}</p>
+            </div>
           )}
         </div>
 
         <div className="tutor-character">
           <div className="tutor-character-circle">
-            <img src="/svg/숭이.png" alt="튜터" className="tutor-character-img" />
+            <img src="/svg/initmonkey.png" alt="튜터" className="tutor-character-img" />
           </div>
         </div>
       </div>

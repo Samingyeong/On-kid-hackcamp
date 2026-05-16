@@ -95,47 +95,38 @@
   min-height: 0;
 }
 
-/* 말풍선 (오른쪽 위) */
+/* 말풍선 이미지 (오른쪽 위) */
 .tutor-speech-bubble {
   position: absolute;
   top: 10px;
-  right: 12%;
-  background: #fff;
-  border-radius: 15px;
-  padding: 20px 28px;
-  max-width: 380px;
-  min-width: 200px;
-  min-height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.12);
-  animation: bubbleIn 0.3s ease-out;
+  right: 8%;
   z-index: 20;
+  animation: bubbleIn 0.3s ease-out;
 }
-.tutor-speech-bubble::after {
-  content: '';
+.tutor-speech-img-wrap {
+  position: relative;
+  display: inline-block;
+}
+.tutor-speech-img {
+  width: 300px;
+  height: auto;
+}
+.tutor-speech-text {
   position: absolute;
-  left: 30px;
-  bottom: -12px;
-  width: 0; height: 0;
-  border: 8px solid transparent;
-  border-top-color: #fff;
-  border-bottom: 0;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  white-space: pre-line;
+  text-align: left;
+  line-height: 1.5;
+  width: 220px;
 }
 @keyframes bubbleIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
-}
-.tutor-speech-text {
-  font-size: 18px;
-  line-height: 1.6;
-  color: #000;
-  word-break: keep-all;
-  margin: 0;
-  text-align: left;
-  white-space: pre-line;
-  font-weight: 500;
 }
 
 /* 캐릭터 (흰 원 안에) */
@@ -144,7 +135,7 @@
   z-index: 5;
 }
 .tutor-character-circle {
-  width: 380px; height: 380px;
+  width: 300px; height: 300px;
   border-radius: 50%;
   background: #fff;
   display: flex;
@@ -154,7 +145,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 .tutor-character-img {
-  width: 360px; height: 360px;
+  width: 280px; height: 280px;
   object-fit: contain;
   animation: floatChar 3s ease-in-out infinite;
 }
@@ -202,12 +193,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 30px;
-  min-width: 280px;
-  height: 100px;
-  border-radius: 45px;
-  border: 6px solid;
-  font-size: 40px;
+  padding: 10px 24px;
+  min-width: 200px;
+  height: 72px;
+  border-radius: 40px;
+  border: 5px solid;
+  font-size: 28px;
   font-weight: 700;
   color: #fff;
   cursor: pointer;
@@ -241,12 +232,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 24px;
-  min-width: 180px;
-  height: 90px;
-  border-radius: 40px;
-  border: 5px solid;
-  font-size: 34px;
+  padding: 8px 18px;
+  min-width: 130px;
+  height: 68px;
+  border-radius: 36px;
+  border: 4px solid;
+  font-size: 26px;
   font-weight: 700;
   color: #fff;
   cursor: pointer;
@@ -274,13 +265,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 30px;
-  min-width: 200px;
-  height: 80px;
-  border-radius: 40px;
-  border: 5px solid #2DAFAD;
+  padding: 8px 22px;
+  min-width: 160px;
+  height: 60px;
+  border-radius: 36px;
+  border: 4px solid #2DAFAD;
   background: #6ED0CF;
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 700;
   color: #fff;
   cursor: pointer;
