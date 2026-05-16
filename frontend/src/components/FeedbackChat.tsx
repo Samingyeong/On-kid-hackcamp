@@ -11,7 +11,7 @@ const CHARACTER_MAP: Record<string, { img: string; name: string }> = {
   vision:  { img: '/svg/강아지.png', name: '강아지' },
 }
 
-const DEFAULT_CHARACTER = { img: '/svg/숭이.png', name: '원숭이' }
+const DEFAULT_CHARACTER = { img: '/svg/토끼.png', name: '토끼' }
 
 export default function FeedbackChat() {
   const { childName, childCharacter, childBirthDate } = useAuth()
