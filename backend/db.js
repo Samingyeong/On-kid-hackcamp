@@ -84,6 +84,21 @@ db.exec(`
     UNIQUE(user_id, title, sentence)
   );
   CREATE INDEX IF NOT EXISTS idx_book_sentences_title ON book_sentences(title);
+
+  CREATE TABLE IF NOT EXISTS book_difficulty (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    title           TEXT NOT NULL UNIQUE,
+    total_words     INTEGER DEFAULT 0,
+    beginner_count  INTEGER DEFAULT 0,
+    intermediate_count INTEGER DEFAULT 0,
+    advanced_count  INTEGER DEFAULT 0,
+    beginner_ratio  REAL DEFAULT 0,
+    intermediate_ratio REAL DEFAULT 0,
+    advanced_ratio  REAL DEFAULT 0,
+    level           TEXT DEFAULT 'beginner',
+    analyzed_at     TEXT DEFAULT (datetime('now'))
+  );
+  CREATE INDEX IF NOT EXISTS idx_book_difficulty_level ON book_difficulty(level);
 `)
 
 // ─── 마이그레이션: user_id 컬럼 추가 ──────────────────────────

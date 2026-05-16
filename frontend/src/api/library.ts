@@ -261,3 +261,29 @@ export async function lookupDict(word: string): Promise<DictItem[]> {
   }
   return []
 }
+
+// ─── 책 난이도 기반 추천 ──────────────────────────────────────
+export interface RecommendedBook {
+  title: string
+  level: string
+  totalWords: number
+  thumbnail: string
+  description: string
+  storyType: string
+}
+
+export async function fetchRecommendedBooks(level: 'beginner' | 'intermediate' | 'advanced', limit = 4): Promise<RecommendedBook[]> {
+  const res = await fetch(`${BASE}/api/books/recommend?level=${level}&limit=${limit}`)
+  return res.json()
+}
+
+export async function analyzeBookDifficulty(title: string, words: string[]): Promise<{
+  title: string; level: string; total_words: number; beginner: number; intermediate: number; advanced: number
+}> {
+  const res = await fetch(`${BASE}/api/books/analyze-difficulty`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, words }),
+  })
+  return res.json()
+}

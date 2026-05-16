@@ -12,7 +12,7 @@ const STEPS = [
 function AutoRedirect() {
   const navigate = useNavigate()
   useEffect(() => {
-    const timer = setTimeout(() => navigate('/'), 3000)
+    const timer = setTimeout(() => navigate('/tutor'), 3000)
     return () => clearTimeout(timer)
   }, [navigate])
   return null
@@ -60,7 +60,7 @@ export default function Login() {
     const loginEmail = `${loginId}@${loginDomain}`
     const { error } = await signIn(loginEmail, loginPassword)
     if (error) setError(error)
-    else navigate('/')
+    else navigate('/tutor')
     setLoading(false)
   }
 

@@ -538,6 +538,114 @@ app.post('/api/writing/check', async (req, res) => {
   }
 })
 
+// ─── 책 난이도 분석 + 수준 기반 추천 ─────────────────────────
+
+// 단어 난이도 판정 (글자 수 + 한국어기초사전 등급 기반)
+function classifyWordLevel(word) {
+  if (!word || word.length <= 2) return 'beginner'
+  if (word.length <= 3) return 'intermediate'
+  return 'advanced'
+}
+
+// POST /api/books/analyze-difficulty — 책의 단어 난이도 분석 후 저장
+app.post('/api/books/analyze-difficulty', async (req, res) => {
+  const { title, words } = req.body
+  if (!title || !Array.isArray(words)) return res.status(400).json({ error: 'title and words required' })
+
+  const total = words.length || 1
+  let beginner = 0, intermediate = 0, advanced = 0
+
+  for (const w of words) {
+    const level = classifyWordLevel(w)
+    if (level === 'beginner') beginner++
+    else if (level === 'intermediate') intermediate++
+    else advanced++
+  }
+
+  const beginnerRatio = beginner / total
+  const intermediateRatio = intermediate / total
+  const advancedRatio = advanced / total
+
+  // 전체 난이도 판정
+  let level = 'beginner'
+  if (advancedRatio > 0.3) level = 'advanced'
+  else if (intermediateRatio + advancedRatio > 0.4) level = 'intermediate'
+
+  db.prepare(`
+    INSERT OR REPLACE INTO book_difficulty
+    (title, total_words, beginner_count, intermediate_count, advanced_count,
+     beginner_ratio, intermediate_ratio, advanced_ratio, level)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(title, total, beginner, intermediate, advanced,
+         beginnerRatio, intermediateRatio, advancedRatio, level)
+
+  res.json({ title, level, total_words: total, beginner, intermediate, advanced })
+})
+
+// GET /api/books/recommend?level=beginner|intermediate|advanced&limit=4
+// 아이 수준에 맞는 책 추천
+app.get('/api/books/recommend', (req, res) => {
+  const { level = 'beginner', limit = '4' } = req.query
+  const lim = parseInt(limit)
+
+  // 해당 레벨 책 우선, 부족하면 한 단계 아래도 포함
+  let rows = db.prepare(`
+    SELECT bd.*, b.thumbnail, b.local_img, b.description, b.story_type, b.url
+    FROM book_difficulty bd
+    JOIN books b ON b.title = bd.title
+    WHERE bd.level = ?
+    ORDER BY RANDOM()
+    LIMIT ?
+  `).all(level, lim)
+
+  // 부족하면 한 단계 아래 추가
+  if (rows.length < lim) {
+    const fallbackLevel = level === 'advanced' ? 'intermediate' : 'beginner'
+    const more = db.prepare(`
+      SELECT bd.*, b.thumbnail, b.local_img, b.description, b.story_type, b.url
+      FROM book_difficulty bd
+      JOIN books b ON b.title = bd.title
+      WHERE bd.level = ? AND bd.title NOT IN (${rows.map(() => '?').join(',')})
+      ORDER BY RANDOM()
+      LIMIT ?
+    `).all(fallbackLevel, ...rows.map(r => r.title), lim - rows.length)
+    rows = [...rows, ...more]
+  }
+
+  // 아직도 부족하면 분석 안 된 책에서 랜덤
+  if (rows.length < lim) {
+    const more = db.prepare(`
+      SELECT b.title, b.thumbnail, b.local_img, b.description, b.story_type, b.url,
+             'beginner' as level, 0 as total_words
+      FROM books b
+      WHERE b.title NOT IN (SELECT title FROM book_difficulty)
+      ORDER BY RANDOM()
+      LIMIT ?
+    `).all(lim - rows.length)
+    rows = [...rows, ...more]
+  }
+
+  const items = rows.map(r => ({
+    title: r.title,
+    level: r.level,
+    totalWords: r.total_words || 0,
+    thumbnail: r.local_img ? `http://localhost:4000${r.local_img}` : (r.thumbnail || ''),
+    description: r.description || '',
+    storyType: r.story_type || '',
+  }))
+
+  res.json(items)
+})
+
+// GET /api/books/difficulty-stats — 전체 난이도 분포 통계
+app.get('/api/books/difficulty-stats', (req, res) => {
+  const stats = db.prepare(`
+    SELECT level, COUNT(*) as cnt FROM book_difficulty GROUP BY level
+  `).all()
+  const total = db.prepare(`SELECT COUNT(*) as cnt FROM book_difficulty`).get()
+  res.json({ total: total.cnt, byLevel: stats })
+})
+
 // ─── KT 믿음 (Mi:dm) AI 엔드포인트 ──────────────────────────
 // POST /api/midm/feedback — 학습 수준 진단 + 맞춤 추천
 app.post('/api/midm/feedback', async (req, res) => {

@@ -8,6 +8,8 @@ import StudySelect from '../pages/StudySelect'
 import StudyWrite from '../pages/StudyWrite'
 import StudyTyping from '../pages/StudyTyping'
 import StudySentence from '../pages/StudySentence'
+import MidmTest from '../pages/MidmTest'
+import TutorIntro from '../pages/TutorIntro'
 
 const Placeholder = ({ title }: { title: string }) => (
   <div style={{ padding: 40, textAlign: 'center' }}>
@@ -18,6 +20,7 @@ const Placeholder = ({ title }: { title: string }) => (
 
 const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
+  { path: '/tutor', element: <TutorIntro /> },
   {
     path: '/',
     element: <Layout />,
@@ -31,6 +34,7 @@ const router = createBrowserRouter([
       { path: 'study/practice', element: <StudyWrite /> },
       { path: 'study/typing', element: <StudyTyping /> },
       { path: 'study/sentence', element: <StudySentence /> },
+      { path: 'midm-test', element: <MidmTest /> },
       { path: 'study/*', element: <Placeholder title="학습" /> },
     ],
   },

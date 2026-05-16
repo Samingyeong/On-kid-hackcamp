@@ -1,0 +1,361 @@
+.tutor-intro {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 배경 */
+.tutor-bg {
+  position: absolute;
+  inset: 0;
+  background: #FFB256;
+  z-index: 0;
+}
+
+/* 장식 책 모양 */
+.tutor-deco {
+  position: absolute;
+  border-radius: 12px;
+  z-index: 1;
+}
+.tutor-deco-1 {
+  width: 180px;
+  height: 180px;
+  left: 60px;
+  top: 120px;
+  background: #1FA7E1;
+  transform: rotate(-10deg);
+  opacity: 0.7;
+}
+.tutor-deco-2 {
+  width: 140px;
+  height: 140px;
+  right: 80px;
+  top: 200px;
+  background: #FF8B8B;
+  transform: rotate(15deg);
+  opacity: 0.6;
+}
+.tutor-deco-3 {
+  width: 120px;
+  height: 120px;
+  left: 200px;
+  bottom: 100px;
+  background: #75D069;
+  transform: rotate(-20deg);
+  opacity: 0.5;
+}
+
+/* 상단 바 */
+.tutor-topbar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+}
+.tutor-logo {
+  height: 40px;
+}
+.tutor-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 242, 217, 0.6);
+  border-radius: 80px;
+  padding: 8px 16px 8px 20px;
+}
+.tutor-user-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+.tutor-user-label {
+  font-size: 13px;
+  color: #595959;
+}
+.tutor-user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #FEFCF9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.tutor-user-avatar img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+/* 메인 영역 */
+.tutor-main {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 32px;
+  overflow: hidden;
+}
+
+/* 캐릭터 */
+.tutor-character-wrap {
+  margin-bottom: 24px;
+}
+.tutor-character-circle {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  animation: floatChar 3s ease-in-out infinite;
+}
+@keyframes floatChar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.tutor-character-img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+/* 대화 영역 */
+.tutor-chat {
+  flex: 1;
+  width: 100%;
+  max-width: 600px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+/* 말풍선 */
+.tutor-bubble {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  animation: bubbleIn 0.3s ease-out;
+}
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.tutor-bubble.bot {
+  align-self: flex-start;
+}
+.tutor-bubble.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+.tutor-bubble-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fff;
+  padding: 3px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.tutor-bubble-text {
+  background: #fff;
+  border-radius: 18px 18px 18px 6px;
+  padding: 12px 18px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+  max-width: 400px;
+  word-break: keep-all;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.tutor-bubble.user .tutor-bubble-text {
+  background: #FFF3CD;
+  border-radius: 18px 18px 6px 18px;
+}
+
+/* 타이핑 애니메이션 */
+.tutor-typing {
+  display: flex;
+  gap: 5px;
+  padding: 14px 20px;
+}
+.tutor-typing span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #bbb;
+  animation: typingDot 1.2s infinite;
+}
+.tutor-typing span:nth-child(2) { animation-delay: 0.2s; }
+.tutor-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingDot {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* 선택지 버튼 영역 */
+.tutor-choices-area {
+  position: relative;
+  z-index: 10;
+  padding: 16px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.tutor-choices {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: bubbleIn 0.3s ease-out;
+}
+.tutor-choice-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 22px;
+  border-radius: 30px;
+  border: 2.5px solid #fff;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+.tutor-choice-btn:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  border-color: #1FA7E1;
+}
+.tutor-choice-btn:active {
+  transform: translateY(0);
+}
+.tutor-choice-emoji {
+  font-size: 18px;
+}
+.tutor-skip-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 4px 8px;
+}
+.tutor-skip-btn:hover {
+  color: #fff;
+}
+
+/* 책 추천 카드 */
+.tutor-recommend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: bubbleIn 0.3s ease-out;
+}
+.tutor-book-cards {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.tutor-book-card {
+  width: 200px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.tutor-book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+.tutor-book-cover {
+  width: 100%;
+  height: 140px;
+  background: #f0f4f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.tutor-book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tutor-book-placeholder {
+  font-size: 40px;
+}
+.tutor-book-info {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tutor-book-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tutor-book-desc {
+  font-size: 12px;
+  color: #777;
+  line-height: 1.4;
+}
+.tutor-home-btn {
+  margin-top: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-color: transparent;
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+  .tutor-character-circle {
+    width: 180px;
+    height: 180px;
+  }
+  .tutor-character-img {
+    width: 130px;
+    height: 130px;
+  }
+  .tutor-deco-1, .tutor-deco-2, .tutor-deco-3 {
+    display: none;
+  }
+  .tutor-topbar {
+    padding: 12px 16px;
+  }
+  .tutor-main {
+    padding: 12px 16px;
+  }
+  .tutor-choices-area {
+    padding: 12px 16px 20px;
+  }
+  .tutor-choice-btn {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}
