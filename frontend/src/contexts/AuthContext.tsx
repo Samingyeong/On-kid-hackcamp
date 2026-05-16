@@ -55,11 +55,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false)
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-      if (session?.user) await fetchChildName(session.user.id)
-      else { setChildName(''); setChildCharacter(''); setChildBirthDate('') }
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT') {
+        setSession(null)
+        setUser(null)
+        setChildName('')
+        setChildCharacter('')
+        setChildBirthDate('')
+        return
+      }
+      if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
+        setSession(session)
+        setUser(session?.user ?? null)
+        if (session?.user) await fetchChildName(session.user.id)
+      }
+      // TOKEN_REFRESHED 등 다른 이벤트는 무시 (불필요한 API 호출 방지)
     })
 
     return () => subscription.unsubscribe()

@@ -6,10 +6,7 @@ const BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000'
 // 현재 로그인된 유저 ID를 가져오는 헬퍼
 export async function getUserId(): Promise<string> {
   const { data: { session } } = await supabase.auth.getSession()
-  if (session?.user?.id) return session.user.id
-  // 세션 만료 시 refresh 시도
-  const { data } = await supabase.auth.refreshSession()
-  return data.session?.user?.id || ''
+  return session?.user?.id || ''
 }
 
 // ─── 백엔드 응답 → Book 타입 변환 ────────────────────────────
