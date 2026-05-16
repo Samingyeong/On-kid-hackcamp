@@ -1,0 +1,226 @@
+.booklist {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px 48px 12px;
+  height: calc(100vh - 64px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 상단 탭 ── */
+.booklist-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+.booklist-tab {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 2px solid #ddd;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: #666;
+  white-space: nowrap;
+}
+.booklist-tab:hover:not(.active) { border-color: #FFB256; color: #FFB256; }
+.booklist-tab.active { color: #fff; border-color: transparent; }
+
+/* ── 메인 레이아웃 ── */
+.booklist-layout {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.bl-deco {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.45;
+  z-index: 0;
+}
+.bl-deco-tl { top: -20px; left: -40px; width: 220px; }
+.bl-deco-br { bottom: -20px; right: -20px; width: 260px; }
+
+/* ── 왼쪽 사이드바 ── */
+.booklist-sidebar {
+  position: relative;
+  z-index: 1;
+  width: 170px;
+  flex-shrink: 0;
+  background: rgba(255,253,237,0.95);
+  border: 1px solid rgba(163,55,55,0.12);
+  border-radius: 20px;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-year {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  border: none;
+  background: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  border-radius: 12px;
+  margin: 2px 8px;
+  transition: background 0.15s;
+}
+.sidebar-year:hover:not(.active) { background: #fff3e0; color: #FFB256; }
+.sidebar-year.active { background: #FFB256; color: #fff; font-weight: 700; }
+.sidebar-arrow { font-size: 16px; font-weight: 900; }
+.year-cnt { font-size: 12px; opacity: 0.7; }
+
+/* ── 오른쪽 책 선반 ── */
+.booklist-shelf-area {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  background: rgba(255,253,237,0.95);
+  border: 1px solid rgba(163,55,55,0.12);
+  border-radius: 20px;
+  padding: 20px 32px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── 선반 한 줄 ── */
+.shelf-row {
+  position: relative;
+  padding-bottom: 32px; /* 판자 높이 */
+}
+
+/* 판자 — CSS background로 처리 (img 반복 렌더링 제거) */
+.shelf-plank {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: url('/svg/prac_tree.svg') repeat-x center / auto 32px;
+  z-index: 0;
+}
+
+/* 책들 — 판자 너비 기준 가운데 정렬, 판자 위에 */
+.shelf-books-line {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 80px;
+}
+
+/* 책 wrap: 제목(위) + 책+버튼(아래) */
+.shelf-book-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 0;
+}
+
+/* 책+버튼 가로 묶음 */
+.shelf-book-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: -10px;
+}
+
+/* 책 */
+.shelf-book {
+  cursor: pointer;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  width: 110px;
+}
+.shelf-book:hover { transform: translateY(-8px); }
+
+.shelf-book-svg {
+  width: 110px;
+  height: 142px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(-3px 6px 10px rgba(0,0,0,0.2));
+}
+.shelf-book-thumb {
+  width: 110px;
+  height: 142px;
+  object-fit: cover;
+  border-radius: 6px 12px 12px 6px;
+  box-shadow: -4px 6px 14px rgba(0,0,0,0.22);
+}
+
+/* 버튼 */
+.shelf-book-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 4px;
+}
+.shelf-action-btn {
+  width: 44px;
+  height: 28px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.1s;
+}
+.shelf-action-btn img { width: 100%; height: 100%; object-fit: contain; }
+.shelf-action-btn:hover { transform: scale(1.12); }
+
+/* 제목 — 책 위, 책 너비 기준 가운데 */
+.shelf-book-title {
+  font-size: 12px;
+  color: #555;
+  text-align: center;
+  width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-bottom: 6px;
+  align-self: flex-start;
+}
+
+/* 페이지네이션 */
+.shelf-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #888;
+}
+.shelf-pagination button {
+  background: none;
+  border: none;
+  color: #FFB256;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.booklist-loading, .booklist-empty {
+  text-align: center;
+  padding: 60px;
+  color: #bbb;
+  font-size: 16px;
+}
