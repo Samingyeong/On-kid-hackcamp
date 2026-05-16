@@ -104,6 +104,13 @@ export function Component() {
 
   return (
     <div className="home">
+      {/* 배경 데코레이션 */}
+      <div className="home-bg-left" />
+      <div className="home-bg-right" />
+      <img src="/svg/Union.svg" alt="" className="deco deco-1" />
+      <img src="/svg/Union-1.svg" alt="" className="deco deco-2" />
+      <img src="/svg/Union-2.svg" alt="" className="deco deco-3" />
+
       {/* 날짜바 */}
       <div className="date-bar">
         <div className="date-weekdays">

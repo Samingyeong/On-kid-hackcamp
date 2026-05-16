@@ -477,3 +477,99 @@
   font-weight: 600;
   color: #333;
 }
+
+/* 배경 데코레이션 */
+.home {
+  position: relative;
+  overflow: hidden;
+}
+
+.home-bg-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(135deg, #f0f2ff 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-bg-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(225deg, #fff5f0 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.deco {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.deco-1 {
+  top: 60px;
+  left: -40px;
+  width: 180px;
+}
+
+.deco-2 {
+  top: 200px;
+  right: -30px;
+  width: 140px;
+}
+
+.deco-3 {
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+}
+
+/* 콘텐츠 z-index */
+.date-bar,
+.search-bar,
+.category-slider,
+.home-panels {
+  position: relative;
+  z-index: 1;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .home-panels {
+    flex-direction: column;
+  }
+
+  .flip-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .home {
+    padding: 16px;
+  }
+
+  .date-weekdays {
+    gap: 4px;
+  }
+
+  .weekday-item {
+    padding: 6px 8px;
+  }
+
+  .study-grid {
+    gap: 10px;
+  }
+
+  .study-card {
+    padding: 14px 10px;
+  }
+}
