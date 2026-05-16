@@ -231,13 +231,13 @@ export default function StudyWrite() {
 
         {/* 채점 + 다시쓰기 버튼 */}
         <div className="sw-check-row">
-          <button className="sw-clear-btn" onClick={clearAllCanvas}>🔄 다시 쓰기</button>
+          <button className="sw-clear-btn" onClick={clearAllCanvas}>다시 쓰기</button>
           <button className="sw-check-btn" onClick={handleCheck} disabled={checking}>
-            {checking ? '채점 중...' : '✅ 채점하기'}
+            {checking ? '채점 중...' : '채점하기'}
           </button>
           {result && (
             <span className={`sw-result ${result.correct ? 'correct' : 'wrong'}`}>
-              {result.correct ? '🎉 정답!' : `아쉬워요! (인식: ${result.recognized})`}
+              {result.correct ? '정답!' : `아쉬워요! (인식: ${result.recognized})`}
             </span>
           )}
         </div>
@@ -256,7 +256,7 @@ export default function StudyWrite() {
           <span className="sw-progress">{learnedCount}/{words.length}</span>
           {currentIdx === words.length - 1 && stage === 3 && result?.correct && (
             <button className="sw-next-stage-btn" onClick={() => navigate(-1)}>
-              🎉 학습 완료!
+              학습 완료!
             </button>
           )}
         </div>
