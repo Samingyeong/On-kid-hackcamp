@@ -4,9 +4,9 @@ import { useAuth } from '../contexts/AuthContext'
 import './Login.css'
 
 const STEPS = [
-  { label: 'Step 1', desc: '가입정보 등록', icon: '/svg/signup1.png' },
-  { label: 'Step 2', desc: '아이정보 등록', icon: '/svg/signup2.png' },
-  { label: 'Step 3', desc: '회원가입 완료', icon: '/svg/signup3.png' },
+  { label: 'Step 1', desc: '가입정보 등록', icon: '/svg/step1.png' },
+  { label: 'Step 2', desc: '아이정보 등록', icon: '/svg/step2.png' },
+  { label: 'Step 3', desc: '회원가입 완료', icon: '/svg/step3.png' },
 ]
 
 export default function Login() {
@@ -22,6 +22,11 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [phone, setPhone] = useState('')
+  const [phone2, setPhone2] = useState('')
+  const [phone3, setPhone3] = useState('')
+  const [carrier, setCarrier] = useState('LG U+')
+  const [emailId, setEmailId] = useState('')
+  const [emailDomain, setEmailDomain] = useState('gmail.com')
 
   // Step 2 fields
   const [childName, setChildName] = useState('')
@@ -44,14 +49,16 @@ export default function Login() {
 
   async function handleNextStep() {
     if (step === 1) {
-      if (!name || !email || !password) return setError('필수 항목을 입력하세요.')
+      if (!name || !emailId || !password) return setError('필수 항목을 입력하세요.')
       if (password !== passwordConfirm) return setError('비밀번호가 일치하지 않습니다.')
+      setEmail(`${emailId}@${emailDomain}`)
       setError('')
       setStep(2)
     } else if (step === 2) {
       setError('')
       setLoading(true)
-      const { error } = await signUp(email, password, name)
+      const fullEmail = `${emailId}@${emailDomain}`
+      const { error } = await signUp(fullEmail, password, name)
       if (error) { setError(error); setLoading(false); return }
       setStep(3)
       setLoading(false)
@@ -128,7 +135,7 @@ export default function Login() {
             </div>
             <div className="signup-field">
               <span className="signup-label">아이디</span>
-              <input type="email" placeholder="이메일을 입력하세요." value={email} onChange={e => setEmail(e.target.value)} className="signup-input" />
+              <input type="text" placeholder="아이디를 입력하세요." value={emailId} onChange={e => setEmailId(e.target.value)} className="signup-input" />
             </div>
             <div className="signup-field">
               <span className="signup-label">비밀번호</span>
@@ -140,7 +147,40 @@ export default function Login() {
             </div>
             <div className="signup-field">
               <span className="signup-label">휴대폰 번호</span>
-              <input type="tel" placeholder="010-0000-0000" value={phone} onChange={e => setPhone(e.target.value)} className="signup-input" />
+              <div className="signup-phone-row">
+                <select className="signup-input signup-select signup-phone-carrier" value={carrier} onChange={e => setCarrier(e.target.value)}>
+                  <option>LG U+</option>
+                  <option>SKT</option>
+                  <option>KT</option>
+                </select>
+              </div>
+            </div>
+            <div className="signup-field">
+              <span className="signup-label"></span>
+              <div className="signup-phone-row">
+                <select className="signup-input signup-select signup-phone-prefix" value={phone} onChange={e => setPhone(e.target.value)}>
+                  <option>010</option>
+                  <option>011</option>
+                  <option>016</option>
+                </select>
+                <span className="signup-dash">-</span>
+                <input type="text" maxLength={4} value={phone2} onChange={e => setPhone2(e.target.value)} className="signup-input signup-phone-num" />
+                <span className="signup-dash">-</span>
+                <input type="text" maxLength={4} value={phone3} onChange={e => setPhone3(e.target.value)} className="signup-input signup-phone-num" />
+              </div>
+            </div>
+            <div className="signup-field">
+              <span className="signup-label">이메일</span>
+              <div className="signup-email-row">
+                <input type="text" value={emailId} onChange={e => setEmailId(e.target.value)} className="signup-input signup-email-id" />
+                <span className="signup-at">@</span>
+                <select className="signup-input signup-select signup-email-domain" value={emailDomain} onChange={e => setEmailDomain(e.target.value)}>
+                  <option>gmail.com</option>
+                  <option>naver.com</option>
+                  <option>daum.net</option>
+                  <option>hanmail.net</option>
+                </select>
+              </div>
             </div>
             {error && <p className="login-error">{error}</p>}
             <button className="signup-next-btn" onClick={handleNextStep}>다음단계로</button>

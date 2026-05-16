@@ -16,12 +16,12 @@
 
 .login-deco {
   position: absolute;
-  width: 200px;
-  opacity: 0.5;
+  width: 140px;
+  opacity: 0.3;
   pointer-events: none;
 }
-.login-deco-left { left: -60px; bottom: -80px; }
-.login-deco-right { right: -40px; top: -20px; }
+.login-deco-left { left: -40px; bottom: -40px; }
+.login-deco-right { right: -30px; top: -10px; }
 
 .login-body {
   flex: 1;
@@ -324,4 +324,28 @@
   background-repeat: no-repeat;
   background-position: right 20px center;
   padding-right: 48px;
+}
+
+/* 전화번호 + 이메일 레이아웃 */
+.signup-phone-row,
+.signup-email-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.signup-phone-carrier { width: 120px; flex: none; }
+.signup-phone-prefix { width: 90px; flex: none; }
+.signup-phone-num { width: 100px; flex: none; }
+.signup-email-id { flex: 1; }
+.signup-email-domain { width: 160px; flex: none; }
+
+.signup-dash {
+  font-size: 20px;
+  color: #1F1F1F;
+}
+.signup-at {
+  font-size: 20px;
+  color: #1F1F1F;
 }
