@@ -15,13 +15,10 @@
 }
 
 .login-deco {
-  position: absolute;
-  width: 140px;
-  opacity: 0.3;
-  pointer-events: none;
+  display: none;
 }
-.login-deco-left { left: -40px; bottom: -40px; }
-.login-deco-right { right: -30px; top: -10px; }
+.login-deco-left { display: none; }
+.login-deco-right { display: none; }
 
 .login-body {
   flex: 1;
@@ -335,9 +332,9 @@
   flex: 1;
 }
 
-.signup-phone-carrier { width: 120px; flex: none; }
-.signup-phone-prefix { width: 90px; flex: none; }
-.signup-phone-num { width: 100px; flex: none; }
+.signup-phone-carrier { width: 140px; flex: none; }
+.signup-phone-prefix { width: 110px; flex: none; }
+.signup-phone-num { width: 120px; flex: none; }
 .signup-email-id { flex: 1; }
 .signup-email-domain { width: 160px; flex: none; }
 
