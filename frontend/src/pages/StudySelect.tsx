@@ -57,6 +57,8 @@ export default function StudySelect() {
       navigate(`/study/sentence?book=${encodeURIComponent(selectedBook)}`)
     } else if (modeId === 'type') {
       navigate(`/study/typing?book=${encodeURIComponent(selectedBook)}`)
+    } else if (modeId === 'speak') {
+      navigate(`/study/voice?book=${encodeURIComponent(selectedBook)}`)
     } else if (modeId === 'sign') {
       navigate(`/study/sign?book=${encodeURIComponent(selectedBook)}`)
     } else {

@@ -9,6 +9,7 @@ import StudyWrite from '../pages/StudyWrite'
 import StudyTyping from '../pages/StudyTyping'
 import StudySentence from '../pages/StudySentence'
 import StudySign from '../pages/StudySign'
+import StudyVoice from '../pages/StudyVoice'
 import MidmTest from '../pages/MidmTest'
 import TutorIntro from '../pages/TutorIntro'
 
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: 'study/select', element: <StudySelect /> },
       { path: 'study/practice', element: <StudyWrite /> },
       { path: 'study/typing', element: <StudyTyping /> },
+      { path: 'study/voice', element: <StudyVoice /> },
       { path: 'study/sentence', element: <StudySentence /> },
       { path: 'study/sign', element: <StudySign /> },
       { path: 'midm-test', element: <MidmTest /> },
