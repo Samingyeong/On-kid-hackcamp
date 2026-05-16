@@ -76,21 +76,26 @@ export default function Login() {
         </div>
         <div className="login-body">
           <div className="login-card">
-            <h1 className="login-title">on-kid</h1>
+            <img src="/svg/login-onkid.png" alt="on-kid" className="login-hero-logo" />
+            <p className="login-slogan">눈으로 듣고 마음으로 배우는 진짜 교육!<br/>차별은 빼고, 배움은 더했습니다!</p>
+
             <form onSubmit={handleLogin} className="login-form">
-              <div className="login-field">
-                <span className="login-label">이메일</span>
-                <input type="email" placeholder="이메일을 입력하세요." value={email} onChange={e => setEmail(e.target.value)} className="login-input" required />
-              </div>
-              <div className="login-field">
-                <span className="login-label">비밀번호</span>
-                <input type="password" placeholder="비밀번호를 입력하세요." value={password} onChange={e => setPassword(e.target.value)} className="login-input" required />
+              <input type="email" placeholder="아이디" value={email} onChange={e => setEmail(e.target.value)} className="login-input login-input-full" required />
+              <input type="password" placeholder="비밀번호" value={password} onChange={e => setPassword(e.target.value)} className="login-input login-input-full" required />
+              <div className="login-remember">
+                <label><input type="checkbox" /> 로그인 유지</label>
               </div>
               {error && <p className="login-error">{error}</p>}
               <button type="submit" className="login-btn" disabled={loading}>
-                {loading ? '로그인 중...' : '로그인'}
+                {loading ? '로그인 중...' : '로그인 하기'}
               </button>
             </form>
+
+            <div className="login-links">
+              <span>아이디 찾기</span>
+              <span className="login-divider">|</span>
+              <span>비밀번호 찾기</span>
+            </div>
             <button className="login-toggle" onClick={() => { setMode('signup'); setError('') }}>
               회원가입
             </button>

@@ -355,3 +355,42 @@
 }
 
 .signup-birth { flex: 1; min-width: 0; }
+
+/* 로그인 화면 전용 */
+.login-hero-logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.login-slogan {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 36px;
+}
+
+.login-input-full {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-remember {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 13px;
+  color: #888;
+}
+.login-remember input { margin-right: 6px; }
+
+.login-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #888;
+}
+.login-divider { color: #ddd; }
