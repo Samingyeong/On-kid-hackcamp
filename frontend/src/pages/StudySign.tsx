@@ -534,9 +534,18 @@ export default function StudySign() {
 
       if (result.correct) {
         setPhase('passed')
+        window.dispatchEvent(new CustomEvent('ai-tutor-trigger', {
+          detail: { context: `수어 학습 성공! ${currentWord} 동작 정확해요` }
+        }))
         completeCurrentWord(1200)
       } else {
         setPhase('retry')
+        // 평가 결과를 AI 튜터에게 전달
+        const feedback = result.feedback || result.message || ''
+        const detail = result.details ? JSON.stringify(result.details) : ''
+        window.dispatchEvent(new CustomEvent('ai-tutor-trigger', {
+          detail: { context: `수어 학습 - ${currentWord} 틀림 (${nextAttempt}회). 피드백: ${feedback} ${detail}` }
+        }))
       }
     } catch (error) {
       setCameraError(toCameraMessage(error))
@@ -572,16 +581,6 @@ export default function StudySign() {
     if (phase === 'retry') return '촬영 준비'
     return '촬영 준비'
   })()
-
-  // AI 튜터에게 피드백 트리거
-  useEffect(() => {
-    if (phase === 'retry' && attempts > 0) {
-      window.dispatchEvent(new CustomEvent('ai-tutor-trigger', { detail: { context: `수어 학습 - ${currentWord} 틀림 ${attempts}회` } }))
-    }
-    if (phase === 'passed') {
-      window.dispatchEvent(new CustomEvent('ai-tutor-trigger', { detail: { context: `수어 학습 - ${currentWord} 성공!` } }))
-    }
-  }, [phase, attempts, currentWord])
 
   return (
     <div className="study-sign">
