@@ -12,6 +12,7 @@ import StudySign from '../pages/StudySign'
 import StudyVoice from '../pages/StudyVoice'
 import MidmTest from '../pages/MidmTest'
 import TutorIntro from '../pages/TutorIntro'
+import ParentDashboard from '../pages/ParentDashboard'
 
 const Placeholder = ({ title }: { title: string }) => (
   <div style={{ padding: 40, textAlign: 'center' }}>
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       { path: 'books', element: <BookList /> },
       { path: 'reader', element: <Reader /> },
       { path: 'notes', element: <Placeholder title="내 오답노트" /> },
-      { path: 'parent', element: <Placeholder title="학부모케어" /> },
+      { path: 'parent', element: <ParentDashboard /> },
       { path: 'study/select', element: <StudySelect /> },
       { path: 'study/practice', element: <StudyWrite /> },
       { path: 'study/typing', element: <StudyTyping /> },

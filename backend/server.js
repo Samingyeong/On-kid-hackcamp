@@ -12,12 +12,20 @@ const { syncBooks }          = require('./sync')
 const { downloadAllImages }  = require('./images')
 const { downloadBookVideos, getLocalVideoPath, VIDEO_DIR } = require('./videos')
 const { extractKeywords, getBaseForm } = require('./groq_nlp')
-const { getLearningFeedback, generateQuiz, explainWord, generateWeeklyReport, tutorialStep } = require('./midm')
+const {
+  getLearningFeedback,
+  generateQuiz,
+  explainWord,
+  generateWeeklyReport,
+  tutorialStep,
+  routeVoiceDialog: routeVoiceDialogWithMidm,
+} = require('./midm')
 const { listSignMotions } = require('./sign_motion')
 const { evaluateSignPractice } = require('./sign_practice_eval')
 
 const app  = express()
 const PORT = 4000
+const VOICE_SERVICE_URL = process.env.VOICE_SERVICE_URL || 'http://127.0.0.1:4100'
 
 // ─── 사전 결과 서버 캐시 ──────────────────────────────────────
 const nlpCache  = new Map()
@@ -825,6 +833,732 @@ app.get('/api/study/sentences', (req, res) => {
   const unique = sentences.filter((s, i, arr) => arr.findIndex(x => x.sentence === s.sentence) === i).slice(0, 15)
 
   res.json({ sentences: unique, words: wordList })
+})
+
+// ─── 오디오 기반 동화 학습 API ───────────────────────────────
+const VOICE_PROFILE_DEFAULT = {
+  visualSupport: 'audioFirst',
+  hearingSupport: 'normal',
+  literacySupport: 'easyText',
+  inputMode: 'voice',
+  outputMode: 'tts',
+}
+
+const VOICE_LLM_ROUTER_ENABLED = process.env.VOICE_LLM_ROUTER !== '0'
+
+async function postVoiceService(pathname, payload) {
+  const response = await fetch(`${VOICE_SERVICE_URL}${pathname}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload || {}),
+  })
+  const data = await response.json().catch(() => ({}))
+  if (!response.ok) {
+    const message = data.detail || data.error || `voice service ${response.status}`
+    const error = new Error(message)
+    error.statusCode = response.status
+    throw error
+  }
+  return data
+}
+
+function normalizeVoiceText(text) {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/[.,!?~…]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/믿음아|미듬아|미드마|미듬|믿음/g, '')
+    .trim()
+}
+
+function includesAny(text, words) {
+  return words.some(word => text.includes(word))
+}
+
+function routeVoiceIntent(rawText, allowedIntents = []) {
+  const text = normalizeVoiceText(rawText)
+  const allowed = new Set(Array.isArray(allowedIntents) ? allowedIntents : [])
+  const allow = intent => allowed.size === 0 || allowed.has(intent)
+
+  if (!text) {
+    return {
+      intent: 'UNKNOWN',
+      confidence: 0,
+      slots: {},
+      requiresConfirmation: true,
+      spokenResponse: '잘 듣지 못했어요. 다시 말해 주세요.',
+      nextAction: { tool: 'listenAgain', args: {} },
+    }
+  }
+
+  const rules = [
+    {
+      intent: 'START',
+      words: ['시작', '시작해', '들려줘', '읽어줘'],
+      spokenResponse: '첫 문장을 들려줄게요.',
+      nextAction: { tool: 'playStorySegment', args: { direction: 'current' } },
+    },
+    {
+      intent: 'REPEAT',
+      words: ['다시', '한 번 더', '한번 더', '또 들려', '반복'],
+      spokenResponse: '방금 문장을 다시 들려줄게요.',
+      nextAction: { tool: 'playStorySegment', args: { direction: 'current' } },
+    },
+    {
+      intent: 'START_QUIZ',
+      words: ['문제', '퀴즈', '질문 내줘', '문제 내줘'],
+      spokenResponse: '문제를 하나 낼게요.',
+      nextAction: { tool: 'askVoiceQuiz', args: {} },
+    },
+    {
+      intent: 'NEXT',
+      words: ['다음', '넘어가', '계속', '이어 들려'],
+      spokenResponse: '다음 문장으로 넘어갈게요.',
+      nextAction: { tool: 'playStorySegment', args: { direction: 'next' } },
+    },
+    {
+      intent: 'PREVIOUS',
+      words: ['이전', '앞 문장', '뒤로', '전 문장'],
+      spokenResponse: '이전 문장으로 돌아갈게요.',
+      nextAction: { tool: 'playStorySegment', args: { direction: 'previous' } },
+    },
+    {
+      intent: 'HINT',
+      words: ['힌트', '도움', '도와줘', '모르겠어'],
+      spokenResponse: '짧은 힌트를 들려줄게요.',
+      nextAction: { tool: 'explainHint', args: {} },
+    },
+    {
+      intent: 'TODAY_RESULT',
+      words: ['오늘 결과', '결과 알려', '학습 결과', '오늘 어땠어', '추천'],
+      spokenResponse: '오늘 학습 결과를 정리해 줄게요.',
+      nextAction: { tool: 'summarizeProgress', args: {} },
+    },
+    {
+      intent: 'EXPLAIN_WORD',
+      words: ['단어 설명', '뜻 알려', '무슨 뜻', '단어 뜻'],
+      spokenResponse: '현재 문장의 중요한 단어를 설명할게요.',
+      nextAction: { tool: 'explainWord', args: {} },
+    },
+    {
+      intent: 'LEVEL_DOWN',
+      words: ['천천히', '느리게', '쉬운', '더 쉬운'],
+      spokenResponse: '조금 천천히 들려줄게요.',
+      nextAction: { tool: 'setSpeechRate', args: { rate: 'slow' } },
+    },
+    {
+      intent: 'LEVEL_UP',
+      words: ['빠르게', '보통 속도', '빨리'],
+      spokenResponse: '조금 더 빠르게 들려줄게요.',
+      nextAction: { tool: 'setSpeechRate', args: { rate: 'normal' } },
+    },
+    {
+      intent: 'CHANGE_BOOK',
+      words: ['책 바꾸기', '다른 책', '책 바꿔'],
+      spokenResponse: '책 선택 화면으로 돌아갈게요.',
+      nextAction: { tool: 'recommendBook', args: {} },
+    },
+    {
+      intent: 'STOP',
+      words: ['그만', '멈춰', '중지', '끝', '종료'],
+      spokenResponse: '학습을 잠시 멈출게요.',
+      nextAction: { tool: 'pauseSession', args: {} },
+    },
+  ]
+
+  for (const rule of rules) {
+    if (allow(rule.intent) && includesAny(text, rule.words)) {
+      return {
+        intent: rule.intent,
+        confidence: 0.95,
+        slots: {
+          answerText: '',
+          targetWord: '',
+          requestedSpeed: rule.nextAction.args.rate || 'normal',
+        },
+        requiresConfirmation: false,
+        spokenResponse: rule.spokenResponse,
+        nextAction: rule.nextAction,
+      }
+    }
+  }
+
+  if (allow('ANSWER_QUIZ') && text.length > 0) {
+    return {
+      intent: 'ANSWER_QUIZ',
+      confidence: 0.5,
+      slots: {
+        answerText: text,
+        targetWord: '',
+        requestedSpeed: 'normal',
+      },
+      requiresConfirmation: true,
+      spokenResponse: '답변으로 들었어요. 확인한 뒤 알려줄게요.',
+      nextAction: { tool: 'gradeQuiz', args: { answerText: text } },
+    }
+  }
+
+  return {
+    intent: 'UNKNOWN',
+    confidence: 0.2,
+    slots: { answerText: text, targetWord: '', requestedSpeed: 'normal' },
+    requiresConfirmation: true,
+    spokenResponse: '무엇을 할지 확실하지 않아요. 다시, 다음, 힌트처럼 말해 주세요.',
+    nextAction: { tool: 'listenAgain', args: {} },
+  }
+}
+
+function normalizeQuizAnswer(text) {
+  const particles = ['을','를','이','가','은','는','도','의','에게','한테','에','로','으로','와','과','랑','이랑','하고']
+  let value = normalizeVoiceText(text).replace(/\s/g, '')
+  for (const particle of particles.sort((a, b) => b.length - a.length)) {
+    if (value.endsWith(particle) && value.length > particle.length + 1) {
+      value = value.slice(0, -particle.length)
+      break
+    }
+  }
+  return value
+}
+
+function clamp01(value) {
+  return Math.max(0, Math.min(1, Number.isFinite(value) ? value : 0))
+}
+
+function difficultyToLevel(difficulty) {
+  if (difficulty >= 3) return 'advanced'
+  if (difficulty >= 2) return 'intermediate'
+  return 'beginner'
+}
+
+function getVoiceProgressSummary(userId, bookTitle = '') {
+  const sessionParams = [userId]
+  const sessionWhere = ['user_id = ?']
+  if (bookTitle) {
+    sessionWhere.push('book_title = ?')
+    sessionParams.push(bookTitle)
+  }
+
+  const sessions = db.prepare(`
+    SELECT id, book_title, started_at
+    FROM voice_sessions
+    WHERE ${sessionWhere.join(' AND ')}
+    ORDER BY started_at DESC
+    LIMIT 30
+  `).all(...sessionParams)
+  const sessionIds = sessions.map(row => row.id)
+  const idPlaceholders = sessionIds.map(() => '?').join(',')
+
+  const turns = sessionIds.length
+    ? db.prepare(`
+        SELECT intent, confidence
+        FROM voice_turns
+        WHERE user_id = ? AND session_id IN (${idPlaceholders})
+      `).all(userId, ...sessionIds)
+    : []
+
+  const attempts = sessionIds.length
+    ? db.prepare(`
+        SELECT question_id, score, is_correct, needs_retry
+        FROM voice_quiz_attempts
+        WHERE user_id = ? AND session_id IN (${idPlaceholders})
+      `).all(userId, ...sessionIds)
+    : []
+
+  const totalQuiz = attempts.length
+  const correctQuiz = attempts.filter(row => row.is_correct).length
+  const retryCount = attempts.filter(row => row.needs_retry).length
+  const quizAccuracy = totalQuiz > 0 ? correctQuiz / totalQuiz : 0
+  const commandTurns = turns.filter(row => row.intent !== 'ANSWER_QUIZ')
+  const knownCommandTurns = commandTurns.filter(row => row.intent && row.intent !== 'UNKNOWN')
+  const hintTurns = turns.filter(row => row.intent === 'HINT').length
+  const commandFollowing = commandTurns.length > 0 ? knownCommandTurns.length / commandTurns.length : 0
+  const helpRequestRate = turns.length > 0 ? hintTurns / turns.length : 0
+  const listeningComprehension = totalQuiz > 0 ? quizAccuracy : 0
+  const vocabulary = totalQuiz > 0 ? clamp01(quizAccuracy - retryCount * 0.05) : 0
+  const shortTermRecall = totalQuiz > 0 ? quizAccuracy : 0
+
+  let recommendedDifficulty = 1
+  if (totalQuiz >= 2 && quizAccuracy >= 0.85 && helpRequestRate <= 0.25) recommendedDifficulty = 3
+  else if (totalQuiz >= 1 && quizAccuracy >= 0.6) recommendedDifficulty = 2
+
+  const skillVector = {
+    listeningComprehension: clamp01(listeningComprehension),
+    vocabulary: clamp01(vocabulary),
+    shortTermRecall: clamp01(shortTermRecall),
+    commandFollowing: clamp01(commandFollowing),
+    helpRequestRate: clamp01(helpRequestRate),
+    recommendedDifficulty,
+  }
+
+  const spokenSummary = totalQuiz === 0
+    ? '아직 퀴즈 기록이 없어요. 동화를 듣고 문제를 풀면 오늘 결과를 알려줄게요.'
+    : `오늘은 ${totalQuiz}문제 중 ${correctQuiz}문제를 맞혔어요. ${recommendedDifficulty === 1 ? '다음에는 같은 문장을 한 번 더 듣고 쉬운 문제부터 해볼게요.' : recommendedDifficulty === 2 ? '다음에는 비슷한 난이도의 짧은 동화를 이어서 해볼게요.' : '잘 기억했어요. 다음에는 조금 더 어려운 문제도 해볼 수 있어요.'}`
+
+  return {
+    userId,
+    bookTitle,
+    sessionCount: sessions.length,
+    turnCount: turns.length,
+    totalQuiz,
+    correctQuiz,
+    quizAccuracy,
+    recommendedLevel: difficultyToLevel(recommendedDifficulty),
+    skillVector,
+    spokenSummary,
+    lastSessionAt: sessions[0]?.started_at || '',
+  }
+}
+
+function upsertVoiceLearningProfile(userId, bookTitle = '') {
+  const summary = getVoiceProgressSummary(userId, bookTitle)
+  db.prepare(`
+    INSERT INTO user_learning_profiles (
+      user_id, accessibility_profile, skill_vector, recommended_difficulty, source_summary, updated_at
+    )
+    VALUES (?, ?, ?, ?, ?, datetime('now'))
+    ON CONFLICT(user_id) DO UPDATE SET
+      accessibility_profile = excluded.accessibility_profile,
+      skill_vector = excluded.skill_vector,
+      recommended_difficulty = excluded.recommended_difficulty,
+      source_summary = excluded.source_summary,
+      updated_at = datetime('now')
+  `).run(
+    userId,
+    JSON.stringify(VOICE_PROFILE_DEFAULT),
+    JSON.stringify(summary.skillVector),
+    summary.skillVector.recommendedDifficulty,
+    JSON.stringify({
+      source: 'voice',
+      bookTitle,
+      totalQuiz: summary.totalQuiz,
+      correctQuiz: summary.correctQuiz,
+      sessionCount: summary.sessionCount,
+    }),
+  )
+  return summary
+}
+
+function getVoiceBookRecommendations(userId, bookTitle = '', limit = 3) {
+  const summary = upsertVoiceLearningProfile(userId, bookTitle)
+  const level = summary.recommendedLevel
+  const lim = Math.max(1, Math.min(parseInt(limit, 10) || 3, 6))
+
+  let rows = db.prepare(`
+    SELECT b.title, b.description, b.thumbnail, b.local_img, b.story_type, bd.level
+    FROM books b
+    LEFT JOIN book_difficulty bd ON bd.title = b.title
+    WHERE COALESCE(bd.level, ?) = ?
+      AND b.thumbnail LIKE '%/Nlcy_001_%'
+      AND (? = '' OR b.title <> ?)
+    ORDER BY RANDOM()
+    LIMIT ?
+  `).all(level, level, bookTitle, bookTitle, lim)
+
+  if (rows.length < lim) {
+    const excluded = rows.map(row => row.title)
+    rows = rows.concat(db.prepare(`
+      SELECT b.title, b.description, b.thumbnail, b.local_img, b.story_type, COALESCE(bd.level, ?) AS level
+      FROM books b
+      LEFT JOIN book_difficulty bd ON bd.title = b.title
+      WHERE b.thumbnail LIKE '%/Nlcy_001_%'
+        AND b.title NOT IN (${excluded.map(() => '?').join(',') || "''"})
+        AND (? = '' OR b.title <> ?)
+      ORDER BY RANDOM()
+      LIMIT ?
+    `).all(level, ...excluded, bookTitle, bookTitle, lim - rows.length))
+  }
+
+  if (rows.length === 0 && bookTitle) {
+    rows = db.prepare(`
+      SELECT b.title, b.description, b.thumbnail, b.local_img, b.story_type, COALESCE(bd.level, ?) AS level
+      FROM books b
+      LEFT JOIN book_difficulty bd ON bd.title = b.title
+      WHERE b.title = ?
+      LIMIT 1
+    `).all(level, bookTitle)
+  }
+
+  const reasonByLevel = {
+    beginner: '오늘 결과를 보면 짧은 문장을 다시 듣고 확인하는 흐름이 적절해요.',
+    intermediate: '기본 내용을 기억하고 있어서 비슷한 길이의 문장을 이어서 연습하기 좋아요.',
+    advanced: '정답률이 안정적이라 조금 더 어려운 듣기 문제로 넘어갈 수 있어요.',
+  }
+  const items = rows.map((row, index) => ({
+    title: row.title,
+    level: row.level || level,
+    reason: reasonByLevel[level] || reasonByLevel.beginner,
+    rank: index + 1,
+    thumbnail: row.local_img ? `http://localhost:4000${row.local_img}` : (row.thumbnail || ''),
+    description: row.description || '',
+    storyType: row.story_type || '',
+  }))
+
+  db.prepare(`DELETE FROM learning_recommendations WHERE user_id = ? AND source = 'voice'`).run(userId)
+  const insert = db.prepare(`
+    INSERT INTO learning_recommendations (user_id, source, book_title, reason, rank)
+    VALUES (?, 'voice', ?, ?, ?)
+  `)
+  for (const item of items) {
+    insert.run(userId, item.title, item.reason, item.rank)
+  }
+
+  return { progress: summary, items }
+}
+
+app.post('/api/voice/session/start', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+  const { bookTitle = '', profile = VOICE_PROFILE_DEFAULT } = req.body || {}
+  try {
+    const info = db.prepare(`
+      INSERT INTO voice_sessions (user_id, book_title, profile)
+      VALUES (?, ?, ?)
+    `).run(userId, bookTitle, JSON.stringify({ ...VOICE_PROFILE_DEFAULT, ...profile }))
+
+    res.json({
+      sessionId: info.lastInsertRowid,
+      accessibilityProfile: { ...VOICE_PROFILE_DEFAULT, ...profile },
+    })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+app.post('/api/voice/dialog', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+  const {
+    text = '',
+    sessionId = null,
+    state = '',
+    allowedIntents = [],
+    childProfile = {},
+    context = {},
+  } = req.body || {}
+
+  void (async () => {
+    const ruleResult = routeVoiceIntent(text, allowedIntents)
+    let result = ruleResult
+    const shouldAskLlm = VOICE_LLM_ROUTER_ENABLED &&
+      text &&
+      (ruleResult.intent === 'UNKNOWN' || ruleResult.intent === 'ANSWER_QUIZ' || ruleResult.confidence < 0.75)
+
+    if (shouldAskLlm) {
+      try {
+        const llmResult = await routeVoiceDialogWithMidm(childProfile, {
+          text,
+          state,
+          allowedIntents,
+          context,
+        })
+        if (!Array.isArray(allowedIntents) || allowedIntents.length === 0 || allowedIntents.includes(llmResult.intent)) {
+          result = llmResult
+        }
+      } catch {
+        result = { ...ruleResult, source: 'rules_fallback' }
+      }
+    } else {
+      result = { ...ruleResult, source: 'rules' }
+    }
+
+    if (sessionId) {
+      db.prepare(`
+        INSERT INTO voice_turns (session_id, user_id, stt_text, intent, confidence, state)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `).run(sessionId, userId, text, result.intent, result.confidence, state)
+    }
+    res.json(result)
+  })().catch(e => {
+    res.status(500).json({ error: e.message })
+  })
+})
+
+app.post('/api/voice/quiz/evaluate', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+  const { questionId = '', sttText = '', expectedAnswers = [], sessionId = null } = req.body || {}
+  const expected = Array.isArray(expectedAnswers) ? expectedAnswers.map(normalizeQuizAnswer).filter(Boolean) : []
+  const answer = normalizeQuizAnswer(sttText)
+
+  if (!answer || expected.length === 0) {
+    return res.json({
+      questionId,
+      sttText,
+      expectedAnswers,
+      matchType: 'insufficient_data',
+      score: 0,
+      isCorrect: false,
+      needsRetry: true,
+      feedbackHint: '답변이나 정답 후보가 부족함',
+    })
+  }
+
+  const exact = expected.includes(answer)
+  const partial = expected.some(item => item.includes(answer) || answer.includes(item))
+  const score = exact ? 1 : partial ? 0.75 : 0
+  const result = {
+    questionId,
+    sttText,
+    expectedAnswers,
+    matchType: exact ? 'exact_match' : partial ? 'partial_match' : 'no_match',
+    score,
+    isCorrect: score >= 0.75,
+    needsRetry: score < 0.75,
+    feedbackHint: score >= 0.75 ? '핵심 답변을 기억함' : '정답 후보와 직접 매칭되지 않음',
+  }
+
+  try {
+    if (sessionId) {
+      const info = db.prepare(`
+        INSERT INTO voice_quiz_attempts (
+          session_id, user_id, question_id, stt_text, expected_answers,
+          match_type, score, is_correct, needs_retry, feedback_hint
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(
+        sessionId,
+        userId,
+        questionId,
+        sttText,
+        JSON.stringify(expectedAnswers),
+        result.matchType,
+        result.score,
+        result.isCorrect ? 1 : 0,
+        result.needsRetry ? 1 : 0,
+        result.feedbackHint,
+      )
+      result.attemptId = info.lastInsertRowid
+      const session = db.prepare(`SELECT book_title FROM voice_sessions WHERE id = ?`).get(sessionId)
+      result.progress = upsertVoiceLearningProfile(userId, session?.book_title || '')
+    }
+    res.json(result)
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+app.get('/api/voice/progress', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+  const { bookTitle = '' } = req.query
+  try {
+    res.json(upsertVoiceLearningProfile(userId, String(bookTitle || '')))
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+app.post('/api/voice/progress', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+  const { bookTitle = '' } = req.body || {}
+  try {
+    res.json(upsertVoiceLearningProfile(userId, bookTitle))
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+app.get('/api/voice/recommend/books', (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+  const { bookTitle = '', limit = '3' } = req.query
+  try {
+    res.json(getVoiceBookRecommendations(userId, String(bookTitle || ''), limit))
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+function parseJsonSafe(value, fallback) {
+  try {
+    return JSON.parse(value)
+  } catch {
+    return fallback
+  }
+}
+
+function formatPercent(value) {
+  return `${Math.round(clamp01(value) * 100)}%`
+}
+
+app.get('/api/parent/summary', async (req, res) => {
+  const userId = req.headers['x-user-id'] || ''
+  const childProfile = {
+    name: req.query.childName || '아이',
+    birth_date: req.query.birthDate || '',
+    disability: req.query.disability || 'vision',
+  }
+
+  try {
+    const readingRows = db.prepare(`
+      SELECT title, MAX(read_at) AS lastReadAt, COUNT(*) AS readCount
+      FROM reading_history
+      WHERE user_id = ?
+      GROUP BY title
+      ORDER BY lastReadAt DESC
+      LIMIT 8
+    `).all(userId)
+
+    const readingTrend = db.prepare(`
+      SELECT read_at AS date, COUNT(DISTINCT title) AS count
+      FROM reading_history
+      WHERE user_id = ? AND read_at >= date('now', '-6 days')
+      GROUP BY read_at
+      ORDER BY read_at ASC
+    `).all(userId)
+
+    const wordStats = db.prepare(`
+      SELECT
+        COUNT(*) AS total,
+        SUM(CASE WHEN known = 1 THEN 1 ELSE 0 END) AS known,
+        SUM(CASE WHEN known = 0 THEN 1 ELSE 0 END) AS unknown
+      FROM word_study
+      WHERE user_id = ?
+    `).get(userId)
+
+    const voiceProfileRow = db.prepare(`
+      SELECT accessibility_profile, skill_vector, recommended_difficulty, source_summary, updated_at
+      FROM user_learning_profiles
+      WHERE user_id = ?
+    `).get(userId)
+
+    const voiceStats = db.prepare(`
+      SELECT
+        COUNT(*) AS totalQuiz,
+        SUM(CASE WHEN is_correct = 1 THEN 1 ELSE 0 END) AS correctQuiz,
+        AVG(score) AS averageScore,
+        SUM(CASE WHEN needs_retry = 1 THEN 1 ELSE 0 END) AS retryCount
+      FROM voice_quiz_attempts
+      WHERE user_id = ?
+    `).get(userId)
+
+    const recentVoiceSessions = db.prepare(`
+      SELECT id, book_title AS bookTitle, started_at AS startedAt, ended_at AS endedAt
+      FROM voice_sessions
+      WHERE user_id = ?
+      ORDER BY started_at DESC
+      LIMIT 5
+    `).all(userId)
+
+    const latestRecommendations = db.prepare(`
+      SELECT book_title AS title, reason, rank, created_at AS createdAt
+      FROM learning_recommendations
+      WHERE user_id = ? AND source = 'voice'
+      ORDER BY rank ASC, created_at DESC
+      LIMIT 5
+    `).all(userId)
+
+    const booksRead = readingRows.map(row => row.title)
+    const totalQuiz = Number(voiceStats.totalQuiz || 0)
+    const correctQuiz = Number(voiceStats.correctQuiz || 0)
+    const quizAccuracy = totalQuiz > 0 ? correctQuiz / totalQuiz : 0
+    const skillVector = parseJsonSafe(voiceProfileRow?.skill_vector, {
+      listeningComprehension: totalQuiz > 0 ? quizAccuracy : 0,
+      vocabulary: 0,
+      shortTermRecall: totalQuiz > 0 ? quizAccuracy : 0,
+      commandFollowing: 0,
+      helpRequestRate: 0,
+      recommendedDifficulty: 1,
+    })
+    const voiceProgress = {
+      totalQuiz,
+      correctQuiz,
+      quizAccuracy,
+      averageScore: Number(voiceStats.averageScore || 0),
+      retryCount: Number(voiceStats.retryCount || 0),
+      recommendedLevel: difficultyToLevel(Number(voiceProfileRow?.recommended_difficulty || skillVector.recommendedDifficulty || 1)),
+      skillVector,
+      updatedAt: voiceProfileRow?.updated_at || '',
+    }
+    const knownWords = Number(wordStats.known || 0)
+    const totalWords = Number(wordStats.total || 0)
+    const unknownWords = Number(wordStats.unknown || 0)
+    const studyDays = readingTrend.length
+
+    const deterministicSummary = {
+      message_to_parent: totalQuiz > 0
+        ? `음성 학습에서 ${totalQuiz}문제 중 ${correctQuiz}문제를 맞혔고, 듣기 이해도는 ${formatPercent(quizAccuracy)}로 집계됐습니다.`
+        : '아직 음성 퀴즈 기록이 충분하지 않습니다. 오디오 동화 학습에서 문제를 풀면 분석이 누적됩니다.',
+      observations: [
+        totalQuiz > 0 ? `듣기 이해: ${formatPercent(skillVector.listeningComprehension || quizAccuracy)}` : '듣기 이해: 기록 대기',
+        totalWords > 0 ? `단어 학습: ${knownWords}개 이해, ${unknownWords}개 복습 필요` : '단어 학습: 기록 대기',
+        booksRead.length > 0 ? `최근 읽은 동화: ${booksRead.slice(0, 3).join(', ')}` : '최근 읽은 동화 기록이 없습니다.',
+      ],
+      next_actions: [
+        latestRecommendations[0] ? `다음 추천 동화: ${latestRecommendations[0].title}` : '암탉과 누렁이 음성 퀴즈를 먼저 진행해 주세요.',
+        voiceProgress.retryCount > 0 ? '다시 시도한 문제를 짧게 복습해 주세요.' : '현재 난이도의 듣기 문제를 한 세트 더 진행해도 좋습니다.',
+        '원본 음성·영상은 저장하지 않고 학습 결과 중심으로 확인합니다.',
+      ],
+    }
+
+    let aiSummary = null
+    if (process.env.PARENT_AI_SUMMARY !== '0') {
+      try {
+        aiSummary = await generateWeeklyReport(childProfile, {
+          booksRead,
+          newWords: totalWords,
+          accuracy: Math.round(quizAccuracy * 100),
+          studyDays,
+        })
+      } catch {}
+    }
+
+    res.json({
+      childProfile,
+      reading: {
+        totalBooks: readingRows.length,
+        recentBooks: readingRows,
+        trend: readingTrend,
+      },
+      words: {
+        total: totalWords,
+        known: knownWords,
+        unknown: unknownWords,
+      },
+      voice: {
+        ...voiceProgress,
+        recentSessions: recentVoiceSessions,
+      },
+      recommendations: latestRecommendations,
+      summary: aiSummary || deterministicSummary,
+      summarySource: aiSummary ? 'midm' : 'rules',
+    })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+app.get('/api/voice/service/health', async (req, res) => {
+  try {
+    const response = await fetch(`${VOICE_SERVICE_URL}/health`)
+    const data = await response.json()
+    res.status(response.ok ? 200 : response.status).json(data)
+  } catch (e) {
+    res.status(503).json({
+      ok: false,
+      error: e.message,
+      voiceServiceUrl: VOICE_SERVICE_URL,
+    })
+  }
+})
+
+app.post('/api/voice/stt', async (req, res) => {
+  try {
+    const data = await postVoiceService('/stt/transcribe', req.body)
+    res.json(data)
+  } catch (e) {
+    res.status(e.statusCode || 503).json({
+      error: e.message,
+      voiceServiceUrl: VOICE_SERVICE_URL,
+    })
+  }
+})
+
+app.post('/api/voice/tts', async (req, res) => {
+  try {
+    const data = await postVoiceService('/tts/synthesize', req.body)
+    res.json(data)
+  } catch (e) {
+    res.status(e.statusCode || 503).json({
+      error: e.message,
+      voiceServiceUrl: VOICE_SERVICE_URL,
+    })
+  }
 })
 
 // ─── KT 믿음 (Mi:dm) AI 엔드포인트 ──────────────────────────

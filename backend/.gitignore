@@ -8,3 +8,4 @@ data/*.db-wal
 __pycache__/
 *.log
 .env
+.local/

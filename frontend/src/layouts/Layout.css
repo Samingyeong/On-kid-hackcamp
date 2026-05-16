@@ -11,3 +11,7 @@
   min-height: 0;
   overflow: auto;
 }
+
+.layout-immersive .layout-main {
+  overflow: hidden;
+}

@@ -236,6 +236,81 @@ async function callTutor(stateData) {
   }
 }
 
+function parseJsonObject(text, fallback) {
+  try {
+    let jsonStr = String(text || '').trim()
+    let depth = 0, start = -1, end = -1
+    for (let i = 0; i < jsonStr.length; i++) {
+      if (jsonStr[i] === '{') { if (start === -1) start = i; depth++ }
+      else if (jsonStr[i] === '}') { depth--; if (depth === 0) { end = i; break } }
+    }
+    if (start >= 0 && end > start) jsonStr = jsonStr.slice(start, end + 1)
+    return JSON.parse(jsonStr)
+  } catch {
+    return fallback
+  }
+}
+
+async function routeVoiceDialog(childProfile, voiceData) {
+  const allowedIntents = voiceData.allowedIntents || []
+  const messages = [
+    {
+      role: 'system',
+      content: `너는 시각장애 아동의 오디오 동화 학습을 위한 대화 라우터다.
+STT 결과를 현재 학습 상태에서 가능한 action 중 하나로만 매핑한다.
+STT, TTS, 정답 채점 자체를 하지 않는다.
+명확한 고정 명령은 그대로 intent로 반환하고, 애매한 자연어만 해석한다.
+아이에게 말할 문장은 짧고 음성으로 듣기 쉽게 쓴다.
+반드시 JSON 객체 하나만 출력한다.
+출력 schema:
+{
+  "intent": "START | START_QUIZ | ANSWER_QUIZ | REPEAT | HINT | TODAY_RESULT | NEXT | PREVIOUS | STOP | CHANGE_BOOK | LEVEL_DOWN | LEVEL_UP | EXPLAIN_WORD | UNKNOWN",
+  "confidence": 0.0,
+  "slots": {
+    "answerText": "",
+    "targetWord": "",
+    "requestedSpeed": "normal"
+  },
+  "requiresConfirmation": false,
+  "spokenResponse": "",
+  "nextAction": {
+    "tool": "playStorySegment",
+    "args": {}
+  }
+}`,
+    },
+    {
+      role: 'user',
+      content: JSON.stringify({
+        child_profile: {
+          name: childProfile.name || '친구',
+          age: calcAge(childProfile.birth_date),
+          support_type: mapSupportType(childProfile.disability || 'vision'),
+        },
+        allowed_intents: allowedIntents,
+        utterance: voiceData.text || '',
+        state: voiceData.state || '',
+        context: voiceData.context || {},
+      }),
+    },
+  ]
+
+  const result = await chatCompletion(messages, { maxTokens: 384, temperature: 0.1 })
+  const parsed = parseJsonObject(result, null)
+  if (!parsed || typeof parsed.intent !== 'string') {
+    throw new Error('Mi:dm voice router response parse error')
+  }
+  return {
+    intent: parsed.intent,
+    confidence: Number(parsed.confidence || 0),
+    slots: parsed.slots || {},
+    requiresConfirmation: Boolean(parsed.requiresConfirmation),
+    spokenResponse: String(parsed.spokenResponse || ''),
+    nextAction: parsed.nextAction || { tool: 'listenAgain', args: {} },
+    source: 'midm',
+  }
+}
+
 // ─── 편의 함수들 ─────────────────────────────────────────────
 
 // 장애 유형 매핑 (DB값 → 프롬프트용)
@@ -352,6 +427,7 @@ module.exports = {
   explainWord,
   generateWeeklyReport,
   tutorialStep,
+  routeVoiceDialog,
   mapSupportType,
   calcAge,
 }

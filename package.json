@@ -5,7 +5,12 @@
     "setup": "npm --prefix backend install && npm --prefix backend run install:python && npm --prefix frontend install && npm --prefix backend run check:setup",
     "setup:js": "npm --prefix backend install && npm --prefix frontend install",
     "check:setup": "npm --prefix backend run check:setup",
+    "setup:voice-models": "npm --prefix backend run install:voice-models",
+    "setup:midm-model": "npm --prefix backend run install:midm-model",
+    "models:apis": "bash scripts/start-model-apis.sh",
+    "models:apis:win": "powershell -ExecutionPolicy Bypass -File scripts/start-model-apis.ps1",
     "dev:backend": "npm --prefix backend run dev",
+    "dev:voice": "npm --prefix backend run dev:voice",
     "dev:frontend": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build"
   }

@@ -5,9 +5,12 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
+    "dev:voice": "node scripts/run_voice_service.js",
     "sync": "node sync.js",
     "analyze": "node analyze_difficulty.js",
     "install:python": "node scripts/install_python_deps.js",
+    "install:voice-models": "node scripts/install_python_deps.js requirements-voice.txt",
+    "install:midm-model": "node scripts/install_python_deps.js requirements-midm.txt",
     "check:setup": "node scripts/check_setup.js"
   },
   "dependencies": {

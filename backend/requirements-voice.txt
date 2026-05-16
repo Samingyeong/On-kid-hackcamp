@@ -1,0 +1,8 @@
+-r requirements.txt
+
+# Optional local/server STT backend for /api/voice/stt.
+# Verified on Python 3.8.17 in conda env v1; keep compatible with Windows,
+# macOS, and Linux Python 3.8+.
+# TTS is not installed here; use the dedicated Supertonic GUI/service
+# environment and point VOICE_SERVICE_URL at that service.
+faster-whisper>=1.1,<1.2

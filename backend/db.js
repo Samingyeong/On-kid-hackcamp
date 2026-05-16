@@ -101,6 +101,64 @@ db.exec(`
     analyzed_at     TEXT DEFAULT (datetime('now'))
   );
   CREATE INDEX IF NOT EXISTS idx_book_difficulty_level ON book_difficulty(level);
+
+  CREATE TABLE IF NOT EXISTS voice_sessions (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id     TEXT NOT NULL DEFAULT '',
+    book_title  TEXT,
+    profile     TEXT,
+    started_at  TEXT DEFAULT (datetime('now')),
+    ended_at    TEXT
+  );
+  CREATE INDEX IF NOT EXISTS idx_voice_sessions_user ON voice_sessions(user_id, started_at DESC);
+
+  CREATE TABLE IF NOT EXISTS voice_turns (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id  INTEGER,
+    user_id     TEXT NOT NULL DEFAULT '',
+    stt_text    TEXT,
+    intent      TEXT,
+    confidence  REAL DEFAULT 0,
+    state       TEXT,
+    created_at  TEXT DEFAULT (datetime('now'))
+  );
+  CREATE INDEX IF NOT EXISTS idx_voice_turns_session ON voice_turns(session_id, created_at);
+
+  CREATE TABLE IF NOT EXISTS voice_quiz_attempts (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id       INTEGER,
+    user_id          TEXT NOT NULL DEFAULT '',
+    question_id      TEXT,
+    stt_text         TEXT,
+    expected_answers TEXT,
+    match_type       TEXT,
+    score            REAL DEFAULT 0,
+    is_correct       INTEGER DEFAULT 0,
+    needs_retry      INTEGER DEFAULT 0,
+    feedback_hint    TEXT,
+    created_at       TEXT DEFAULT (datetime('now'))
+  );
+  CREATE INDEX IF NOT EXISTS idx_voice_quiz_attempts_session ON voice_quiz_attempts(session_id, created_at);
+
+  CREATE TABLE IF NOT EXISTS user_learning_profiles (
+    user_id                 TEXT PRIMARY KEY,
+    accessibility_profile   TEXT,
+    skill_vector            TEXT,
+    recommended_difficulty  INTEGER DEFAULT 1,
+    source_summary          TEXT,
+    updated_at              TEXT DEFAULT (datetime('now'))
+  );
+
+  CREATE TABLE IF NOT EXISTS learning_recommendations (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id     TEXT NOT NULL DEFAULT '',
+    source      TEXT NOT NULL DEFAULT 'voice',
+    book_title  TEXT NOT NULL,
+    reason      TEXT,
+    rank        INTEGER DEFAULT 0,
+    created_at  TEXT DEFAULT (datetime('now'))
+  );
+  CREATE INDEX IF NOT EXISTS idx_learning_recommendations_user ON learning_recommendations(user_id, source, created_at DESC);
 `)
 
 // ─── 마이그레이션: user_id 컬럼 추가 ──────────────────────────

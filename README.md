@@ -134,9 +134,10 @@ On-kid-hackcamp/
 
 ### 공통 요구사항
 - Node.js 22 LTS 권장
-- Python 3.10~3.12 권장
-- Java JDK 17 이상 권장 (KoNLPy Okt 실행에 필요)
-- Windows에서는 Python 설치 시 `python` 실행 별칭 또는 `py` launcher가 동작해야 합니다.
+- Python 3.8 이상 권장. 현재 macOS 데모는 conda `v1`의 Python 3.8.17로 검증했습니다.
+- Java JDK 17 이상 권장 (KoNLPy Okt 실행에 필요). Windows에서는 `JAVA_HOME`과 `Path`에 JDK가 잡혀 있어야 합니다.
+- Python 실행 파일은 OS별로 `PYTHON_BIN`을 지정할 수 있습니다. macOS 데모는 `/opt/homebrew/Caskroom/miniforge/base/envs/v1/bin/python`, Windows는 `py` 또는 `python`을 권장합니다.
+- Supertonic TTS는 프로젝트 Python 환경에 설치하지 않고 전용 GUI/service 환경에서 별도로 실행합니다.
 
 ### 한 번에 설치 및 확인
 ```bash
@@ -145,13 +146,76 @@ npm run setup
 
 위 명령은 백엔드/프론트엔드 JS 의존성, Python `requirements.txt`, 데모용 DB·키포인트·VRM·MediaPipe asset 상태를 함께 확인합니다.
 
+### Midm-mini / faster-whisper 모델 API 실행
+
+처음 clone한 뒤 모델 API까지 같은 프로젝트에서 띄우려면 먼저 기본 설정 파일을 만듭니다.
+
+```bash
+cp backend/.env.example backend/.env
+```
+
+STT만 로컬 또는 서버에서 켤 경우:
+
+```bash
+npm run setup:voice-models
+```
+
+Supertonic TTS는 전용 GUI/service 환경에서 실행하고, 백엔드는 해당 서비스로 프록시합니다. `backend/.env`는 아래처럼 둡니다. `backend/voice_service.py`를 브리지로 쓰는 경우에도 `v1`이 아니라 Supertonic 런타임이 설치된 별도 Python을 `VOICE_PYTHON_BIN`으로 지정합니다.
+
+```env
+VOICE_SERVICE_URL=http://127.0.0.1:4100
+VOICE_TTS_BACKEND=supertonic
+# macOS/Linux 예: VOICE_PYTHON_BIN=/path/to/supertonic/python
+# Windows 예: VOICE_PYTHON_BIN=C:\path\to\supertonic\python.exe
+```
+
+Midm-mini를 vLLM OpenAI-compatible API로 직접 띄울 Linux/CUDA 서버에서는 별도 Python 환경에서 아래 의존성을 설치합니다. vLLM은 Windows/macOS 로컬보다 Linux/CUDA 서버 또는 WSL2에서 실행하는 쪽이 안정적입니다.
+
+```bash
+npm run setup:midm-model
+```
+
+macOS/Linux 터미널:
+
+```bash
+npm run models:apis
+```
+
+Windows PowerShell:
+
+```powershell
+npm run models:apis:win
+```
+
+Windows에서 Midm-mini를 WSL2/Linux 쪽에서 띄우려면:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/start-model-apis.ps1 -UseWsl
+```
+
+기본 포트는 Midm-mini `http://127.0.0.1:8000/v1`, voice API `http://127.0.0.1:4100`입니다. GPU 서버에서는 예를 들어 아래처럼 모델별 GPU를 분리할 수 있습니다.
+
+```bash
+MIDM_CUDA_VISIBLE_DEVICES=0,1 WHISPER_CUDA_VISIBLE_DEVICES=2 npm run models:apis
+```
+
+모델 서버가 떠 있으면 `backend/.env`는 아래 값을 기준으로 둡니다.
+
+```env
+MIDM_BASE_URL=http://127.0.0.1:8000/v1
+MIDM_MODEL=midm-mini
+VOICE_SERVICE_URL=http://127.0.0.1:4100
+```
+
 ### 백엔드
+macOS/Linux:
+
 ```bash
 cd backend
 npm install
-npm run install:python
+PYTHON_BIN=/opt/homebrew/Caskroom/miniforge/base/envs/v1/bin/python npm run install:python
 npm run check:setup
-npm run dev           # http://localhost:4000
+PYTHON_BIN=/opt/homebrew/Caskroom/miniforge/base/envs/v1/bin/python npm run dev  # http://localhost:4000
 ```
 
 Windows에서 Python 실행명이 `py`인 경우 PowerShell에서 아래처럼 지정할 수 있습니다.

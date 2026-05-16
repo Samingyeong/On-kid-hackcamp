@@ -345,6 +345,220 @@ export async function evaluateSignPractice(
   return res.json()
 }
 
+// ─── 오디오 기반 동화 학습 ───────────────────────────────────
+export type VoiceIntent =
+  | 'START'
+  | 'START_QUIZ'
+  | 'ANSWER_QUIZ'
+  | 'REPEAT'
+  | 'HINT'
+  | 'TODAY_RESULT'
+  | 'NEXT'
+  | 'PREVIOUS'
+  | 'STOP'
+  | 'CHANGE_BOOK'
+  | 'LEVEL_DOWN'
+  | 'LEVEL_UP'
+  | 'EXPLAIN_WORD'
+  | 'UNKNOWN'
+
+export interface VoiceDialogResult {
+  intent: VoiceIntent
+  confidence: number
+  slots: {
+    answerText?: string
+    targetWord?: string
+    requestedSpeed?: 'normal' | 'slow'
+  }
+  requiresConfirmation: boolean
+  spokenResponse: string
+  nextAction: {
+    tool: string
+    args: Record<string, unknown>
+  }
+  source?: string
+}
+
+export async function startVoiceSession(bookTitle: string): Promise<{
+  sessionId: number
+  accessibilityProfile: Record<string, string>
+}> {
+  const uid = await getUserId()
+  const res = await fetch(`${BASE}/api/voice/session/start`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-user-id': uid },
+    body: JSON.stringify({ bookTitle }),
+  })
+  return res.json()
+}
+
+export async function routeVoiceDialog(data: {
+  text: string
+  sessionId?: number | null
+  state?: string
+  allowedIntents?: VoiceIntent[]
+  childProfile?: Record<string, unknown>
+  context?: Record<string, unknown>
+}): Promise<VoiceDialogResult> {
+  const uid = await getUserId()
+  const res = await fetch(`${BASE}/api/voice/dialog`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-user-id': uid },
+    body: JSON.stringify(data),
+  })
+  return res.json()
+}
+
+export async function fetchVoiceServiceHealth(): Promise<Record<string, unknown>> {
+  const res = await fetch(`${BASE}/api/voice/service/health`)
+  return res.json()
+}
+
+export async function transcribeVoiceAudio(data: {
+  audioBase64: string
+  mimeType?: string
+  language?: string
+  prompt?: string
+}): Promise<Record<string, unknown>> {
+  const res = await fetch(`${BASE}/api/voice/stt`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  return res.json()
+}
+
+export async function synthesizeVoiceText(data: {
+  text: string
+  voice?: string
+  rate?: number
+  lang?: string
+  format?: string
+  totalSteps?: number
+}): Promise<Record<string, unknown>> {
+  const res = await fetch(`${BASE}/api/voice/tts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  return res.json()
+}
+
+export interface VoiceQuizEvaluation {
+  questionId: string
+  sttText: string
+  expectedAnswers: string[]
+  matchType: 'exact_match' | 'partial_match' | 'no_match' | 'insufficient_data'
+  score: number
+  isCorrect: boolean
+  needsRetry: boolean
+  feedbackHint: string
+  attemptId?: number
+  progress?: VoiceProgressSummary
+}
+
+export interface VoiceProgressSummary {
+  userId: string
+  bookTitle: string
+  sessionCount: number
+  turnCount: number
+  totalQuiz: number
+  correctQuiz: number
+  quizAccuracy: number
+  recommendedLevel: 'beginner' | 'intermediate' | 'advanced'
+  skillVector: {
+    listeningComprehension: number
+    vocabulary: number
+    shortTermRecall: number
+    commandFollowing: number
+    helpRequestRate: number
+    recommendedDifficulty: number
+  }
+  spokenSummary: string
+  lastSessionAt: string
+}
+
+export interface VoiceBookRecommendation {
+  title: string
+  level: string
+  reason: string
+  rank: number
+  thumbnail: string
+  description: string
+  storyType: string
+}
+
+export interface VoiceBookRecommendationResponse {
+  progress: VoiceProgressSummary
+  items: VoiceBookRecommendation[]
+}
+
+export interface ParentSummary {
+  childProfile: Record<string, string>
+  reading: {
+    totalBooks: number
+    recentBooks: Array<{ title: string; lastReadAt: string; readCount: number }>
+    trend: Array<{ date: string; count: number }>
+  }
+  words: {
+    total: number
+    known: number
+    unknown: number
+  }
+  voice: VoiceProgressSummary & {
+    averageScore: number
+    retryCount: number
+    updatedAt: string
+    recentSessions: Array<{ id: number; bookTitle: string; startedAt: string; endedAt: string }>
+  }
+  recommendations: Array<{ title: string; reason: string; rank: number; createdAt: string }>
+  summary: {
+    message_to_child?: string
+    message_to_parent?: string
+    system_analysis?: string
+    observations?: string[]
+    next_actions?: string[]
+  }
+  summarySource: 'midm' | 'rules'
+}
+
+export async function evaluateVoiceQuiz(data: {
+  questionId: string
+  sttText: string
+  expectedAnswers: string[]
+  sessionId?: number | null
+}): Promise<VoiceQuizEvaluation> {
+  const uid = await getUserId()
+  const res = await fetch(`${BASE}/api/voice/quiz/evaluate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-user-id': uid },
+    body: JSON.stringify(data),
+  })
+  return res.json()
+}
+
+export async function fetchVoiceProgress(bookTitle: string): Promise<VoiceProgressSummary> {
+  const uid = await getUserId()
+  const params = new URLSearchParams()
+  if (bookTitle) params.set('bookTitle', bookTitle)
+  const res = await fetch(`${BASE}/api/voice/progress?${params}`, { headers: { 'x-user-id': uid } })
+  return res.json()
+}
+
+export async function fetchVoiceBookRecommendations(bookTitle: string, limit = 3): Promise<VoiceBookRecommendationResponse> {
+  const uid = await getUserId()
+  const params = new URLSearchParams({ limit: String(limit) })
+  if (bookTitle) params.set('bookTitle', bookTitle)
+  const res = await fetch(`${BASE}/api/voice/recommend/books?${params}`, { headers: { 'x-user-id': uid } })
+  return res.json()
+}
+
+export async function fetchParentSummary(): Promise<ParentSummary> {
+  const uid = await getUserId()
+  const res = await fetch(`${BASE}/api/parent/summary`, { headers: { 'x-user-id': uid } })
+  return res.json()
+}
+
 // ─── 한국어사전 ───────────────────────────────────────────────
 export interface DictItem { word: string; pos: string; grade: string; definitions: string[] }
 

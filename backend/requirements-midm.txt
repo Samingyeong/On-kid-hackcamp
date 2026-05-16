@@ -1,0 +1,6 @@
+# Optional Midm-mini OpenAI-compatible API server.
+# Do not install this into the macOS conda v1 runtime. vLLM is intended for a
+# separate Linux/CUDA environment or WSL2/Linux server, then the backend should
+# point MIDM_BASE_URL at that remote API.
+vllm==0.8.5.post1
+transformers==4.51.3

@@ -1,11 +1,23 @@
 const fs = require('fs')
+const os = require('os')
 const path = require('path')
 const { spawnSync } = require('child_process')
 
 const rootDir = path.resolve(__dirname, '..', '..')
 const backendDir = path.join(rootDir, 'backend')
 const frontendDir = path.join(rootDir, 'frontend')
-const pythonBin = process.env.PYTHON_BIN || (process.platform === 'win32' ? 'python' : 'python3')
+
+function pickPython() {
+  const defaults = process.platform === 'win32' ? ['py', 'python'] : ['python3', 'python']
+  const candidates = [process.env.PYTHON_BIN, ...defaults].filter(Boolean)
+  for (const candidate of candidates) {
+    const result = spawnSync(candidate, ['--version'], { stdio: 'ignore', shell: false })
+    if (result.status === 0) return candidate
+  }
+  return process.env.PYTHON_BIN || defaults[0]
+}
+
+const pythonBin = pickPython()
 
 function assertFile(filePath, label) {
   if (!fs.existsSync(filePath)) {
@@ -56,9 +68,14 @@ function runPythonCheck() {
 
 function runDbCheck() {
   const Database = require('better-sqlite3')
-  const dbPath = path.join(backendDir, 'data', 'books.db')
-  const db = new Database(dbPath, { readonly: true })
+  const sourceDbPath = path.join(backendDir, 'data', 'books.db')
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'on-kid-db-'))
+  const dbPath = path.join(tempDir, 'books.db')
+  fs.copyFileSync(sourceDbPath, dbPath)
+
+  let db
   try {
+    db = new Database(dbPath, { readonly: true, fileMustExist: true })
     const signCount = db.prepare("SELECT COUNT(*) AS count FROM sign_motion_segments WHERE keypoints_path != ''").get().count
     const wordCount = db.prepare(`
       SELECT COUNT(*) AS count
@@ -74,7 +91,8 @@ function runDbCheck() {
     }
     return { signCount, wordCount }
   } finally {
-    db.close()
+    if (db) db.close()
+    fs.rmSync(tempDir, { recursive: true, force: true })
   }
 }
 
