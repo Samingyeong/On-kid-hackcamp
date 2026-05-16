@@ -8,6 +8,7 @@ import StudySelect from '../pages/StudySelect'
 import StudyWrite from '../pages/StudyWrite'
 import StudyTyping from '../pages/StudyTyping'
 import StudySentence from '../pages/StudySentence'
+import ScenarioModule from '../components/ScenarioModule'
 
 const Placeholder = ({ title }: { title: string }) => (
   <div style={{ padding: 40, textAlign: 'center' }}>
@@ -31,6 +32,8 @@ const router = createBrowserRouter([
       { path: 'study/practice', element: <StudyWrite /> },
       { path: 'study/typing', element: <StudyTyping /> },
       { path: 'study/sentence', element: <StudySentence /> },
+      // 선택형 시나리오 모듈 (?scenario=mock-001 등 쿼리로 시나리오 지정)
+      { path: 'study/scenario', element: <ScenarioModule /> },
       { path: 'study/*', element: <Placeholder title="학습" /> },
     ],
   },
