@@ -3,7 +3,23 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { fetchReadingHistory, type ReadHistory } from '../api/library'
 import './StudySelect.css'
 
-const MODES = [
+type StandardStudyMode = {
+  id: 'write' | 'type' | 'speak' | 'sign'
+  label: string
+  bg: string
+  monkey: string
+}
+
+type QuizStudyMode = {
+  id: 'quiz'
+  label: string
+  monkey: string
+  labelImage: string
+}
+
+type StudyMode = StandardStudyMode | QuizStudyMode
+
+const MODES: StudyMode[] = [
   {
     id: 'write',
     label: '따라쓰기',
@@ -23,6 +39,12 @@ const MODES = [
     monkey: '/svg/따라말하기원숭이.png',
   },
   {
+    id: 'quiz',
+    label: '퀴즈',
+    monkey: '/svg/quiz_game_art.png',
+    labelImage: '/svg/quiz_game_label.png',
+  },
+  {
     id: 'sign',
     label: '수화하기',
     bg: '/svg/수화하기배경.png',
@@ -31,7 +53,7 @@ const MODES = [
 ]
 
 // 문장학습 모드 (따라쓰기 제외)
-const SENTENCE_MODES = [
+const SENTENCE_MODES: StandardStudyMode[] = [
   {
     id: 'type',
     label: '타자치기',
@@ -87,6 +109,8 @@ export default function StudySelect() {
       navigate(`/study/typing?book=${encodeURIComponent(selectedBook)}`)
     } else if (modeId === 'speak') {
       navigate(`/study/voice?book=${encodeURIComponent(selectedBook)}`)
+    } else if (modeId === 'quiz') {
+      navigate(`/study/quiz?book=${encodeURIComponent(selectedBook)}`)
     } else if (modeId === 'sign') {
       navigate(`/study/sign?book=${encodeURIComponent(selectedBook)}`)
     } else {
@@ -164,8 +188,20 @@ export default function StudySelect() {
             className={`study-mode-card ${mode.id}`}
             onClick={() => selectMode(mode.id)}
           >
-            <img src={mode.bg} alt="" className="study-mode-bg" />
-            <img src={mode.monkey} alt={mode.label} className="study-mode-monkey" />
+            {mode.id === 'quiz' ? (
+              <>
+                <div className="study-mode-bg study-mode-quiz-bg" aria-hidden="true" />
+                <img src={mode.monkey} alt={mode.label} className="study-mode-monkey study-mode-quiz-monkey" />
+                <div className="study-mode-quiz-label" aria-hidden="true">
+                  <img src={mode.labelImage} alt="" />
+                </div>
+              </>
+            ) : (
+              <>
+                <img src={mode.bg} alt="" className="study-mode-bg" />
+                <img src={mode.monkey} alt={mode.label} className="study-mode-monkey" />
+              </>
+            )}
           </div>
         ))}
       </div>
