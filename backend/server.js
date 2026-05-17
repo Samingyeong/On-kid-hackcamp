@@ -1728,6 +1728,16 @@ app.post('/admin/sync', async (req, res) => {
   }
 })
 
+// ─── 프론트엔드 정적 파일 서빙 (배포용) ──────────────────────
+const FRONTEND_DIST = path.join(__dirname, '..', 'frontend', 'dist')
+if (fs.existsSync(FRONTEND_DIST)) {
+  app.use(express.static(FRONTEND_DIST))
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api/') || req.path.startsWith('/proxy') || req.path.startsWith('/images') || req.path.startsWith('/sign-motion') || req.path.startsWith('/videos')) return next()
+    res.sendFile(path.join(FRONTEND_DIST, 'index.html'))
+  })
+}
+
 // ─── 서버 시작 ────────────────────────────────────────────────
 app.listen(PORT, async () => {
   console.log(`📚 book-backend 실행 중: http://localhost:${PORT}`)
