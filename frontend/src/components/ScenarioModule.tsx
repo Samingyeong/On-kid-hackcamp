@@ -8,9 +8,9 @@ import styles from './ScenarioModule.module.css'
 type Phase = 'SELECT_STORY' | 'STEP_1' | 'STEP_2' | 'STEP_3' | 'GENERATING' | 'BOOKSHELF'
 
 const STORIES = [
-  { id: 'pig', title: '아기돼지 삼형제', emoji: '🐷' },
-  { id: 'duck', title: '미운오리새끼', emoji: '🦆' },
-  { id: 'hansel', title: '헨젤과 그레텔', emoji: '🍬' },
+  { id: 'pig', title: '아기돼지 삼형제' },
+  { id: 'duck', title: '미운오리새끼' },
+  { id: 'hansel', title: '헨젤과 그레텔' },
 ]
 
 const CHARACTERS = [
@@ -20,13 +20,13 @@ const CHARACTERS = [
 ]
 
 const STEP2_CHOICES = [
-  { id: 'fight', label: '늑대와 싸우기 💨', desc: '용감하게 맞서는 이야기' },
-  { id: 'run', label: '도망가기 🏃', desc: '지혜롭게 피하는 이야기' },
+  { id: 'fight', label: '늑대와 싸우기', desc: '용감하게 맞서는 이야기' },
+  { id: 'run', label: '도망가기', desc: '지혜롭게 피하는 이야기' },
 ]
 
 const STEP3_CHOICES = [
-  { id: 'good', label: '알고보니 착한 늑대 🤝', desc: '늑대와 친구가 되는 결말' },
-  { id: 'bad', label: '늑대를 혼내주기 😤', desc: '늑대에게 교훈을 주는 결말' },
+  { id: 'good', label: '알고보니 착한 늑대', desc: '늑대와 친구가 되는 결말' },
+  { id: 'bad', label: '늑대를 혼내주기', desc: '늑대에게 교훈을 주는 결말' },
 ]
 
 // 장면별 이미지 매핑
@@ -95,19 +95,18 @@ export default function ScenarioModule() {
   if (phase === 'SELECT_STORY') {
     return (
       <div className={styles.container}>
-        <h1 className={styles.mainTitle}>📚 나만의 동화 만들기</h1>
+        <h1 className={styles.mainTitle}>나만의 동화 만들기</h1>
         <p className={styles.subtitle}>어떤 동화를 만들어볼까요?</p>
         <div className={styles.storyGrid}>
           {STORIES.map(s => (
             <button key={s.id} className={styles.storyCard} onClick={() => selectStory(s.id)}>
-              <span className={styles.storyEmoji}>{s.emoji}</span>
               <span className={styles.storyTitle}>{s.title}</span>
             </button>
           ))}
         </div>
         {books.length > 0 && (
           <button className={styles.shelfBtn} onClick={() => setPhase('BOOKSHELF')}>
-            📖 나만의 책장 ({books.length}권)
+            나만의 책장 ({books.length}권)
           </button>
         )}
       </div>
@@ -118,14 +117,13 @@ export default function ScenarioModule() {
   if (phase === 'BOOKSHELF') {
     return (
       <div className={styles.container}>
-        <h1 className={styles.mainTitle}>📖 나만의 책장</h1>
+        <h1 className={styles.mainTitle}>나만의 책장</h1>
         {books.length === 0 ? (
           <p className={styles.subtitle}>아직 만든 동화가 없어요. 동화를 만들어보세요!</p>
         ) : (
           <div className={styles.bookshelf}>
             {books.map((book, i) => (
               <div key={i} className={styles.bookItem}>
-                <span className={styles.bookEmoji}>📕</span>
                 <div>
                   <strong>{book.title}</strong>
                   <p className={styles.bookDate}>{book.createdAt}</p>
@@ -148,7 +146,7 @@ export default function ScenarioModule() {
           <div className={styles.generating}>
             <div className={styles.spinner} />
             <p>동화를 제작하고 있어요...</p>
-            <p className={styles.genSub}>AI가 이야기를 엮고 있어요 ✨</p>
+            <p className={styles.genSub}>AI가 이야기를 엮고 있어요</p>
           </div>
         </div>
       </div>
