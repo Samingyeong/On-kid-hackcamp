@@ -15,6 +15,7 @@ import MyStory from '../pages/MyStory'
 import MidmTest from '../pages/MidmTest'
 import TutorIntro from '../pages/TutorIntro'
 import ParentDashboard from '../pages/ParentDashboard'
+import ScenarioModule from '../components/ScenarioModule'
 
 const Placeholder = ({ title }: { title: string }) => (
   <div style={{ padding: 40, textAlign: 'center' }}>
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
       { path: 'study/quiz', element: <StudyQuiz /> },
       { path: 'study/sentence', element: <StudySentence /> },
       { path: 'study/sign', element: <StudySign /> },
+      { path: 'study/scenario', element: <ScenarioModule /> },
       { path: 'midm-test', element: <MidmTest /> },
       { path: 'study/*', element: <Placeholder title="학습" /> },
     ],

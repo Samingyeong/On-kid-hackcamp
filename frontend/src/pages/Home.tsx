@@ -48,6 +48,14 @@ const STUDY_CARDS = [
     path: '/study/select?type=sentence',
     img: '/svg/sentence_study.png',
   },
+  {
+    id: 'scenario',
+    label: '상황 이야기',
+    border: '#A78BFA',
+    labelBg: '#A78BFA',
+    path: '/study/scenario',
+    img: '/svg/sentence_monkey2.png',
+  },
 ]
 
 const BOOK_SVGS: Record<string, string> = { all: '/svg/book_all.svg' }
