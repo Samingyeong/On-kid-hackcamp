@@ -1,71 +1,104 @@
 ﻿.container {
   min-height: calc(100vh - 64px);
-  background: #1a1a2e;
+  background: #FAF4EE;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
+  padding: 40px 24px;
+  gap: 24px;
 }
 
-.scene {
-  flex: 1;
+.mainTitle {
+  font-size: 32px;
+  font-weight: 900;
+  color: #333;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #888;
+}
+
+.storyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 600px;
   width: 100%;
+}
+
+.storyCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 20px;
+  background: #fff;
+  border: 3px solid #eee;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+}
+.storyCard:hover { border-color: #FFB256; transform: translateY(-4px); box-shadow: 0 8px 20px rgba(255,178,86,0.2); }
+
+.storyEmoji { font-size: 48px; }
+.storyTitle { font-size: 16px; }
+
+.shelfBtn {
+  margin-top: 16px;
+  padding: 14px 28px;
+  background: #6ED0CF;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* 분할 레이아웃 */
+.splitLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 60vh;
+  align-items: center;
+}
+
+.leftPanel {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  min-height: 0;
-  position: relative;
 }
 
 .sceneImg {
-  max-width: 100%;
-  max-height: 60vh;
+  width: 100%;
+  max-height: 50vh;
   object-fit: contain;
   border-radius: 16px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
-.controls {
-  width: 100%;
-  max-width: 800px;
-  padding: 20px 24px 32px;
+.rightPanel {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  gap: 20px;
 }
 
-.startBtn {
-  padding: 20px 48px;
-  background: #FFB256;
-  border: none;
-  border-radius: 40px;
+.stepTitle {
   font-size: 24px;
   font-weight: 900;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 6px 0 #d4882a;
-  transition: all 0.15s;
-}
-.startBtn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 0 #d4882a; }
-.startBtn:disabled { opacity: 0.6; cursor: default; }
-
-.choices {
-  text-align: center;
-  animation: fadeUp 0.4s ease;
+  color: #333;
 }
 
-.prompt {
-  font-size: 20px;
-  font-weight: 800;
-  color: #fff;
-  margin: 0 0 16px;
-}
-
-.choiceGrid {
+.charGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
@@ -74,96 +107,116 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 20px 16px;
+  padding: 16px;
   background: #fff;
-  border: 3px solid transparent;
+  border: 3px solid #eee;
   border-radius: 20px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #333;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
   transition: all 0.2s;
 }
-.charBtn:hover { border-color: #FFB256; transform: translateY(-4px); box-shadow: 0 8px 20px rgba(255,178,86,0.3); }
+.charBtn:hover { border-color: #FFB256; transform: translateY(-3px); }
 
-.charEmoji { font-size: 40px; }
-
-.scenarioGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+.charImg {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
 }
 
-.scenarioBtn {
+.choiceList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.choiceCard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 24px;
+  background: #fff;
+  border: 3px solid #eee;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+.choiceCard:hover { border-color: #FFB256; transform: translateX(4px); }
+.choiceCard strong { font-size: 18px; color: #333; }
+.choiceCard span { font-size: 14px; color: #888; }
+
+.backBtn {
+  padding: 10px 20px;
+  background: none;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #888;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+/* 제작중 */
+.sceneWrap {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+}
+
+.generating {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 28px 24px;
-  background: #fff;
-  border: 3px solid transparent;
-  border-radius: 24px;
-  font-size: 18px;
-  font-weight: 800;
-  color: #333;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.scenarioBtn:hover { border-color: #FFB256; transform: translateY(-4px); }
-
-.scenarioEmoji { font-size: 48px; }
-
-.nextBtn {
-  padding: 14px 36px;
-  background: #6ED0CF;
-  border: none;
-  border-radius: 30px;
-  font-size: 18px;
-  font-weight: 800;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+  border-radius: 16px;
   color: #fff;
-  cursor: pointer;
-  animation: pulse 2s infinite;
+  font-size: 20px;
+  font-weight: 700;
+  gap: 12px;
 }
 
-.narrating {
-  font-size: 16px;
-  color: rgba(255,255,255,0.7);
-  animation: dots 1.5s infinite;
+.genSub { font-size: 14px; opacity: 0.7; }
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255,255,255,0.3);
+  border-top-color: #FFB256;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* 책장 */
+.bookshelf {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 500px;
 }
 
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(110,208,207,0.4); }
-  50% { box-shadow: 0 0 0 12px rgba(110,208,207,0); }
+.bookItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-@keyframes dots {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
+.bookEmoji { font-size: 32px; }
+.bookItem strong { font-size: 16px; color: #333; }
+.bookDate { font-size: 12px; color: #aaa; margin-top: 4px; }
 
 @media (max-width: 768px) {
-  .choiceGrid { grid-template-columns: repeat(2, 1fr); }
-  .sceneImg { max-height: 45vh; }
-}
-
-.caption {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.75);
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.6;
-  max-width: 80%;
-  text-align: center;
-  animation: fadeUp 0.3s ease;
+  .splitLayout { grid-template-columns: 1fr; }
+  .storyGrid { grid-template-columns: repeat(2, 1fr); }
 }

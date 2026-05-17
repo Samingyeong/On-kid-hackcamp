@@ -1,197 +1,217 @@
 ﻿/**
- * ScenarioModule.tsx - 나만의 동화: 아기돼지 3형제 인터랙티브
- * TTS + 선택지 분기 + 장면 전환
+ * ScenarioModule.tsx - 나만의 동화 만들기
+ * 동화 선택 → 챕터별 선택지 → 제작중 화면 → 나만의 책장
  */
-import { useState, useCallback, useEffect } from 'react'
+import { useState } from 'react'
 import styles from './ScenarioModule.module.css'
 
-type Phase = 'START' | 'CHAR_SELECT' | 'SCENARIO_SELECT' | 'SCENE_4' | 'SCENE_5A' | 'SCENE_6A' | 'SCENE_5B' | 'SCENE_6B' | 'ENDING'
+type Phase = 'SELECT_STORY' | 'STEP_1' | 'STEP_2' | 'STEP_3' | 'GENERATING' | 'BOOKSHELF'
 
-const CHARACTERS = [
-  { id: 'elephant', label: '코끼리', emoji: '🐘' },
-  { id: 'monkey', label: '원숭이', emoji: '🐵' },
-  { id: 'rabbit', label: '토끼', emoji: '🐰' },
-  { id: 'dog', label: '강아지', emoji: '🐶' },
+const STORIES = [
+  { id: 'pig', title: '아기돼지 삼형제', emoji: '🐷' },
+  { id: 'duck', title: '미운오리새끼', emoji: '🦆' },
+  { id: 'hansel', title: '헨젤과 그레텔', emoji: '🍬' },
 ]
 
-const IMAGES: Record<Phase, string> = {
-  START: '/flowai/KakaoTalk_20260517_075158632.png',
-  CHAR_SELECT: '/flowai/KakaoTalk_20260517_075158632_01.png',
-  SCENARIO_SELECT: '/flowai/KakaoTalk_20260517_075158632_02.png',
-  SCENE_4: '/flowai/KakaoTalk_20260517_075158632_03.png',
-  SCENE_5A: '/flowai/KakaoTalk_20260517_075158632_04.png',
-  SCENE_6A: '/flowai/KakaoTalk_20260517_075158632_05.png',
-  SCENE_5B: '/flowai/KakaoTalk_20260517_075158632_06.png',
-  SCENE_6B: '/flowai/KakaoTalk_20260517_075158632_07.png',
-  ENDING: '/flowai/KakaoTalk_20260517_075158632_08.png',
+const CHARACTERS = [
+  { id: 'rabbit', label: '토끼', img: '/svg/토끼.png' },
+  { id: 'pig', label: '돼지', img: '/svg/숭이.png' },
+  { id: 'elephant', label: '코끼리', img: '/svg/코끼리.png' },
+]
+
+const STEP2_CHOICES = [
+  { id: 'fight', label: '늑대와 싸우기 💨', desc: '용감하게 맞서는 이야기' },
+  { id: 'run', label: '도망가기 🏃', desc: '지혜롭게 피하는 이야기' },
+]
+
+const STEP3_CHOICES = [
+  { id: 'good', label: '알고보니 착한 늑대 🤝', desc: '늑대와 친구가 되는 결말' },
+  { id: 'bad', label: '늑대를 혼내주기 😤', desc: '늑대에게 교훈을 주는 결말' },
+]
+
+// 장면별 이미지 매핑
+const SCENE_IMAGES: Record<string, string> = {
+  STEP_1: '/flowai/scene1.png',
+  STEP_2: '/flowai/scene2.png',
+  STEP_3: '/flowai/scene3.png',
+  GENERATING: '/flowai/scene4.png',
 }
 
-function speak(text: string, onEnd?: () => void) {
-  if (!('speechSynthesis' in window)) { onEnd?.(); return }
-  window.speechSynthesis.cancel()
-  const u = new SpeechSynthesisUtterance(text)
-  u.lang = 'ko-KR'; u.rate = 0.88; u.pitch = 1.1
-  u.onend = () => onEnd?.()
-  u.onerror = () => onEnd?.()
-  window.speechSynthesis.speak(u)
+interface MyBook {
+  title: string
+  character: string
+  choices: string[]
+  createdAt: string
 }
 
 export default function ScenarioModule() {
-  const [phase, setPhase] = useState<Phase>('START')
+  const [phase, setPhase] = useState<Phase>('SELECT_STORY')
+  const [selectedStory, setSelectedStory] = useState('')
   const [character, setCharacter] = useState('')
-  const [scenario, setScenario] = useState<'DESTRUCTION' | 'COOPERATION' | ''>('')
-  const [narrating, setNarrating] = useState(false)
-  const [showNext, setShowNext] = useState(false)
-  const [caption, setCaption] = useState('')
+  const [choices, setChoices] = useState<string[]>([])
+  const [books, setBooks] = useState<MyBook[]>([])
 
-  const charName = CHARACTERS.find(c => c.id === character)?.label || '동물'
-
-  const narrate = useCallback((text: string, nextPhase?: Phase) => {
-    setNarrating(true)
-    setShowNext(false)
-    setCaption(text)
-    speak(text, () => {
-      setNarrating(false)
-      if (nextPhase) setPhase(nextPhase)
-      else setShowNext(true)
-    })
-  }, [])
-
-  // 시작 버튼
-  function handleStart() {
-    narrate(
-      '옛날 옛적에, 귀여운 아기돼지 삼형제가 살고 있었어요. 삼형제는 무서운 늑대를 피해 숲속에 각자 집을 짓기로 했답니다.',
-      'CHAR_SELECT'
-    )
+  function selectStory(id: string) {
+    setSelectedStory(id)
+    setPhase('STEP_1')
   }
 
-  // 캐릭터 선택
-  function handleCharSelect(id: string) {
+  function selectCharacter(id: string) {
     setCharacter(id)
-    const name = CHARACTERS.find(c => c.id === id)?.label || '동물'
-    narrate(
-      `우와, 귀여운 ${name} 삼형제의 이야기군요! 그럼 이번엔 어떤 이야기가 펼쳐질지 골라볼까요?`,
-      'SCENARIO_SELECT'
+    setChoices([id])
+    setPhase('STEP_2')
+  }
+
+  function selectStep2(id: string) {
+    setChoices(prev => [...prev, id])
+    setPhase('STEP_3')
+  }
+
+  function selectStep3(id: string) {
+    setChoices(prev => [...prev, id])
+    setPhase('GENERATING')
+    // 3초 후 완성
+    setTimeout(() => {
+      const charLabel = CHARACTERS.find(c => c.id === character)?.label || '동물'
+      const storyTitle = STORIES.find(s => s.id === selectedStory)?.title || '동화'
+      setBooks(prev => [...prev, {
+        title: `${charLabel}의 ${storyTitle}`,
+        character,
+        choices: [...choices, id],
+        createdAt: new Date().toLocaleString('ko-KR'),
+      }])
+      setTimeout(() => setPhase('BOOKSHELF'), 2000)
+    }, 3000)
+  }
+
+  function reset() {
+    setPhase('SELECT_STORY')
+    setSelectedStory('')
+    setCharacter('')
+    setChoices([])
+  }
+
+  // 동화 선택 화면
+  if (phase === 'SELECT_STORY') {
+    return (
+      <div className={styles.container}>
+        <h1 className={styles.mainTitle}>📚 나만의 동화 만들기</h1>
+        <p className={styles.subtitle}>어떤 동화를 만들어볼까요?</p>
+        <div className={styles.storyGrid}>
+          {STORIES.map(s => (
+            <button key={s.id} className={styles.storyCard} onClick={() => selectStory(s.id)}>
+              <span className={styles.storyEmoji}>{s.emoji}</span>
+              <span className={styles.storyTitle}>{s.title}</span>
+            </button>
+          ))}
+        </div>
+        {books.length > 0 && (
+          <button className={styles.shelfBtn} onClick={() => setPhase('BOOKSHELF')}>
+            📖 나만의 책장 ({books.length}권)
+          </button>
+        )}
+      </div>
     )
   }
 
-  // 시나리오 선택
-  function handleScenarioSelect(mode: 'DESTRUCTION' | 'COOPERATION') {
-    setScenario(mode)
-    narrate(
-      `숲속으로 간 ${charName} 삼형제는 각자 집을 짓기 시작했어요. 첫째와 둘째는 짚과 나무로 뚝딱뚝딱 집을 지었지만, 의젓한 셋째는 설계도를 꼼꼼히 보며 아주 단단한 벽돌집을 지었답니다.`,
-      'SCENE_4'
+  // 나만의 책장
+  if (phase === 'BOOKSHELF') {
+    return (
+      <div className={styles.container}>
+        <h1 className={styles.mainTitle}>📖 나만의 책장</h1>
+        {books.length === 0 ? (
+          <p className={styles.subtitle}>아직 만든 동화가 없어요. 동화를 만들어보세요!</p>
+        ) : (
+          <div className={styles.bookshelf}>
+            {books.map((book, i) => (
+              <div key={i} className={styles.bookItem}>
+                <span className={styles.bookEmoji}>📕</span>
+                <div>
+                  <strong>{book.title}</strong>
+                  <p className={styles.bookDate}>{book.createdAt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        <button className={styles.backBtn} onClick={reset}>+ 새 동화 만들기</button>
+      </div>
     )
   }
 
-  // 다음 장면
-  function handleNext() {
-    setShowNext(false)
-    if (phase === 'SCENE_4') {
-      if (scenario === 'DESTRUCTION') {
-        narrate(
-          `그때, 배고픈 늑대 아저씨가 나타났어요! 늑대가 숨을 크게 모아 후~ 하고 불자, 짚 집과 나무 집이 힘없이 날아가 버렸어요! 깜짝 놀란 ${charName} 형제들은 셋째의 벽돌집으로 도망쳤답니다.`,
-          'SCENE_5A'
-        )
-      } else {
-        narrate(
-          `늑대 아저씨도 ${charName} 삼형제처럼 멋진 벽돌집이 갖고 싶었나 봐요! 하지만 복잡한 설명서를 봐도 어떻게 짓는지 도무지 알 수 없어 눈물이 찔끔 났어요.`,
-          'SCENE_5B'
-        )
-      }
-    } else if (phase === 'SCENE_5A') {
-      narrate(
-        `늑대 아저씨는 벽돌집 앞에서도 온 힘을 다해 바람을 불었어요. 하지만 셋째의 벽돌집은 꿈쩍도 하지 않았지요. 결국 지쳐버린 늑대 아저씨는 숲속으로 도망치고 말았답니다. ${charName} 삼형제의 승리예요!`,
-        'SCENE_6A'
-      )
-    } else if (phase === 'SCENE_5B') {
-      narrate(
-        `${charName} 형제들의 다정한 가르침 덕분에, 늑대 아저씨도 마침내 집 짓는 방법을 이해하게 되었어요. 이제 늑대 아저씨는 ${charName} 삼형제와 함께 세상에서 가장 아름다운 벽돌집을 짓는 최고의 친구가 되었답니다.`,
-        'SCENE_6B'
-      )
-    } else if (phase === 'SCENE_6A' || phase === 'SCENE_6B') {
-      narrate('동화가 끝났어요! 정말 재미있었지? 다음에 또 만나자!', 'ENDING')
-    }
+  // 제작중 화면
+  if (phase === 'GENERATING') {
+    return (
+      <div className={styles.container}>
+        <div className={styles.sceneWrap}>
+          <img src={SCENE_IMAGES.GENERATING} alt="제작중" className={styles.sceneImg} />
+          <div className={styles.generating}>
+            <div className={styles.spinner} />
+            <p>동화를 제작하고 있어요...</p>
+            <p className={styles.genSub}>AI가 이야기를 엮고 있어요 ✨</p>
+          </div>
+        </div>
+      </div>
+    )
   }
 
-  // 리마인드 타이머 (7초 무응답 시)
-  useEffect(() => {
-    if (phase !== 'CHAR_SELECT' && phase !== 'SCENARIO_SELECT') return
-    const timer = setTimeout(() => {
-      if (phase === 'CHAR_SELECT') speak('화면에서 마음에 드는 주인공을 골라보세요!')
-      if (phase === 'SCENARIO_SELECT') speak('늑대 아저씨와 대결? 아니면 도와주기?')
-    }, 7000)
-    return () => clearTimeout(timer)
-  }, [phase])
-
-  // 키보드 Enter로 다음
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if ((e.code === 'Enter' || e.code === 'NumpadEnter') && showNext) handleNext()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [showNext, phase, scenario, charName])
+  // 선택지 단계 (STEP_1, STEP_2, STEP_3)
+  const sceneImg = SCENE_IMAGES[phase] || ''
 
   return (
     <div className={styles.container}>
-      <div className={styles.scene}>
-        <img src={IMAGES[phase]} alt="장면" className={styles.sceneImg} />
-        {caption && narrating && (
-          <div className={styles.caption}>{caption}</div>
-        )}
-      </div>
+      <div className={styles.splitLayout}>
+        {/* 왼쪽: 장면 이미지 */}
+        <div className={styles.leftPanel}>
+          {sceneImg && <img src={sceneImg} alt="장면" className={styles.sceneImg} />}
+        </div>
 
-      <div className={styles.controls}>
-        {phase === 'START' && (
-          <button className={styles.startBtn} onClick={handleStart} disabled={narrating}>
-            🎬 동화 시작하기
-          </button>
-        )}
+        {/* 오른쪽: 선택지 */}
+        <div className={styles.rightPanel}>
+          {phase === 'STEP_1' && (
+            <>
+              <h2 className={styles.stepTitle}>주인공을 골라보세요!</h2>
+              <div className={styles.charGrid}>
+                {CHARACTERS.map(c => (
+                  <button key={c.id} className={styles.charBtn} onClick={() => selectCharacter(c.id)}>
+                    <img src={c.img} alt={c.label} className={styles.charImg} />
+                    <span>{c.label}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
-        {phase === 'CHAR_SELECT' && !narrating && (
-          <div className={styles.choices}>
-            <p className={styles.prompt}>오늘의 주인공을 골라보세요!</p>
-            <div className={styles.choiceGrid}>
-              {CHARACTERS.map(c => (
-                <button key={c.id} className={styles.charBtn} onClick={() => handleCharSelect(c.id)}>
-                  <span className={styles.charEmoji}>{c.emoji}</span>
-                  <span>{c.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+          {phase === 'STEP_2' && (
+            <>
+              <h2 className={styles.stepTitle}>늑대를 만났어요! 어떻게 할까요?</h2>
+              <div className={styles.choiceList}>
+                {STEP2_CHOICES.map(c => (
+                  <button key={c.id} className={styles.choiceCard} onClick={() => selectStep2(c.id)}>
+                    <strong>{c.label}</strong>
+                    <span>{c.desc}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
-        {phase === 'SCENARIO_SELECT' && !narrating && (
-          <div className={styles.choices}>
-            <p className={styles.prompt}>어떤 이야기를 볼까요?</p>
-            <div className={styles.scenarioGrid}>
-              <button className={styles.scenarioBtn} onClick={() => handleScenarioSelect('DESTRUCTION')}>
-                <span className={styles.scenarioEmoji}>💨</span>
-                <span>늑대와 대결!</span>
-              </button>
-              <button className={styles.scenarioBtn} onClick={() => handleScenarioSelect('COOPERATION')}>
-                <span className={styles.scenarioEmoji}>🤝</span>
-                <span>늑대를 도와주기</span>
-              </button>
-            </div>
-          </div>
-        )}
+          {phase === 'STEP_3' && (
+            <>
+              <h2 className={styles.stepTitle}>이야기의 결말은?</h2>
+              <div className={styles.choiceList}>
+                {STEP3_CHOICES.map(c => (
+                  <button key={c.id} className={styles.choiceCard} onClick={() => selectStep3(c.id)}>
+                    <strong>{c.label}</strong>
+                    <span>{c.desc}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
-        {showNext && (
-          <button className={styles.nextBtn} onClick={handleNext}>
-            다음 장면 →
-          </button>
-        )}
-
-        {phase === 'ENDING' && !narrating && (
-          <button className={styles.startBtn} onClick={() => { setPhase('START'); setCharacter(''); setScenario('') }}>
-            🔄 다시 하기
-          </button>
-        )}
-
-        {narrating && <p className={styles.narrating}>📖 이야기를 들려주고 있어요...</p>}
+          <button className={styles.backBtn} onClick={reset}>← 처음으로</button>
+        </div>
       </div>
     </div>
   )
